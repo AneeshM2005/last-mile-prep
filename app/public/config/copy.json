@@ -1,0 +1,111 @@
+{
+  "landing": {
+    "headline": "The last stretch, one steady step at a time.",
+    "sub": "Strategy, timing and a calmer routine for the final weeks before CAT. Built from your own practice.",
+    "privacyLine": "Everything stays on this device. Nothing is sent automatically.",
+    "prototypeTag": "Prototype · sample content",
+    "cta": "Get started"
+  },
+  "onboarding": {
+    "title": "Before we start",
+    "consentNotice": "Everything you do stays on this device and nothing is sent automatically. If you choose to share feedback, you will see exactly what will be shared first, and it will not include your name. Please do not type personal details in feedback boxes. You can delete everything on this device at any time with Reset my data.",
+    "consentCheck1": "I understand and agree to this notice.",
+    "consentCheck2": "I am 18 or older.",
+    "consentHelper": "Tick both boxes to continue.",
+    "displayNameLabel": "Display name",
+    "displayNameHelper": "Any name or nickname. It stays on this device.",
+    "displayNameError": "Please enter a name between 1 and 30 characters.",
+    "schoolsTitle": "Target schools",
+    "schoolsHelper": "Choose 1 to 3 schools.",
+    "schoolsMax": "You can choose up to 3.",
+    "dailyTimeTitle": "Daily time available",
+    "dailyTimeHelper": "How much time can you usually set aside each day?",
+    "dailyTimeRequired": "Please choose a daily time.",
+    "ctaContinue": "Continue",
+    "ctaGoToToday": "Go to Today",
+    "ctaBack": "Back"
+  },
+  "nav": {
+    "more": "More",
+    "skipToMain": "Skip to main content"
+  },
+  "home": {
+    "title": "Today",
+    "daysToCAT": "days to CAT",
+    "catPassed": "CAT day has passed",
+    "taskFallback": "We couldn't prepare today's task. Choose from Practice instead.",
+    "whyThis": "Why this?",
+    "resume": "Resume",
+    "daysPractised": "Days practised"
+  },
+  "profile": {
+    "title": "My profile",
+    "tabSwot": "SWOT",
+    "tabSettings": "Settings and data",
+    "yourDetails": "Your details",
+    "dataOnDevice": "Data on this device",
+    "dataExplain": "All your practice data, settings and session history are stored on this device only.",
+    "resetBtn": "Reset my data",
+    "newSessionBtn": "Start new session",
+    "resetConfirm": "Delete everything on this device? This removes your profile and all practice data. It can't be undone.",
+    "newSessionConfirm": "Start a new session? This removes your profile and all practice data so another person can use this device.",
+    "confirmBtn": "Yes, delete everything",
+    "cancelBtn": "Cancel"
+  },
+  "empty": {
+    "swot": "Nothing here yet. This fills in as you practise.",
+    "dueToday": "Nothing is due today. Add a topic to start a revision plan.",
+    "myWords": "No words yet. Select words you don't know while reading a passage.",
+    "mock": "No mocks recorded yet. Start one when you are ready."
+  },
+  "timer": {
+    "timeUp": "Time's up. Your answers are saved.",
+    "roundEnded": "The round has ended. Your answers are saved.",
+    "oneMinLeft": "1 min left"
+  },
+  "banners": {
+    "starterProfile": "Starter profile. It becomes more detailed as you use the app.",
+    "storage": "Progress cannot be saved in this browser mode.",
+    "demo": "Demo date: {date} · Simulation",
+    "contentError": "We couldn't load {file}. {field} needs attention.",
+    "genericError": "That didn't save. Please try again."
+  },
+  "reflection": {
+    "round": "What would you do the same next time?",
+    "mock": "Which one decision would you change in the next mock?",
+    "baseline": "What surprised you about how you worked through these?"
+  },
+  "revision": {
+    "due": "Waiting for you",
+    "complete": "Revision cycle complete"
+  },
+  "selection": {
+    "alignment": "You attempted {attempted} of the {recommended} questions rated easiest for this set."
+  },
+  "potential": {
+    "label": "The score if every question you could solve were answered correctly. This is not a prediction. It ignores timing and negative marking."
+  },
+  "comment": {
+    "helper": "A short note about your own experience. Please don't paste the question."
+  },
+  "wellness": {
+    "line": "A practice aid for steadier routines. It is not a promise to eliminate anxiety."
+  },
+  "pills": {
+    "strategy": "Strategy",
+    "fun": "Fun",
+    "wellness": "Wellness"
+  },
+  "errors": {
+    "notFound": "We couldn't find that page.",
+    "goToToday": "Go to Today",
+    "contentTitle": "Content couldn't load",
+    "tryAgain": "Try again"
+  },
+  "badges": {
+    "sample": "SAMPLE",
+    "memoryBased": "Memory-based question",
+    "simulation": "Simulation",
+    "prototype": "Prototype · sample content"
+  }
+}

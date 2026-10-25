@@ -1,0 +1,34 @@
+{
+  "questionTypes": {
+    "VARC": [
+      "Reading Comprehension",
+      "Para Jumble",
+      "Para Summary",
+      "Odd Sentence Out",
+      "Sentence Completion",
+      "Critical Reasoning"
+    ],
+    "LRDI": [
+      "Games and Tournaments",
+      "Seating Arrangement",
+      "Data Interpretation - Tables",
+      "Data Interpretation - Charts",
+      "Data Interpretation - Graphs",
+      "Logical Reasoning - Sets",
+      "Binary Logic",
+      "Scheduling",
+      "Grouping and Selection"
+    ],
+    "QA": [
+      "Arithmetic",
+      "Algebra",
+      "Geometry",
+      "Number System",
+      "Modern Math",
+      "Mensuration",
+      "Trigonometry",
+      "Probability",
+      "Permutation and Combination"
+    ]
+  }
+}

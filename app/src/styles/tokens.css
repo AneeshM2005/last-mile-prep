@@ -1,0 +1,320 @@
+/* =============================================================
+   tokens.css – Last Mile design system
+   Raw values are --lm-* variables.
+   Tailwind @theme maps them to design names.
+   No hex values should appear outside this file in src/.
+   ============================================================= */
+
+@import "tailwindcss";
+
+/* ── Raw tokens ─────────────────────────────────────────────── */
+:root {
+  /* Colours */
+  --lm-bg:               #FAF9F8;
+  --lm-surface:          #FFFFFF;
+  --lm-inset:            #F5F3F0;
+  --lm-sidebar:          #F3F1EE;
+  --lm-border:           #E6E3DE;
+  --lm-border-strong:    #8C867E;
+  --lm-ink:              #2B2B2B;
+  --lm-text-muted:       #5E5A55;
+  --lm-btn-secondary:    #F0EDE8;
+  --lm-accent:           #657E8E;
+  --lm-accent-strong:    #3F5766;
+  --lm-accent-soft:      #E4EBEF;
+  --lm-sample:           #EFE9DC;
+  --lm-notice-bg:        #F6ECD9;
+  --lm-notice-text:      #7A4D0A;
+  --lm-scrim:            #1E2A33;
+  --lm-focus:            #3F5766;
+  --lm-disabled-text:    #8C867E;
+
+  /* Grade colours */
+  --lm-grade-a-fg:       #25594D;
+  --lm-grade-a-bg:       #E3EFEB;
+  --lm-grade-b-fg:       #3F5766;
+  --lm-grade-b-bg:       #E4EBEF;
+  --lm-grade-c-fg:       #7A4D0A;
+  --lm-grade-c-bg:       #F6ECD9;
+  --lm-grade-d-fg:       #7A3450;
+  --lm-grade-d-bg:       #F4E4EA;
+
+  /* Radii */
+  --lm-radius-pill:      9999px;
+  --lm-radius-xl:        24px;
+  --lm-radius-lg:        20px;
+  --lm-radius-md:        16px;
+  --lm-radius-sm:        12px;
+
+  /* Spacing (4 px base) */
+  --lm-space-1:          4px;
+  --lm-space-2:          8px;
+  --lm-space-3:          12px;
+  --lm-space-4:          16px;
+  --lm-space-5:          20px;
+  --lm-space-6:          24px;
+  --lm-space-8:          32px;
+  --lm-space-10:         40px;
+  --lm-space-12:         48px;
+  --lm-space-16:         64px;
+  --lm-gutter:           12px;
+
+  /* Elevation */
+  --lm-shadow-0:         none;
+  --lm-shadow-1:         0 1px 2px rgba(43,43,43,.06);
+  --lm-shadow-2:         0 12px 32px rgba(43,43,43,.12);
+
+  /* Motion */
+  --lm-dur-fast:         120ms;
+  --lm-dur-base:         200ms;
+  --lm-dur-slow:         320ms;
+  --lm-ease-out:         cubic-bezier(.2,0,0,1);
+  --lm-ease-inout:       cubic-bezier(.4,0,.2,1);
+
+  /* Z-index */
+  --lm-z-content:        0;
+  --lm-z-sticky:         10;
+  --lm-z-sidebar:        20;
+  --lm-z-bottombar:      20;
+  --lm-z-banner:         30;
+  --lm-z-sheet:          40;
+  --lm-z-modal:          50;
+  --lm-z-toast:          60;
+
+  /* Sky fallback gradient (no gradient in components; only here) */
+  --lm-sky-fallback:     linear-gradient(180deg, #C9D9E3 0%, #E6EEF2 55%, #F3EFE8 100%);
+}
+
+/* ── Tailwind @theme mappings ───────────────────────────────── */
+@theme inline {
+  /* Colours */
+  --color-bg:            var(--lm-bg);
+  --color-surface:       var(--lm-surface);
+  --color-inset:         var(--lm-inset);
+  --color-sidebar:       var(--lm-sidebar);
+  --color-border:        var(--lm-border);
+  --color-border-strong: var(--lm-border-strong);
+  --color-ink:           var(--lm-ink);
+  --color-text-muted:    var(--lm-text-muted);
+  --color-btn-secondary: var(--lm-btn-secondary);
+  --color-accent:        var(--lm-accent);
+  --color-accent-strong: var(--lm-accent-strong);
+  --color-accent-soft:   var(--lm-accent-soft);
+  --color-sample:        var(--lm-sample);
+  --color-notice-bg:     var(--lm-notice-bg);
+  --color-notice-text:   var(--lm-notice-text);
+  --color-scrim:         var(--lm-scrim);
+  --color-focus:         var(--lm-focus);
+  --color-disabled-text: var(--lm-disabled-text);
+
+  /* Grade colours */
+  --color-grade-a-fg:    var(--lm-grade-a-fg);
+  --color-grade-a-bg:    var(--lm-grade-a-bg);
+  --color-grade-b-fg:    var(--lm-grade-b-fg);
+  --color-grade-b-bg:    var(--lm-grade-b-bg);
+  --color-grade-c-fg:    var(--lm-grade-c-fg);
+  --color-grade-c-bg:    var(--lm-grade-c-bg);
+  --color-grade-d-fg:    var(--lm-grade-d-fg);
+  --color-grade-d-bg:    var(--lm-grade-d-bg);
+
+  /* Fonts */
+  --font-sans:           "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif:          "Newsreader", Georgia, serif;
+
+  /* Radii */
+  --radius-pill:         var(--lm-radius-pill);
+  --radius-xl:           var(--lm-radius-xl);
+  --radius-lg:           var(--lm-radius-lg);
+  --radius-md:           var(--lm-radius-md);
+  --radius-sm:           var(--lm-radius-sm);
+
+  /* Breakpoints */
+  --breakpoint-sm:       480px;
+  --breakpoint-md:       768px;
+  --breakpoint-lg:       1024px;
+  --breakpoint-xl:       1280px;
+}
+
+/* ── Typography classes ─────────────────────────────────────── */
+.text-display {
+  font-family: var(--font-sans);
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+@media (max-width: 767px) {
+  .text-display {
+    font-size: 34px;
+    line-height: 38px;
+  }
+}
+
+.text-h1 {
+  font-family: var(--font-sans);
+  font-size: 32px;
+  line-height: 38px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+@media (max-width: 767px) {
+  .text-h1 {
+    font-size: 26px;
+    line-height: 32px;
+  }
+}
+
+.text-h2 {
+  font-family: var(--font-sans);
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.text-h3 {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.text-body-lg {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.text-body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.text-body-strong {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.text-small {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.text-caption {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.text-numeric {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.text-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+@media (max-width: 767px) {
+  .text-quote {
+    font-size: 19px;
+    line-height: 27px;
+  }
+}
+
+.text-reflect {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* ── Base styles ────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--lm-bg);
+  color: var(--lm-ink);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--lm-bg);
+  color: var(--lm-ink);
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: var(--lm-space-2);
+  z-index: var(--lm-z-toast);
+  background: var(--lm-surface);
+  color: var(--lm-ink);
+  padding: var(--lm-space-2) var(--lm-space-4);
+  border-radius: var(--lm-radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--lm-shadow-2);
+}
+.skip-link:focus {
+  left: var(--lm-space-4);
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--lm-focus);
+  outline-offset: 2px;
+}
+
+/* Hover only for pointer devices */
+@media (hover: hover) {
+  a:hover, button:hover {
+    opacity: 0.85;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Disabled controls */
+[aria-disabled="true"],
+:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

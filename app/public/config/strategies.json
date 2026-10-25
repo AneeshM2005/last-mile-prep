@@ -1,0 +1,29 @@
+{
+  "strategies": [
+    {
+      "id": "easiest_first",
+      "label": "Easiest first",
+      "description": "Scan and pick the questions you find easiest before attempting harder ones."
+    },
+    {
+      "id": "skim_then_pick",
+      "label": "Skim then pick",
+      "description": "Skim all questions, then decide which to attempt based on what you see."
+    },
+    {
+      "id": "followed_order",
+      "label": "Followed order",
+      "description": "Worked through questions in the order they appeared."
+    },
+    {
+      "id": "topics_i_like",
+      "label": "Topics I like",
+      "description": "Picked questions from topic areas you are more confident in."
+    },
+    {
+      "id": "other",
+      "label": "Other",
+      "description": "A different approach not listed here."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "schools": [
+    { "id": "iima",   "name": "IIM Ahmedabad" },
+    { "id": "iimb",   "name": "IIM Bangalore" },
+    { "id": "iimc",   "name": "IIM Calcutta" },
+    { "id": "iims",   "name": "IIM Shillong" },
+    { "id": "iimk",   "name": "IIM Kozhikode" },
+    { "id": "xlri",   "name": "XLRI Jamshedpur" },
+    { "id": "spjimr", "name": "SPJIMR Mumbai" },
+    { "id": "fms",    "name": "FMS Delhi" }
+  ]
+}

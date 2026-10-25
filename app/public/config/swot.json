@@ -1,0 +1,22 @@
+{
+  "swot": {
+    "strengthThreshold": {
+      "minGradeAShare": 0.5,
+      "minQuestions": 3,
+      "description": "Topic is a Strength when more than 50% of answers are grade A with at least 3 questions attempted."
+    },
+    "opportunityThreshold": {
+      "gradeBShare": 0.4,
+      "description": "Topic is an Opportunity when grade B share is 40% or more, indicating correct knowledge but poor decision-making."
+    },
+    "weaknessThreshold": {
+      "gradeDShare": 0.3,
+      "description": "Topic is a Weakness when grade D share is 30% or more."
+    },
+    "threatThreshold": {
+      "gradeCShare": 0.4,
+      "description": "Topic is a Threat when grade C share is 40% or more, indicating guessing or inconsistency."
+    },
+    "tiebreakerOrder": ["Weakness", "Threat", "Opportunity", "Strength"]
+  }
+}

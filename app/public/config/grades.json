@@ -1,0 +1,58 @@
+{
+  "grades": [
+    {
+      "outcomeCode": "CORRECT_FAST",
+      "grade": "A",
+      "label": "Your strength",
+      "meaning": "Good judgement, good knowledge."
+    },
+    {
+      "outcomeCode": "CORRECT_SLOW",
+      "grade": "B",
+      "label": "Be a better test taker",
+      "meaning": "Knowledge was there; the decision was the lever."
+    },
+    {
+      "outcomeCode": "CORRECT_GUESSED",
+      "grade": "C",
+      "label": "Luck or great decision",
+      "meaning": "A good decision, or luck, without solid knowledge yet."
+    },
+    {
+      "outcomeCode": "WRONG_CAN",
+      "grade": "B",
+      "label": "Be a better test taker",
+      "meaning": "Knowledge was there; the decision was the lever."
+    },
+    {
+      "outcomeCode": "WRONG_CANNOT",
+      "grade": "D",
+      "label": "Red flag",
+      "meaning": "Both judgement and knowledge need work. This is your first thing to look at."
+    },
+    {
+      "outcomeCode": "LEFT_CAN",
+      "grade": "B",
+      "label": "Be a better test taker",
+      "meaning": "Knowledge was there; the decision was the lever."
+    },
+    {
+      "outcomeCode": "LEFT_CANNOT",
+      "grade": "C",
+      "label": "Luck or great decision",
+      "meaning": "A good decision, or luck, without solid knowledge yet."
+    },
+    {
+      "outcomeCode": "UNSEEN_CAN",
+      "grade": "B",
+      "label": "Be a better test taker",
+      "meaning": "Knowledge was there; the decision was the lever."
+    },
+    {
+      "outcomeCode": "UNSEEN_CANNOT",
+      "grade": "C",
+      "label": "Luck or great decision",
+      "meaning": "A good decision, or luck, without solid knowledge yet."
+    }
+  ]
+}

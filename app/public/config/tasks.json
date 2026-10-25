@@ -1,0 +1,44 @@
+{
+  "tasks": [
+    {
+      "id": "baseline",
+      "label": "Baseline",
+      "durationMinutes": 15,
+      "eligibility": "baseline_not_done",
+      "priority": 1
+    },
+    {
+      "id": "revision",
+      "label": "Revision",
+      "durationMinutes": 30,
+      "eligibility": "revision_due_today",
+      "priority": 2
+    },
+    {
+      "id": "mock",
+      "label": "Mock analysis",
+      "durationMinutes": 45,
+      "eligibility": "last_mock_older_than_7_days",
+      "priority": 3
+    },
+    {
+      "id": "round",
+      "label": "Question selection",
+      "durationMinutes": 30,
+      "eligibility": "grade_b_share_above_threshold",
+      "priority": 4
+    },
+    {
+      "id": "passage",
+      "label": "Reading passage",
+      "durationMinutes": 20,
+      "eligibility": "always",
+      "priority": 5
+    }
+  ],
+  "cascade": {
+    "gradeBShareThreshold": 0.25,
+    "lastMockWindowDays": 7,
+    "noRepeatSameDayTask": true
+  }
+}

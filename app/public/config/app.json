@@ -1,0 +1,48 @@
+{
+  "brand": {
+    "name": "Last Mile",
+    "wordmarkSvg": null
+  },
+  "cat": {
+    "date": "2026-11-29"
+  },
+  "sections": {
+    "VARC": 24,
+    "LRDI": 22,
+    "QA": 22
+  },
+  "scoring": {
+    "correct": 3,
+    "wrongMcq": -1,
+    "wrongTita": 0,
+    "unattempted": 0
+  },
+  "timers": {
+    "baselineMinutes": 15,
+    "announceAtSeconds": [300, 60]
+  },
+  "features": {
+    "revision": true,
+    "words": true,
+    "moodboardImages": true,
+    "demoTools": true
+  },
+  "nav": [
+    { "id": "home",     "route": "/",                  "label": "Home",         "icon": "House",         "group": "primary" },
+    { "id": "practice", "route": "/practice",          "label": "Practice",     "icon": "Target",        "group": "primary" },
+    { "id": "mock",     "route": "/mock",              "label": "Mock",         "icon": "ClipboardList", "group": "primary" },
+    { "id": "revision", "route": "/revision",          "label": "Revision",     "icon": "RefreshCw",     "group": "primary" },
+    { "id": "words",    "route": "/words",             "label": "Words",        "icon": "BookOpen",      "group": "more" },
+    { "id": "profile",  "route": "/profile",           "label": "My profile",   "icon": "UserRound",     "group": "more" },
+    { "id": "omet",     "route": "/omet",              "label": "OMET",         "icon": "Compass",       "group": "more" },
+    { "id": "feedback", "route": "/feedback",          "label": "Feedback",     "icon": "MessageSquare", "group": "more" }
+  ],
+  "feedback": {
+    "contact": "",
+    "minRoundsForCard": 1
+  },
+  "starterBannerMinQuestions": 10,
+  "assets": {
+    "selfHostedFonts": false
+  }
+}
