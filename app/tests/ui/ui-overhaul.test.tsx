@@ -141,32 +141,58 @@ describe('UI and Design Overhaul Requirements', () => {
     });
   });
 
-  describe('ScrollExpand framed starting state', () => {
-    it('starts framed with rounded radius and bounded width', () => {
+  describe('ScrollExpand full-screen shrinking hero starting state and text swap', () => {
+    it('starts full screen with square corners, stage 1 text visible, and actions hidden', () => {
       render(
         <ScrollExpand
-          src="/test-image.jpg"
-          alt="CAT Prep desk"
+          src="/images/landing-hero.jpeg"
+          alt=""
           title="The last stretch, one steady step at a time."
+          eyebrowStage1="LAST MILE CAT PREP"
+          eyebrowStage2="A CALMER APPROACH TO CAT"
+          stage2Text="Strategy, timing and a calmer routine for the final weeks before CAT. Built from your own practice."
           scrollHint="Scroll"
           useWindowScroll
-        >
-          <div>Revealed content</div>
-        </ScrollExpand>
+          actionsSlot={
+            <div>
+              <button type="button">Get started</button>
+              <p>Your data stays on this device.</p>
+            </div>
+          }
+        />
       );
 
       // Frame container exists
       const frameEl = screen.getByTestId('scroll-expand-frame');
       expect(frameEl).toBeInTheDocument();
 
-      // Starts framed (inset style with rounded radius)
-      expect(frameEl.style.width).toBe('88%');
-      expect(frameEl.style.borderRadius).toBe('32px');
+      // Starts full screen (100% width, 0px border radius, 100vh height)
+      expect(frameEl.style.width).toBe('100%');
+      expect(frameEl.style.borderRadius).toBe('0px');
+      expect(frameEl.style.height).toBe('100vh');
 
-      // Title plaque exists
-      expect(
-        screen.getByText('The last stretch, one steady step at a time.')
-      ).toBeInTheDocument();
+      // Stage 1 text group is visible directly on picture
+      const stage1El = screen.getByTestId('hero-stage-1');
+      expect(stage1El).toBeInTheDocument();
+      expect(stage1El.style.opacity).toBe('1');
+      expect(screen.getByText('LAST MILE CAT PREP')).toBeInTheDocument();
+      expect(screen.getByText('The last stretch, one steady step at a time.')).toBeInTheDocument();
+
+      // Stage 2 text group is in the DOM for accessibility with opacity 0
+      const stage2El = screen.getByTestId('hero-stage-2');
+      expect(stage2El).toBeInTheDocument();
+      expect(stage2El.style.opacity).toBe('0');
+      expect(screen.getByText('A CALMER APPROACH TO CAT')).toBeInTheDocument();
+
+      // Scroll hint is visible
+      const hintEl = screen.getByTestId('hero-scroll-hint');
+      expect(hintEl).toBeInTheDocument();
+      expect(hintEl.style.opacity).toBe('1');
+
+      // Actions below frame are in DOM with opacity 0
+      const actionsEl = screen.getByTestId('hero-actions');
+      expect(actionsEl).toBeInTheDocument();
+      expect(actionsEl.style.opacity).toBe('0');
     });
   });
 });

@@ -41,6 +41,10 @@
   --lm-sage-700:         #4B6F4D;
   --lm-sage-900:         #2F4A32;
 
+  /* Hero photo tint & text legibility */
+  --lm-hero-tint:        rgba(47, 74, 50, 0.45);
+  --lm-hero-text-shadow: 0 1px 3px rgba(15, 25, 17, 0.8), 0 2px 10px rgba(15, 25, 17, 0.6);
+
   /* Amber Palette */
   --lm-amber-400:        #F5B400;
   --lm-amber-100:        #FDF3D0;

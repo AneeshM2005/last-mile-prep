@@ -1,10 +1,19 @@
 {
   "landing": {
+    "eyebrowStage1": "LAST MILE CAT PREP",
     "headline": "The last stretch, one steady step at a time.",
+    "eyebrowStage2": "A CALMER APPROACH TO CAT",
     "sub": "Strategy, timing and a calmer routine for the final weeks before CAT. Built from your own practice.",
-    "privacyLine": "Everything stays on this device. Nothing is sent automatically.",
+    "privacyLine": "Your data stays on this device.",
+    "scrollHint": "Scroll",
     "prototypeTag": "Prototype · sample content",
-    "cta": "Get started"
+    "cta": "Get started",
+    "heroImage": "/images/landing-hero.jpeg",
+    "heroImageCredits": {
+      "source": "founder-supplied",
+      "licence": "founder-supplied, licence to be confirmed",
+      "attribution": "Founder supplied"
+    }
   },
   "onboarding": {
     "title": "Before we start",

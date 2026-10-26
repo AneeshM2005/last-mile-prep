@@ -30,7 +30,7 @@ export function LandingPage(): React.ReactElement {
 
   // Lazy-mount waves after first paint & hero load to never delay initial paint
   const [wavesMounted, setWavesMounted] = useState<boolean>(false);
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
+  const [headerProgress, setHeaderProgress] = useState<number>(0);
 
   useEffect(() => {
     // Reset scroll to top on enter
@@ -41,17 +41,7 @@ export function LandingPage(): React.ReactElement {
         setWavesMounted(true);
       }, 100);
 
-      const handleScroll = () => {
-        const scrolled = Math.max(0, window.scrollY || 0);
-        const ratio = Math.min(1, scrolled / 300);
-        setScrollProgress(ratio);
-      };
-
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      return () => {
-        clearTimeout(timer);
-        window.removeEventListener('scroll', handleScroll);
-      };
+      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -61,10 +51,15 @@ export function LandingPage(): React.ReactElement {
   }
 
   const brandName = config?.app.brand.name || 'Last Mile';
-  const landingCopy = config?.copy?.landing as Record<string, string> | undefined;
-  const headline = landingCopy?.headline || 'The last stretch, one steady step at a time.';
-  const sub = landingCopy?.sub || 'Strategy, timing and a calmer routine for the final weeks before CAT. Built from your own practice.';
-  const ctaText = landingCopy?.cta || 'Get started';
+  const landingCopy = config?.copy?.landing as Record<string, unknown> | undefined;
+  const eyebrowStage1 = typeof landingCopy?.eyebrowStage1 === 'string' ? landingCopy.eyebrowStage1 : 'LAST MILE CAT PREP';
+  const headline = typeof landingCopy?.headline === 'string' ? landingCopy.headline : 'The last stretch, one steady step at a time.';
+  const eyebrowStage2 = typeof landingCopy?.eyebrowStage2 === 'string' ? landingCopy.eyebrowStage2 : 'A CALMER APPROACH TO CAT';
+  const sub = typeof landingCopy?.sub === 'string' ? landingCopy.sub : 'Strategy, timing and a calmer routine for the final weeks before CAT. Built from your own practice.';
+  const privacyLine = typeof landingCopy?.privacyLine === 'string' ? landingCopy.privacyLine : 'Your data stays on this device.';
+  const scrollHint = typeof landingCopy?.scrollHint === 'string' ? landingCopy.scrollHint : 'Scroll';
+  const ctaText = typeof landingCopy?.cta === 'string' ? landingCopy.cta : 'Get started';
+  const heroImageSrc = typeof landingCopy?.heroImage === 'string' ? landingCopy.heroImage : '/images/landing-hero.jpeg';
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
@@ -77,6 +72,46 @@ export function LandingPage(): React.ReactElement {
       >
         Skip to main content
       </a>
+
+      {/* Top Header: Wordmark & Start Profile link, cross-fades seamlessly from paper-white to ink */}
+      <header className="fixed top-0 left-0 right-0 z-30 pointer-events-none">
+        <div className="w-full max-w-[1280px] mx-auto px-6 pt-5 pb-3 flex items-center justify-between">
+          <div className="flex items-center gap-2.5 pointer-events-auto">
+            <div
+              className="w-7 h-7 rounded-lg flex items-center justify-center border transition-all duration-150"
+              style={{
+                backgroundColor: headerProgress > 0.5 ? 'var(--lm-sage-100)' : 'rgba(251, 252, 249, 0.15)',
+                color: headerProgress > 0.5 ? 'var(--lm-sage-700)' : 'var(--lm-bg)',
+                borderColor: headerProgress > 0.5 ? 'var(--lm-sage-200)' : 'rgba(251, 252, 249, 0.3)',
+              }}
+            >
+              <Compass className="w-4 h-4" />
+            </div>
+            <span
+              className="font-serif font-bold text-lg tracking-tight transition-colors duration-150"
+              style={{
+                color: headerProgress > 0.5 ? 'var(--lm-ink)' : 'var(--lm-bg)',
+                textShadow: headerProgress > 0.5 ? 'none' : 'var(--lm-hero-text-shadow)',
+              }}
+            >
+              {brandName}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => navigate('/onboarding')}
+            aria-label="Start profile"
+            className="pointer-events-auto inline-flex items-center min-h-[44px] text-xs font-semibold hover:underline cursor-pointer transition-colors duration-150 px-2"
+            style={{
+              color: headerProgress > 0.5 ? 'var(--lm-sage-700)' : 'var(--lm-bg)',
+              textShadow: headerProgress > 0.5 ? 'none' : 'var(--lm-hero-text-shadow)',
+            }}
+          >
+            Start profile <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </button>
+        </div>
+      </header>
 
       {/* 2B. Fixed Full-Viewport Living Backdrop: GradientWaves */}
       {wavesMounted && (
@@ -112,53 +147,21 @@ export function LandingPage(): React.ReactElement {
 
       {/* Main Content Area sitting above waves */}
       <main id="landing-main" className="relative z-10 flex-1 flex flex-col items-center">
-        {/* Top Slim Wordmark: sits in margin above frame, fades out as frame opens */}
-        <header
-          className="w-full max-w-[1280px] mx-auto px-6 pt-5 pb-3 flex items-center justify-between transition-opacity duration-200"
-          style={{ opacity: Math.max(0, 1 - scrollProgress * 1.5) }}
-        >
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)] flex items-center justify-center border border-[var(--lm-sage-200)]">
-              <Compass className="w-4 h-4" />
-            </div>
-            <span className="font-serif font-bold text-lg tracking-tight text-[var(--lm-ink)]">
-              {brandName}
-            </span>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => navigate('/onboarding')}
-            className="inline-flex items-center text-xs font-semibold text-[var(--lm-sage-700)] hover:underline cursor-pointer"
-          >
-            Start profile <ArrowRight className="w-3.5 h-3.5 ml-1" />
-          </button>
-        </header>
-
-        {/* 1. Hero: ScrollExpand picture */}
-        <section className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 pt-2 pb-12 flex flex-col items-center">
+        {/* 1. Hero: ScrollExpand picture shrinking on scroll */}
+        <section className="w-full flex flex-col items-center">
           <ScrollExpand
-            src="/images/backdrop.jpg"
-            alt="Scenic view from a train window looking out over mountains and green meadows"
+            src={heroImageSrc}
+            alt=""
             title={headline}
-            scrollHint="Scroll"
+            eyebrowStage1={eyebrowStage1}
+            eyebrowStage2={eyebrowStage2}
+            stage2Text={sub}
+            scrollHint={scrollHint}
             useWindowScroll={true}
-            mediaZoom={1.15}
-          >
-            {/* 2. Opening moment revealed inside/under frame once opened */}
-            <div
-              className="max-w-xl p-6 sm:p-8 rounded-[var(--lm-radius-card)] border border-[var(--lm-sage-200)] shadow-sm"
-              style={{
-                backgroundColor: 'rgba(251, 252, 249, 0.92)',
-              }}
-            >
-              <span className="text-xs font-bold uppercase tracking-widest text-[var(--lm-sage-700)] block mb-1">
-                A Calmer Approach to CAT
-              </span>
-              <p className="text-sm sm:text-base text-[var(--lm-ink)] leading-relaxed font-medium mb-5">
-                {sub}
-              </p>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            mediaZoom={1.0}
+            headerProgressCallback={setHeaderProgress}
+            actionsSlot={
+              <div className="flex flex-col items-center justify-center gap-2.5 text-center">
                 <SpecularButton
                   size="lg"
                   radius={9999}
@@ -170,12 +173,12 @@ export function LandingPage(): React.ReactElement {
                   <ArrowRight className="w-4 h-4 ml-0.5" />
                 </SpecularButton>
 
-                <span className="text-xs text-[var(--lm-text-muted)] font-medium">
-                  Your data stays on this device.
-                </span>
+                <p className="text-sm text-[var(--lm-text-muted)] font-medium m-0 leading-normal">
+                  {privacyLine}
+                </p>
               </div>
-            </div>
-          </ScrollExpand>
+            }
+          />
         </section>
 
         {/* 3. Diagnostic Architecture: Editorial two-column layout */}
