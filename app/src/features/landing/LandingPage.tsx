@@ -4,7 +4,7 @@
  * Section 1, 2A, 2B, 3.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { Card } from '../../ui/Card';
 import { useAppContext } from '../../app/providers';
@@ -23,6 +23,44 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 
+// Memoized GradientWaves backdrop wrapper to avoid re-rendering on header state change
+interface WavesBackdropProps {
+  isMobile: boolean;
+}
+
+const WavesBackdrop = React.memo(function WavesBackdrop({ isMobile }: WavesBackdropProps) {
+  return (
+    <div
+      aria-hidden="true"
+      className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
+      style={{ opacity: 0.85 }}
+    >
+      <GradientWaves
+        lightMode={true}
+        backgroundColor="transparent"
+        horizonColor="rgb(181, 205, 176)" // sage-300
+        waveColor="rgb(127, 160, 122)"    // sage-500
+        crestColor="rgb(255, 255, 255)"
+        speed={0.25}
+        amplitude={2.0}
+        waveScale={0.5}
+        relief={0.8}
+        sheen={0.15}
+        brightness={1.0}
+        opacity={0.85}
+        grain={0.12}
+        intro={true}
+        mouseInteraction={true}
+        parallaxStrength={0.3}
+        mouseStrength={0.5}
+        swellOnClick={true}
+        quality={isMobile ? 'low' : 'medium'}
+        dpr={isMobile ? 1.25 : 1.5}
+      />
+    </div>
+  );
+});
+
 export function LandingPage(): React.ReactElement {
   const navigate = useNavigate();
   const { config } = useAppContext();
@@ -30,7 +68,10 @@ export function LandingPage(): React.ReactElement {
 
   // Lazy-mount waves after first paint & hero load to never delay initial paint
   const [wavesMounted, setWavesMounted] = useState<boolean>(false);
-  const [headerProgress, setHeaderProgress] = useState<number>(0);
+  const [headerOverPhoto, setHeaderOverPhoto] = useState<boolean>(true);
+  const [isMobile, setIsMobile] = useState<boolean>(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
 
   useEffect(() => {
     // Reset scroll to top on enter
@@ -43,6 +84,26 @@ export function LandingPage(): React.ReactElement {
 
       return () => clearTimeout(timer);
     }
+  }, []);
+
+  // Track responsive viewport for wave quality
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (typeof window.matchMedia !== 'function') {
+      setIsMobile(window.innerWidth < 768);
+      const resizeHandler = () => setIsMobile(window.innerWidth < 768);
+      window.addEventListener('resize', resizeHandler);
+      return () => window.removeEventListener('resize', resizeHandler);
+    }
+    const mql = window.matchMedia('(max-width: 767px)');
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    setIsMobile(mql.matches);
+    mql.addEventListener?.('change', handler);
+    return () => mql.removeEventListener?.('change', handler);
+  }, []);
+
+  const handleHeaderChange = useCallback((overPhoto: boolean) => {
+    setHeaderOverPhoto(overPhoto);
   }, []);
 
   // If user already completed onboarding, redirect to /
@@ -61,10 +122,8 @@ export function LandingPage(): React.ReactElement {
   const ctaText = typeof landingCopy?.cta === 'string' ? landingCopy.cta : 'Get started';
   const heroImageSrc = typeof landingCopy?.heroImage === 'string' ? landingCopy.heroImage : '/images/landing-hero.jpeg';
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-
   return (
-    <div className="relative min-h-screen bg-[var(--lm-bg)] text-[var(--lm-ink)] overflow-x-hidden font-sans flex flex-col justify-between selection:bg-[var(--lm-sage-100)]">
+    <div className="relative min-h-screen bg-[var(--lm-bg)] text-[var(--lm-ink)] overflow-x-clip font-sans flex flex-col justify-between selection:bg-[var(--lm-sage-100)]">
       {/* Skip to main content */}
       <a
         href="#landing-main"
@@ -80,9 +139,9 @@ export function LandingPage(): React.ReactElement {
             <div
               className="w-7 h-7 rounded-lg flex items-center justify-center border transition-all duration-150"
               style={{
-                backgroundColor: headerProgress > 0.5 ? 'var(--lm-sage-100)' : 'rgba(251, 252, 249, 0.15)',
-                color: headerProgress > 0.5 ? 'var(--lm-sage-700)' : 'var(--lm-bg)',
-                borderColor: headerProgress > 0.5 ? 'var(--lm-sage-200)' : 'rgba(251, 252, 249, 0.3)',
+                backgroundColor: headerOverPhoto ? 'rgba(251, 252, 249, 0.15)' : 'var(--lm-sage-100)',
+                color: headerOverPhoto ? 'var(--lm-bg)' : 'var(--lm-sage-700)',
+                borderColor: headerOverPhoto ? 'rgba(251, 252, 249, 0.3)' : 'var(--lm-sage-200)',
               }}
             >
               <Compass className="w-4 h-4" />
@@ -90,8 +149,8 @@ export function LandingPage(): React.ReactElement {
             <span
               className="font-serif font-bold text-lg tracking-tight transition-colors duration-150"
               style={{
-                color: headerProgress > 0.5 ? 'var(--lm-ink)' : 'var(--lm-bg)',
-                textShadow: headerProgress > 0.5 ? 'none' : 'var(--lm-hero-text-shadow)',
+                color: headerOverPhoto ? 'var(--lm-bg)' : 'var(--lm-ink)',
+                textShadow: headerOverPhoto ? 'var(--lm-hero-text-shadow)' : 'none',
               }}
             >
               {brandName}
@@ -104,8 +163,8 @@ export function LandingPage(): React.ReactElement {
             aria-label="Start profile"
             className="pointer-events-auto inline-flex items-center min-h-[44px] text-xs font-semibold hover:underline cursor-pointer transition-colors duration-150 px-2"
             style={{
-              color: headerProgress > 0.5 ? 'var(--lm-sage-700)' : 'var(--lm-bg)',
-              textShadow: headerProgress > 0.5 ? 'none' : 'var(--lm-hero-text-shadow)',
+              color: headerOverPhoto ? 'var(--lm-bg)' : 'var(--lm-sage-700)',
+              textShadow: headerOverPhoto ? 'var(--lm-hero-text-shadow)' : 'none',
             }}
           >
             Start profile <ArrowRight className="w-3.5 h-3.5 ml-1" />
@@ -114,36 +173,7 @@ export function LandingPage(): React.ReactElement {
       </header>
 
       {/* 2B. Fixed Full-Viewport Living Backdrop: GradientWaves */}
-      {wavesMounted && (
-        <div
-          aria-hidden="true"
-          className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
-          style={{ opacity: 0.85 }}
-        >
-          <GradientWaves
-            lightMode={true}
-            backgroundColor="transparent"
-            horizonColor="rgb(181, 205, 176)" // sage-300
-            waveColor="rgb(127, 160, 122)"    // sage-500
-            crestColor="rgb(255, 255, 255)"
-            speed={0.25}
-            amplitude={2.0}
-            waveScale={0.5}
-            relief={0.8}
-            sheen={0.15}
-            brightness={1.0}
-            opacity={0.85}
-            grain={0.12}
-            intro={true}
-            mouseInteraction={true}
-            parallaxStrength={0.3}
-            mouseStrength={0.5}
-            swellOnClick={true}
-            quality={isMobile ? 'low' : 'medium'}
-            dpr={isMobile ? 1.25 : 1.5}
-          />
-        </div>
-      )}
+      {wavesMounted && <WavesBackdrop isMobile={isMobile} />}
 
       {/* Main Content Area sitting above waves */}
       <main id="landing-main" className="relative z-10 flex-1 flex flex-col items-center">
@@ -157,9 +187,10 @@ export function LandingPage(): React.ReactElement {
             eyebrowStage2={eyebrowStage2}
             stage2Text={sub}
             scrollHint={scrollHint}
+            scrollDistance={1.1}
             useWindowScroll={true}
             mediaZoom={1.0}
-            headerProgressCallback={setHeaderProgress}
+            headerProgressCallback={handleHeaderChange}
             actionsSlot={
               <div className="flex flex-col items-center justify-center gap-2.5 text-center">
                 <SpecularButton

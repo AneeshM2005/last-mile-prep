@@ -1,51 +1,50 @@
 /**
  * heroScroll.ts – Pure calculation of Landing hero shrink and cross-fade states.
- * Maps scroll progress p in [0, 1] to frame geometry, text opacities, and header styles.
- * Eased with cubic-bezier(0.22, 1, 0.36, 1).
+ * Driven by raw progress p in [0, 1] linear in scroll.
+ * Uses smootherstep (6t^5 - 15t^4 + 10t^3) for geometry only.
  */
 
 export interface HeroStateOptions {
-  isMobile?: boolean;
+  viewportWidth?: number;
   viewportHeight?: number;
+  finalHeight?: number;
+  maxRadius?: number;
 }
 
 export interface HeroState {
   progress: number;
-  easedProgress: number;
+  geometry: number;
   frameWidthPercent: number;
-  frameHeightVh: number;
+  frameHeightPx: number;
   frameRadiusPx: number;
   stage1Opacity: number;
   stage2Opacity: number;
   actionsOpacity: number;
   scrollHintOpacity: number;
   headerProgress: number;
+  headerOverPhoto: boolean;
 }
 
 /**
- * Standard cubic bezier approximation for cubic-bezier(0.22, 1, 0.36, 1).
- * Smooth ease-out deceleration with no overshoot.
+ * Standard smootherstep: 6t^5 - 15t^4 + 10t^3
+ * Has 1st and 2nd derivatives = 0 at both t=0 and t=1.
  */
-export function cubicBezierEaseOut(t: number): number {
+export function smootherstep(t: number): number {
   const clamped = Math.max(0, Math.min(1, t));
-  // Exact cubic bezier for (0.22, 1, 0.36, 1) evaluated at parameter u
-  // High-fidelity closed approximation: fast ease-out
-  const p1 = 0.22;
-  const p2 = 0.36;
-  // B(u) = 3(1-u)^2 * u * 1 + 3(1-u) * u^2 * 1 + u^3
-  // Since y1=1 and y2=1, y(u) = 3u(1-u) + u^3 = 3u - 3u^2 + u^3 = 1 - (1-u)^3
-  // For x(u) with x1=0.22, x2=0.36:
-  // Accurate Newton-Raphson inversion for u given t = x:
-  let u = clamped;
-  for (let i = 0; i < 4; i++) {
-    const x = 3 * (1 - u) * (1 - u) * u * p1 + 3 * (1 - u) * u * u * p2 + u * u * u;
-    const dx = 3 * (1 - u) * (1 - u) * p1 + 6 * (1 - u) * u * (p2 - p1) + 3 * u * u * (1 - p2);
-    if (Math.abs(dx) < 1e-6) break;
-    u -= (x - clamped) / dx;
-    u = Math.max(0, Math.min(1, u));
-  }
-  // y(u) with y1=1, y2=1:
-  return 3 * (1 - u) * (1 - u) * u * 1 + 3 * (1 - u) * u * u * 1 + u * u * u;
+  return clamped * clamped * clamped * (clamped * (clamped * 6 - 15) + 10);
+}
+
+/**
+ * Computes geometry progress g from raw scroll progress p.
+ * - g = 0 for p <= 0.03 (dead zone so picture stays full screen on initial touch)
+ * - smootherstep for 0.03 < p < 0.72
+ * - g = 1 for p >= 0.72
+ */
+export function calculateHeroGeometry(rawProgress: number): number {
+  if (rawProgress <= 0.03) return 0;
+  if (rawProgress >= 0.72) return 1;
+  const t = (rawProgress - 0.03) / 0.69;
+  return smootherstep(t);
 }
 
 /**
@@ -53,67 +52,86 @@ export function cubicBezierEaseOut(t: number): number {
  */
 export function calculateHeroState(rawProgress: number, options: HeroStateOptions = {}): HeroState {
   const progress = Math.max(0, Math.min(1, rawProgress));
-  const eased = cubicBezierEaseOut(progress);
+  const g = calculateHeroGeometry(progress);
 
-  const isMobile = Boolean(options.isMobile);
-  const maxRadius = isMobile ? 24 : 32;
+  const vpWidth = options.viewportWidth ?? 1280;
+  const vpHeight = options.viewportHeight ?? 800;
 
-  // Frame width: from 100% full screen to 88% inset
-  const frameWidthPercent = 100 - eased * 12;
+  // Max radius: clamp(24px, 3vw, 32px)
+  const computedMaxRadius = options.maxRadius ?? Math.max(24, Math.min(32, vpWidth * 0.03));
+  const frameRadiusPx = g * computedMaxRadius;
 
-  // Frame height: from 100vh full screen to 56vh (or 48vh on mobile / short screens)
-  const targetHeightVh = isMobile || (options.viewportHeight && options.viewportHeight < 680) ? 48 : 56;
-  const frameHeightVh = 100 - eased * (100 - targetHeightVh);
+  // Frame width: 100 -> 88% using geometry g
+  const frameWidthPercent = 100 - 12 * g;
 
-  // Border radius: from 0px square corners to maxRadius (32px laptop, 24px mobile)
-  const frameRadiusPx = eased * maxRadius;
+  // Frame height: linear from full viewport height to finalHeight using geometry g
+  const finalHeight = options.finalHeight ?? Math.max(260, Math.min(640, vpHeight - 80 - 72 - 48));
+  const frameHeightPx = vpHeight - g * (vpHeight - finalHeight);
 
-  // Stage 1 text: 100% -> 0% between progress 0.15 and 0.50
+  // Stage 1 text opacity: 1 until p = 0.10, falling linearly to 0 at p = 0.38
   let stage1Opacity = 1;
-  if (progress <= 0.15) {
+  if (progress <= 0.10) {
     stage1Opacity = 1;
-  } else if (progress >= 0.50) {
+  } else if (progress >= 0.38) {
     stage1Opacity = 0;
   } else {
-    stage1Opacity = (0.50 - progress) / (0.50 - 0.15);
+    stage1Opacity = (0.38 - progress) / 0.28;
   }
 
-  // Stage 2 text: 0% -> 100% between progress 0.40 and 0.85
+  // Stage 2 text opacity: 0 until p = 0.34, rising linearly to 1 at p = 0.70, stays 1
   let stage2Opacity = 0;
-  if (progress <= 0.40) {
+  if (progress <= 0.34) {
     stage2Opacity = 0;
-  } else if (progress >= 0.85) {
+  } else if (progress >= 0.70) {
     stage2Opacity = 1;
   } else {
-    stage2Opacity = (progress - 0.40) / (0.85 - 0.40);
+    stage2Opacity = (progress - 0.34) / 0.36;
   }
 
-  // Outside actions (Get started button + privacy line): 0% -> 100% between 0.75 and 1.00
+  // Actions (button + privacy line) opacity: 0 until p = 0.62, rising linearly to 1 at p = 0.85, stays 1
   let actionsOpacity = 0;
-  if (progress <= 0.75) {
+  if (progress <= 0.62) {
     actionsOpacity = 0;
-  } else if (progress >= 1.00) {
+  } else if (progress >= 0.85) {
     actionsOpacity = 1;
   } else {
-    actionsOpacity = (progress - 0.75) / (1.00 - 0.75);
+    actionsOpacity = (progress - 0.62) / 0.23;
   }
 
-  // Scroll hint: fades out quickly between 0 and 0.25
-  const scrollHintOpacity = Math.max(0, Math.min(1, 1 - progress * 4));
+  // Scroll hint opacity: 1 until p = 0.02, falling linearly to 0 at p = 0.12
+  let scrollHintOpacity = 1;
+  if (progress <= 0.02) {
+    scrollHintOpacity = 1;
+  } else if (progress >= 0.12) {
+    scrollHintOpacity = 0;
+  } else {
+    scrollHintOpacity = (0.12 - progress) / 0.10;
+  }
 
-  // Header progress for cross-fade from paper-white to ink
-  const headerProgress = Math.max(0, Math.min(1, (progress - 0.5) / 0.4));
+  // Header colour progress: driven by geometry g: 0 until g = 0.15, rising to 1 at g = 0.40
+  let headerProgress = 0;
+  if (g <= 0.15) {
+    headerProgress = 0;
+  } else if (g >= 0.40) {
+    headerProgress = 1;
+  } else {
+    headerProgress = (g - 0.15) / 0.25;
+  }
+
+  // Header is over photo while headerProgress < 0.5 (or g < 0.275)
+  const headerOverPhoto = headerProgress < 0.5;
 
   return {
     progress,
-    easedProgress: eased,
+    geometry: Number(g.toFixed(4)),
     frameWidthPercent: Number(frameWidthPercent.toFixed(2)),
-    frameHeightVh: Number(frameHeightVh.toFixed(2)),
+    frameHeightPx: Number(frameHeightPx.toFixed(1)),
     frameRadiusPx: Number(frameRadiusPx.toFixed(2)),
     stage1Opacity: Number(stage1Opacity.toFixed(3)),
     stage2Opacity: Number(stage2Opacity.toFixed(3)),
     actionsOpacity: Number(actionsOpacity.toFixed(3)),
     scrollHintOpacity: Number(scrollHintOpacity.toFixed(3)),
     headerProgress: Number(headerProgress.toFixed(3)),
+    headerOverPhoto,
   };
 }

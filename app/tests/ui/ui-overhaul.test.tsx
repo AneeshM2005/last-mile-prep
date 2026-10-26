@@ -166,10 +166,10 @@ describe('UI and Design Overhaul Requirements', () => {
       const frameEl = screen.getByTestId('scroll-expand-frame');
       expect(frameEl).toBeInTheDocument();
 
-      // Starts full screen (100% width, 0px border radius, 100vh height)
+      // Starts full screen (100% width, 0px border radius, full viewport height)
       expect(frameEl.style.width).toBe('100%');
       expect(frameEl.style.borderRadius).toBe('0px');
-      expect(frameEl.style.height).toBe('100vh');
+      expect(frameEl.style.height).toBe(`${window.innerHeight}px`);
 
       // Stage 1 text group is visible directly on picture
       const stage1El = screen.getByTestId('hero-stage-1');
@@ -193,6 +193,49 @@ describe('UI and Design Overhaul Requirements', () => {
       const actionsEl = screen.getByTestId('hero-actions');
       expect(actionsEl).toBeInTheDocument();
       expect(actionsEl.style.opacity).toBe('0');
+    });
+
+    it('calculates total container height including shrink runway and hold distance', () => {
+      render(
+        <ScrollExpand
+          src="/images/landing-hero.jpeg"
+          scrollDistance={1.2}
+          actionsSlot={<button type="button">Get started</button>}
+        />
+      );
+
+      const containerEl = screen.getByTestId('scroll-expand-container');
+      expect(containerEl).toBeInTheDocument();
+      // Total = window.innerHeight + Math.round(shrinkDistPx) + Math.round(holdDistPx)
+      const expectedHeight = window.innerHeight + Math.round(window.innerHeight * 1.2) + Math.round(window.innerHeight * 0.6);
+      expect(containerEl.style.height).toBe(`${expectedHeight}px`);
+    });
+
+    it('switches to static layout when viewport is too short to fit frame and actions without clipping', () => {
+      // Mock very short window (e.g. 350px)
+      const originalHeight = window.innerHeight;
+      Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: 350 });
+
+      let headerReportedOverPhoto = true;
+      render(
+        <ScrollExpand
+          src="/images/landing-hero.jpeg"
+          title="The last stretch, one steady step at a time."
+          stage2Text="Strategy, timing and a calmer routine for the final weeks before CAT."
+          actionsSlot={<button type="button">Get started</button>}
+          headerProgressCallback={(overPhoto) => {
+            headerReportedOverPhoto = overPhoto;
+          }}
+        />
+      );
+
+      // In static layout, headline is rendered on the page canvas
+      expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+      // Header callback reports over paper (false)
+      expect(headerReportedOverPhoto).toBe(false);
+
+      // Restore height
+      Object.defineProperty(window, 'innerHeight', { writable: true, configurable: true, value: originalHeight });
     });
   });
 });
