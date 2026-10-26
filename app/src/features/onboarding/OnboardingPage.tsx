@@ -154,6 +154,14 @@ export function OnboardingPage(): React.ReactElement {
 
   return (
     <div className="min-h-screen bg-[var(--lm-bg)] flex flex-col justify-center items-center p-4 sm:p-6 lg:p-12">
+      {/* Skip to main content link for keyboard users */}
+      <a
+        href="#step-heading"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[var(--lm-ink)] text-white rounded-[var(--lm-radius-pill)] shadow-md"
+      >
+        Skip to main content
+      </a>
+
       {/* Container */}
       <div className="w-full max-w-[640px] flex flex-col gap-6">
         {/* Storage notice banner if unavailable */}

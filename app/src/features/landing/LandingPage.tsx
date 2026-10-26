@@ -25,6 +25,14 @@ export function LandingPage(): React.ReactElement {
 
   return (
     <div className="relative min-h-screen bg-[var(--lm-bg)] flex flex-col justify-between overflow-x-hidden selection:bg-[var(--lm-accent-soft)]">
+      {/* Skip to main content link for keyboard users */}
+      <a
+        href="#landing-main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[var(--lm-ink)] text-white rounded-[var(--lm-radius-pill)] shadow-md"
+      >
+        Skip to main content
+      </a>
+
       {/* Top bar with wordmark & prototype badge */}
       <header className="relative z-10 flex items-center justify-between px-6 py-5 max-w-[1280px] w-full mx-auto">
         <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-[var(--lm-radius-pill)] bg-[var(--lm-surface)] border border-[var(--lm-border)] shadow-sm">
@@ -36,7 +44,10 @@ export function LandingPage(): React.ReactElement {
       </header>
 
       {/* Hero section with backdrop & daylight paper panel */}
-      <main className="relative flex-1 flex flex-col lg:flex-row items-center justify-center p-4 sm:p-6 lg:p-12 max-w-[1280px] w-full mx-auto">
+      <main
+        id="landing-main"
+        className="relative flex-1 flex flex-col lg:flex-row items-center justify-center p-4 sm:p-6 lg:p-12 max-w-[1280px] w-full mx-auto"
+      >
         {/* Daylight Backdrop Background */}
         <div
           aria-hidden="true"
