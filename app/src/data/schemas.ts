@@ -4,6 +4,7 @@ import { z } from 'zod';
 export const ISOSchema = z.string().datetime({ offset: true });
 export const LocalDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 export const SectionSchema = z.enum(['VARC', 'LRDI', 'QA']);
+export type Section = z.infer<typeof SectionSchema>;
 
 // ── Profile ───────────────────────────────────────────────────
 export const ProfileSchema = z.object({
