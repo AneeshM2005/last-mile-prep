@@ -1,0 +1,507 @@
+{
+  "id": "00000000-0000-0000-0000-000000000099",
+  "label": "AIMCAT 2026 Sample Mock",
+  "date": "2026-10-15",
+  "sections": [
+    {
+      "section": "VARC",
+      "questionCount": 24,
+      "actualScore": 15,
+      "savedAt": "2026-10-15T10:40:00.000Z",
+      "records": [
+        {
+          "n": 1,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 2,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 3,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 4,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 5,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 6,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 7,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 8,
+          "type": "Para Summary",
+          "step1": "correct",
+          "step2": "slow",
+          "outcomeCode": "CORRECT_SLOW"
+        },
+        {
+          "n": 9,
+          "type": "Para Summary",
+          "step1": "correct",
+          "step2": "slow",
+          "outcomeCode": "CORRECT_SLOW"
+        },
+        {
+          "n": 10,
+          "type": "Para Jumble",
+          "step1": "wrong",
+          "step2": "can_solve",
+          "outcomeCode": "WRONG_CAN"
+        },
+        {
+          "n": 11,
+          "type": "Para Jumble",
+          "step1": "wrong",
+          "step2": "can_solve",
+          "outcomeCode": "WRONG_CAN"
+        },
+        {
+          "n": 12,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 13,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 14,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 15,
+          "type": "Reading Comprehension",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 16,
+          "type": "Odd Sentence Out",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 17,
+          "type": "Odd Sentence Out",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 18,
+          "type": "Odd Sentence Out",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 19,
+          "type": "Odd Sentence Out",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 20,
+          "type": "Reading Comprehension",
+          "step1": "wrong",
+          "step2": "cannot_solve",
+          "outcomeCode": "WRONG_CANNOT"
+        },
+        {
+          "n": 21,
+          "type": "Reading Comprehension",
+          "step1": "wrong",
+          "step2": "cannot_solve",
+          "outcomeCode": "WRONG_CANNOT"
+        },
+        {
+          "n": 22,
+          "type": "Reading Comprehension",
+          "step1": "wrong",
+          "step2": "cannot_solve",
+          "outcomeCode": "WRONG_CANNOT"
+        },
+        {
+          "n": 23,
+          "type": "Reading Comprehension",
+          "step1": "wrong",
+          "step2": "cannot_solve",
+          "outcomeCode": "WRONG_CANNOT"
+        },
+        {
+          "n": 24,
+          "type": "Reading Comprehension",
+          "step1": "wrong",
+          "step2": "cannot_solve",
+          "outcomeCode": "WRONG_CANNOT"
+        }
+      ]
+    },
+    {
+      "section": "LRDI",
+      "questionCount": 22,
+      "actualScore": 12,
+      "savedAt": "2026-10-15T11:25:00.000Z",
+      "records": [
+        {
+          "n": 1,
+          "type": "Data Interpretation - Tables",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 2,
+          "type": "Data Interpretation - Tables",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 3,
+          "type": "Data Interpretation - Tables",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 4,
+          "type": "Data Interpretation - Tables",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 5,
+          "type": "Seating Arrangement",
+          "step1": "correct",
+          "step2": "slow",
+          "outcomeCode": "CORRECT_SLOW"
+        },
+        {
+          "n": 6,
+          "type": "Seating Arrangement",
+          "step1": "correct",
+          "step2": "slow",
+          "outcomeCode": "CORRECT_SLOW"
+        },
+        {
+          "n": 7,
+          "type": "Seating Arrangement",
+          "step1": "correct",
+          "step2": "slow",
+          "outcomeCode": "CORRECT_SLOW"
+        },
+        {
+          "n": 8,
+          "type": "Seating Arrangement",
+          "step1": "correct",
+          "step2": "slow",
+          "outcomeCode": "CORRECT_SLOW"
+        },
+        {
+          "n": 9,
+          "type": "Seating Arrangement",
+          "step1": "correct",
+          "step2": "slow",
+          "outcomeCode": "CORRECT_SLOW"
+        },
+        {
+          "n": 10,
+          "type": "Data Interpretation - Charts",
+          "step1": "left",
+          "step2": "can_solve",
+          "outcomeCode": "LEFT_CAN"
+        },
+        {
+          "n": 11,
+          "type": "Data Interpretation - Charts",
+          "step1": "left",
+          "step2": "can_solve",
+          "outcomeCode": "LEFT_CAN"
+        },
+        {
+          "n": 12,
+          "type": "Data Interpretation - Charts",
+          "step1": "left",
+          "step2": "can_solve",
+          "outcomeCode": "LEFT_CAN"
+        },
+        {
+          "n": 13,
+          "type": "Data Interpretation - Charts",
+          "step1": "left",
+          "step2": "can_solve",
+          "outcomeCode": "LEFT_CAN"
+        },
+        {
+          "n": 14,
+          "type": "Games and Tournaments",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 15,
+          "type": "Games and Tournaments",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 16,
+          "type": "Games and Tournaments",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 17,
+          "type": "Games and Tournaments",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 18,
+          "type": "Games and Tournaments",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 19,
+          "type": "Data Interpretation - Tables",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 20,
+          "type": "Data Interpretation - Tables",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 21,
+          "type": "Data Interpretation - Tables",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 22,
+          "type": "Data Interpretation - Tables",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        }
+      ]
+    },
+    {
+      "section": "QA",
+      "questionCount": 22,
+      "actualScore": 6,
+      "savedAt": "2026-10-15T12:10:00.000Z",
+      "records": [
+        {
+          "n": 1,
+          "type": "Arithmetic",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 2,
+          "type": "Arithmetic",
+          "step1": "correct",
+          "step2": "fast",
+          "outcomeCode": "CORRECT_FAST"
+        },
+        {
+          "n": 3,
+          "type": "Algebra",
+          "step1": "correct",
+          "step2": "slow",
+          "outcomeCode": "CORRECT_SLOW"
+        },
+        {
+          "n": 4,
+          "type": "Algebra",
+          "step1": "correct",
+          "step2": "slow",
+          "outcomeCode": "CORRECT_SLOW"
+        },
+        {
+          "n": 5,
+          "type": "Arithmetic",
+          "step1": "wrong",
+          "step2": "can_solve",
+          "outcomeCode": "WRONG_CAN"
+        },
+        {
+          "n": 6,
+          "type": "Geometry",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 7,
+          "type": "Geometry",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 8,
+          "type": "Geometry",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 9,
+          "type": "Geometry",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 10,
+          "type": "Geometry",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 11,
+          "type": "Geometry",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 12,
+          "type": "Geometry",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 13,
+          "type": "Geometry",
+          "step1": "correct",
+          "step2": "guessed",
+          "outcomeCode": "CORRECT_GUESSED"
+        },
+        {
+          "n": 14,
+          "type": "Number System",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 15,
+          "type": "Number System",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 16,
+          "type": "Number System",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 17,
+          "type": "Number System",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 18,
+          "type": "Number System",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 19,
+          "type": "Number System",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 20,
+          "type": "Number System",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 21,
+          "type": "Number System",
+          "step1": "left",
+          "step2": "cannot_solve",
+          "outcomeCode": "LEFT_CANNOT"
+        },
+        {
+          "n": 22,
+          "type": "Modern Math",
+          "step1": "wrong",
+          "step2": "cannot_solve",
+          "outcomeCode": "WRONG_CANNOT"
+        }
+      ]
+    }
+  ]
+}

@@ -76,9 +76,19 @@ Milestone order: All tiers 1, 2, 3 (tasks P1-01 to P1-21)
 
 ## P1-09: Question selection rounds, workspace, reflection and summary
 - Status: DONE
-- Commit: 2865265
+- Commit: 2db353a
 - Files changed: app/public/content/rounds.json, app/public/content/questions.json, app/src/data/configSchemas.ts, app/src/domain/roundSummary.ts, app/src/features/rounds/RoundsPage.tsx, app/tests/domain/roundSummary.test.ts, app/tests/features/rounds.test.tsx
 - Commands: typecheck pass | lint pass | test pass (49 tests) | build pass | validate:content pass
 - Decisions I made without asking: Appended 10 original QA round questions (rq-1..rq-10) to questions.json and created 2 round definitions in rounds.json with 300s duration and target solves 2-3. Implemented 5-tile non-linear jump grid, quiet timer, 3-step skippable reflection, and verbatim alignment sentence formatting.
 - Conflicts or proposed document changes: None
 - Placeholder or simulated behaviour: Sample questions marked verified: false with memory-based provenance per PRD.
+
+## P1-10 & P1-11: Mock analysis, grading domain, worked example, and summary
+- Status: DONE
+- Commit: ae0bc79
+- Files changed: app/public/content/sampleMock.json, app/src/domain/mockAnalysis.ts, app/src/features/mock/MockPage.tsx, app/tests/domain/mockAnalysis.test.ts, app/tests/features/mock.test.tsx
+- Commands: typecheck pass | lint pass | test pass (55 tests) | build pass | validate:content pass
+- Decisions I made without asking: Built 9 outcome classification mappings (Step 1 + Step 2 -> OutcomeCode -> Grade A/B/C/D), potential score calculation 3 * (A + B), leakage calculation, and verbatim BR-14 sentence. Created sampleMock.json faithfully reproducing BRD worked example (VARC 33, LRDI 39, QA 15, total 87). Implemented start screen, section choice, entry cards, dynamic GradeChip, BarRows, focus list, and reflection prompt.
+- Conflicts or proposed document changes: None
+- Placeholder or simulated behaviour: None (fully functional mock recording and analysis with sample mock loader).
+
