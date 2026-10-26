@@ -8,11 +8,10 @@
  * - All 17 colleges configured with safe slugs and valid display names
  */
 
-import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { CountdownCard } from '../../src/features/home/CountdownCard';
-import { getAllColleges, findCollege, DEFAULT_COLLEGE } from '../../src/domain/colleges';
+import { getAllColleges, findCollege } from '../../src/domain/colleges';
 
 describe('Dream Colleges configuration', () => {
   it('contains exactly 17 dream colleges with valid properties', () => {
