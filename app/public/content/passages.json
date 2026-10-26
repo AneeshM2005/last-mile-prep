@@ -1,0 +1,579 @@
+{
+  "passages": [
+    {
+      "id": "p-1",
+      "title": "Cognitive Architecture and Bounded Rationality",
+      "text": "The classical economic paradigm assumed agents possessed omniscient computational faculties, calculating optimal trajectories through intricate probabilistic terrains. Herbert Simon disrupted this idealized architecture by articulating the principle of bounded rationality. Human agents operate under intractable computational constraints, incomplete information landscapes, and severe temporal restrictions. Consequently, deliberation rarely aims for global optimization; rather, decision makers rely on satisficing heuristics that secure acceptable thresholds of utility. These heuristic adaptations are not pathological imperfections, but rather ecologically rational responses to pervasive environmental uncertainty. When deliberative friction exceeds expected marginal payoff, fast algorithmic approximations preserve vital cognitive bandwidth for novel existential dilemmas.",
+      "source": "The Last-Mile RC Series: Foundations of Decision Theory",
+      "licence": "Original text created for Last-Mile CAT prototype. CC BY-SA 4.0.",
+      "estReadMinutes": 3,
+      "glossary": [
+        {
+          "word": "omniscient",
+          "meaning": "Possessing universal or complete knowledge",
+          "synonym": "all-knowing",
+          "antonym": "uninformed",
+          "usage": "The classical model assumed an omniscient observer with perfect market foresight."
+        },
+        {
+          "word": "paradigm",
+          "meaning": "A typical example or pattern; an overarching conceptual framework",
+          "synonym": "framework",
+          "antonym": "anomaly",
+          "usage": "A new empirical paradigm emerged after classical mechanics faced quantum limits."
+        },
+        {
+          "word": "intractable",
+          "meaning": "Extremely difficult to solve, manage, or manipulate",
+          "synonym": "unmanageable",
+          "antonym": "tractable",
+          "usage": "The optimization problem posed intractable computational hurdles for current computers."
+        },
+        {
+          "word": "satisficing",
+          "meaning": "Choosing an alternative that meets acceptable minimum criteria rather than optimizing",
+          "synonym": "sufficing",
+          "antonym": "optimizing",
+          "usage": "Satisficing behaviour allows rapid decision making in fluctuating market conditions."
+        },
+        {
+          "word": "heuristic",
+          "meaning": "A practical rule or mental shortcut used to solve problems rapidly",
+          "synonym": "rule of thumb",
+          "antonym": "exhaustive algorithm",
+          "usage": "Heuristics allow individuals to navigate complex environments efficiently."
+        },
+        {
+          "word": "pathological",
+          "meaning": "Relating to or manifesting disease; extraordinarily abnormal or dysfunctional",
+          "synonym": "abnormal",
+          "antonym": "healthy",
+          "usage": "The cognitive biases were recognized as functional shortcuts rather than pathological flaws."
+        },
+        {
+          "word": "pervasive",
+          "meaning": "Spreading widely throughout an area or a group of people",
+          "synonym": "ubiquitous",
+          "antonym": "rare",
+          "usage": "Pervasive uncertainty characterized early explorations of quantum mechanics."
+        },
+        {
+          "word": "deliberative",
+          "meaning": "Relating to or characterized by careful consideration or discussion",
+          "synonym": "reflective",
+          "antonym": "impulsive",
+          "usage": "Deliberative reasoning requires conscious cognitive effort and sustained attention."
+        },
+        {
+          "word": "friction",
+          "meaning": "Resistance encountered when moving or processing information",
+          "synonym": "impediment",
+          "antonym": "fluidity",
+          "usage": "Excessive computational friction discourages exhaustive numerical search."
+        },
+        {
+          "word": "bandwidth",
+          "meaning": "The capacity or resources available to handle information or tasks",
+          "synonym": "capacity",
+          "antonym": "limitation",
+          "usage": "Stress depleted the executive bandwidth necessary for complex logical calculations."
+        },
+        {
+          "word": "existential",
+          "meaning": "Relating to human existence or fundamental survival",
+          "synonym": "vital",
+          "antonym": "trivial",
+          "usage": "Early hunter-gatherers encountered existential threats requiring immediate reflex responses."
+        },
+        {
+          "word": "utility",
+          "meaning": "The state of being useful, profitable, or providing satisfaction",
+          "synonym": "benefit",
+          "antonym": "detriment",
+          "usage": "Economic consumers select bundles that balance expected cost against personal utility."
+        },
+        {
+          "word": "algorithmic",
+          "meaning": "Following a systematic, step-by-step procedure for calculation",
+          "synonym": "procedural",
+          "antonym": "random",
+          "usage": "Algorithmic sorting organizes massive datasets into accessible formats."
+        },
+        {
+          "word": "probabilistic",
+          "meaning": "Based on or involving the theory of probability",
+          "synonym": "stochastic",
+          "antonym": "deterministic",
+          "usage": "The meteorologist created probabilistic forecasts incorporating fluctuating wind patterns."
+        },
+        {
+          "word": "faculties",
+          "meaning": "Inherent mental or physical capabilities",
+          "synonym": "abilities",
+          "antonym": "deficits",
+          "usage": "Advancing years did not diminish the philosopher's sharp analytical faculties."
+        }
+      ]
+    },
+    {
+      "id": "p-2",
+      "title": "Evolutionary Anthropology and Cultural Transmission",
+      "text": "Unlike non-human primates whose behavioural repertoires remain largely invariant across successive generations, human populations exhibit cumulative cultural evolution, commonly termed the ratchet effect. Cultural modifications are preserved with high fidelity and iteratively augmented over chronological epochs. This cumulative inheritance enables technological and institutional complexity that eclipses the cognitive capacity of any solitary polymath. Crucial to this transmission is our acute propensity for over-imitation: human apprentices diligently replicate pedagogical idiosyncrasies and arbitrary sub-steps that appear causally opaque. Where utilitarian logic would discard seemingly extraneous routines, cultural conformity preserves tacit wisdom accumulated over millennia of trial and error.",
+      "source": "The Last-Mile RC Series: Cultural Anthropology and Evolutionary Dynamics",
+      "licence": "Original text created for Last-Mile CAT prototype. CC BY-SA 4.0.",
+      "estReadMinutes": 3,
+      "glossary": [
+        {
+          "word": "invariant",
+          "meaning": "Never changing; constant over time",
+          "synonym": "immutable",
+          "antonym": "variable",
+          "usage": "Fundamental physical constants remain invariant throughout the observed universe."
+        },
+        {
+          "word": "repertoires",
+          "meaning": "The complete collection of skills, behaviours, or tools available to an entity",
+          "synonym": "stocks",
+          "antonym": "voids",
+          "usage": "Skilled artisans command extensive repertoires of joinery techniques."
+        },
+        {
+          "word": "cumulative",
+          "meaning": "Increasing or growing by successive additions",
+          "synonym": "aggregating",
+          "antonym": "diminishing",
+          "usage": "Scientific progress stems from the cumulative contributions of countless researchers."
+        },
+        {
+          "word": "fidelity",
+          "meaning": "The quality of being faithful or exact in replication",
+          "synonym": "accuracy",
+          "antonym": "distortion",
+          "usage": "Digital recording guarantees high fidelity reproduction of acoustic signals."
+        },
+        {
+          "word": "iteratively",
+          "meaning": "Doing repeatedly with incremental improvements in each cycle",
+          "synonym": "incrementally",
+          "antonym": "singularly",
+          "usage": "Software engineers iteratively refine code architectures to elevate performance."
+        },
+        {
+          "word": "epochs",
+          "meaning": "Particular periods of time in history or a person's life marked by notable events",
+          "synonym": "eras",
+          "antonym": "moments",
+          "usage": "Geological epochs capture profound shifts in atmospheric composition and species diversity."
+        },
+        {
+          "word": "eclipses",
+          "meaning": "Surpasses in importance, brilliance, or scale",
+          "synonym": "overshadows",
+          "antonym": "illuminates",
+          "usage": "Modern computing speed eclipses the calculating capability of historical room-sized machines."
+        },
+        {
+          "word": "polymath",
+          "meaning": "A person of wide-ranging knowledge or learning",
+          "synonym": "renaissance person",
+          "antonym": "specialist",
+          "usage": "Da Vinci epitomized the polymath whose inquiries spanned anatomy, flight, and optics."
+        },
+        {
+          "word": "propensity",
+          "meaning": "A natural inclination or tendency to behave in a particular way",
+          "synonym": "predilection",
+          "antonym": "aversion",
+          "usage": "Children exhibit a remarkable propensity for acquiring spoken languages without formal drills."
+        },
+        {
+          "word": "pedagogical",
+          "meaning": "Relating to the theory and practice of education and teaching",
+          "synonym": "didactic",
+          "antonym": "uninstructive",
+          "usage": "Modern pedagogical approaches encourage inquiry-based problem solving."
+        },
+        {
+          "word": "idiosyncrasies",
+          "meaning": "Modes of behaviour or ways of thought peculiar to an individual or group",
+          "synonym": "peculiarities",
+          "antonym": "conformities",
+          "usage": "The mentor's idiosyncratic gestures were faithfully mirrored by the novice apprentices."
+        },
+        {
+          "word": "opaque",
+          "meaning": "Not transparent; hard or impossible to see through or understand",
+          "synonym": "impenetrable",
+          "antonym": "lucid",
+          "usage": "The underlying algorithms in proprietary software remained deliberately opaque."
+        },
+        {
+          "word": "utilitarian",
+          "meaning": "Designed to be useful or practical rather than attractive or ceremonial",
+          "synonym": "functional",
+          "antonym": "aesthetic",
+          "usage": "Modern public transit architectures prioritize utilitarian efficiency over ornamentation."
+        },
+        {
+          "word": "extraneous",
+          "meaning": "Irrelevant or unrelated to the subject being dealt with",
+          "synonym": "superfluous",
+          "antonym": "essential",
+          "usage": "A sharp editor prunes extraneous clauses to enhance prose clarity."
+        },
+        {
+          "word": "tacit",
+          "meaning": "Understood or implied without being stated directly",
+          "synonym": "implicit",
+          "antonym": "explicit",
+          "usage": "Master craftspeople possess tacit knowledge that cannot be easily articulated in textbooks."
+        }
+      ]
+    },
+    {
+      "id": "p-3",
+      "title": "Epistemology and the Philosophy of Scientific Discovery",
+      "text": "The popular conception of science presents a sterile progression of steady empirical accumulation. In this sanitized narrative, observations accumulate like bricks until monumental theoretical edifices crystallize. Thomas Kuhn subverted this tranquil teleology by demonstrating that scientific history proceeds through punctuated paradigm shifts. During normal science, researchers solve localized puzzles within an entrenched conceptual rubric, actively ignoring empirical anomalies. However, as recalcitrant discrepancies proliferate, the reigning consensus enters an acute crisis. What follows is not a gradual synthesis, but a conceptual schism where an emergent theoretical matrix reinterprets the observational tapestry itself, reshaping our fundamental ontology.",
+      "source": "The Last-Mile RC Series: Philosophy of Science & Epistemic Evolution",
+      "licence": "Original text created for Last-Mile CAT prototype. CC BY-SA 4.0.",
+      "estReadMinutes": 3,
+      "glossary": [
+        {
+          "word": "epistemology",
+          "meaning": "The theory of knowledge, especially regarding its methods, validity, and scope",
+          "synonym": "theory of knowledge",
+          "antonym": "dogmatism",
+          "usage": "Epistemology interrogates the criteria that separate warranted conviction from mere belief."
+        },
+        {
+          "word": "empirical",
+          "meaning": "Based on, concerned with, or verifiable by observation or experience rather than theory",
+          "synonym": "observational",
+          "antonym": "theoretical",
+          "usage": "The hypothesis gained credibility after rigorous empirical experiments verified the outcome."
+        },
+        {
+          "word": "edifices",
+          "meaning": "Complex systems of belief or organizations; large, imposing structures",
+          "synonym": "structures",
+          "antonym": "ruins",
+          "usage": "Theoretical edifices that dominated twentieth-century physics required constant revision."
+        },
+        {
+          "word": "subverted",
+          "meaning": "Undermined the power and authority of an established system or institution",
+          "synonym": "upended",
+          "antonym": "fortified",
+          "usage": "Recent discoveries in genetics subverted long-standing evolutionary assumptions."
+        },
+        {
+          "word": "teleology",
+          "meaning": "The explanation of phenomena by the purpose they serve rather than by postulated causes",
+          "synonym": "purposefulness",
+          "antonym": "randomness",
+          "usage": "Darwinian biology severed nature from teleology, attributing form to natural selection."
+        },
+        {
+          "word": "punctuated",
+          "meaning": "Interrupted at intervals; characterized by sudden episodic changes",
+          "synonym": "intermittent",
+          "antonym": "continuous",
+          "usage": "Evolutionary history exhibits punctuated equilibria rather than purely uniform gradualism."
+        },
+        {
+          "word": "entrenched",
+          "meaning": "Firmly established and difficult or unlikely to change",
+          "synonym": "ingrained",
+          "antonym": "transient",
+          "usage": "Entrenched institutional habits resisted modernization across multiple departments."
+        },
+        {
+          "word": "rubric",
+          "meaning": "An authoritative category, established guideline, or conceptual rule",
+          "synonym": "criterion",
+          "antonym": "deviation",
+          "usage": "All experimental proposals were evaluated under a rigorous peer-review rubric."
+        },
+        {
+          "word": "anomalies",
+          "meaning": "Things that deviate from what is standard, normal, or expected",
+          "synonym": "irregularities",
+          "antonym": "conformities",
+          "usage": "Astronomers detected spectral anomalies that hinted at a distant orbiting exoplanet."
+        },
+        {
+          "word": "recalcitrant",
+          "meaning": "Stubbornly resisting authority, control, or conventional explanation",
+          "synonym": "unyielding",
+          "antonym": "compliant",
+          "usage": "The recalcitrant dataset refused to fit inside classical thermodynamic formulas."
+        },
+        {
+          "word": "proliferate",
+          "meaning": "Increase rapidly in numbers; multiply",
+          "synonym": "burgeon",
+          "antonym": "dwindle",
+          "usage": "Digital distribution channels proliferate as broadband connectivity deepens."
+        },
+        {
+          "word": "consensus",
+          "meaning": "A general agreement among a group or community",
+          "synonym": "accord",
+          "antonym": "dissension",
+          "usage": "Scientific consensus confirmed the anthropogenic origins of atmospheric warming."
+        },
+        {
+          "word": "schism",
+          "meaning": "A split or division between strongly opposed sections or parties",
+          "synonym": "rupture",
+          "antonym": "union",
+          "usage": "A philosophical schism separated advocates of empiricism from pure rationalists."
+        },
+        {
+          "word": "tapestry",
+          "meaning": "An intricate or complex combination of things or ideas",
+          "synonym": "mosaic",
+          "antonym": "monolith",
+          "usage": "The author wove cultural narratives into a rich historical tapestry."
+        },
+        {
+          "word": "ontology",
+          "meaning": "The branch of metaphysics dealing with the nature of being and reality",
+          "synonym": "metaphysics of being",
+          "antonym": "epistemology",
+          "usage": "Quantum field theory proposes an ontology based on fluctuating wave-fields rather than inert particles."
+        }
+      ]
+    },
+    {
+      "id": "p-4",
+      "title": "Urban Agglomeration and Economic Geography",
+      "text": "For over a century, technological evangelists prophesied that advances in telecommunications would prompt the dissolution of physical metropolises. If communication costs plummet toward zero, the spatial proximity of enterprise should become entirely obsolete. Yet contemporary economic geography reveals the opposite phenomenon: intellectual capital exhibits intense spatial concentration. Dense urban clusters foster knowledge spillovers through serendipitous face-to-face interaction, shared infrastructural overheads, and thick labor pools. While codifiable data transmits instantaneously across continents, nuanced tacit insight remains stubbornly geographic. Cities act not merely as utilitarian dwellings, but as collaborative reactors where recombinant ingenuity flourishes.",
+      "source": "The Last-Mile RC Series: Spatial Economics and Agglomeration Theory",
+      "licence": "Original text created for Last-Mile CAT prototype. CC BY-SA 4.0.",
+      "estReadMinutes": 3,
+      "glossary": [
+        {
+          "word": "agglomeration",
+          "meaning": "A mass or collection of things; clustering of economic activities",
+          "synonym": "concentration",
+          "antonym": "dispersion",
+          "usage": "Agglomeration economies explain why technology firms cluster in specialized research corridors."
+        },
+        {
+          "word": "prophesied",
+          "meaning": "Predicted or foretold that something would happen in the future",
+          "synonym": "forecast",
+          "antonym": "retracted",
+          "usage": "Pundits prophesied the demise of printed books following the advent of digital screens."
+        },
+        {
+          "word": "dissolution",
+          "meaning": "The closing down, dismissal, or gradual disintegration of an assembly or entity",
+          "synonym": "disintegration",
+          "antonym": "formation",
+          "usage": "The dissolution of trade barriers stimulated bilateral economic cooperation."
+        },
+        {
+          "word": "proximity",
+          "meaning": "Nearness in space, time, or relationship",
+          "synonym": "vicinity",
+          "antonym": "remoteness",
+          "usage": "Proximity to transit terminals significantly boosts residential property values."
+        },
+        {
+          "word": "obsolete",
+          "meaning": "No longer produced or used; out of date",
+          "synonym": "archaic",
+          "antonym": "contemporary",
+          "usage": "Punched cards became obsolete when magnetic storage devices entered commercial service."
+        },
+        {
+          "word": "spillovers",
+          "meaning": "Secondary effects or incidental benefits that spill into related areas",
+          "synonym": "externalities",
+          "antonym": "containments",
+          "usage": "University laboratories generated valuable technology spillovers that nurtured local startups."
+        },
+        {
+          "word": "serendipitous",
+          "meaning": "Occurring or discovered by chance in a happy or beneficial way",
+          "synonym": "fortuitous",
+          "antonym": "premeditated",
+          "usage": "A serendipitous meeting at a seminar sparked a decade-long scientific partnership."
+        },
+        {
+          "word": "infrastructural",
+          "meaning": "Relating to the basic physical and organizational structures needed for operation",
+          "synonym": "foundational",
+          "antonym": "superficial",
+          "usage": "Developing economies require substantial infrastructural investments in energy and roads."
+        },
+        {
+          "word": "overheads",
+          "meaning": "Ongoing operational expenses not directly attributable to a single product",
+          "synonym": "operating expenses",
+          "antonym": "direct costs",
+          "usage": "Shared laboratory facilities lowered overheads for nascent biotechnology ventures."
+        },
+        {
+          "word": "codifiable",
+          "meaning": "Capable of being arranged into a systematic code or formal explicit rules",
+          "synonym": "formalizable",
+          "antonym": "ineffable",
+          "usage": "Tax regulations are readily codifiable into structured algorithmic software."
+        },
+        {
+          "word": "nuanced",
+          "meaning": "Characterized by subtle distinctions in meaning or variation",
+          "synonym": "subtle",
+          "antonym": "blunt",
+          "usage": "Diplomatic communiques require nuanced phrasing to avoid misunderstanding."
+        },
+        {
+          "word": "geographic",
+          "meaning": "Based on or determined by regional location and spatial geography",
+          "synonym": "spatial",
+          "antonym": "aspatial",
+          "usage": "Despite virtual platforms, investment syndicates maintain pronounced geographic loyalties."
+        },
+        {
+          "word": "collaborative",
+          "meaning": "Produced or conducted by two or more parties working together",
+          "synonym": "cooperative",
+          "antonym": "adversarial",
+          "usage": "Collaborative research teams solve multidisciplinary problems faster than isolated scholars."
+        },
+        {
+          "word": "recombinant",
+          "meaning": "Relating to or exhibiting new combinations of existing elements",
+          "synonym": "composite",
+          "antonym": "original",
+          "usage": "Recombinant innovation combines established technologies in novel commercial frameworks."
+        },
+        {
+          "word": "ingenuity",
+          "meaning": "The quality of being clever, original, and inventive",
+          "synonym": "inventiveness",
+          "antonym": "clumsiness",
+          "usage": "Human ingenuity converted arid river basins into fertile agricultural settlements."
+        }
+      ]
+    },
+    {
+      "id": "p-5",
+      "title": "Information Ecology and Attentional Economics",
+      "text": "In the emerging information ecology, the historic bottleneck of media distribution has inverted. Throughout early industrialization, scarce information necessitated expensive transmission mechanisms. In contemporary networks, hyperabundant data floods cognitive channels continuously. As Herbert Simon memorably observed, a wealth of information creates a poverty of attention. Because human attentional capacity remains strictly finite, algorithmic platforms weaponize perceptual salience to capture temporal real estate. Content design gravitates toward emotional resonance and sensational brevity, degrading long-form analytical reflection. Preserving intellectual sovereignty requires conscious epistemological hygiene: deliberative filtering of algorithmic stimuli to insulate critical thinking from hyperactive distractions.",
+      "source": "The Last-Mile RC Series: Media Ecology and Cognitive Autonomy",
+      "licence": "Original text created for Last-Mile CAT prototype. CC BY-SA 4.0.",
+      "estReadMinutes": 3,
+      "glossary": [
+        {
+          "word": "inverted",
+          "meaning": "Turned upside down or arranged in opposite order",
+          "synonym": "reversed",
+          "antonym": "upright",
+          "usage": "The traditional buyer-seller balance was inverted when consumers gained global pricing data."
+        },
+        {
+          "word": "bottleneck",
+          "meaning": "A point of congestion or obstruction in an entire system",
+          "synonym": "constriction",
+          "antonym": "open passage",
+          "usage": "Semiconductor shortages created a supply-chain bottleneck that delayed vehicle assembly."
+        },
+        {
+          "word": "hyperabundant",
+          "meaning": "Existing in enormous, excessive quantities",
+          "synonym": "profuse",
+          "antonym": "scarce",
+          "usage": "In a hyperabundant media sphere, finding reliable verification becomes a central skill."
+        },
+        {
+          "word": "finite",
+          "meaning": "Having limits or bounds; not infinite",
+          "synonym": "bounded",
+          "antonym": "infinite",
+          "usage": "Every household manages finite monthly budgets across competing domestic priorities."
+        },
+        {
+          "word": "perceptual",
+          "meaning": "Relating to the ability to interpret or become aware of something through the senses",
+          "synonym": "sensory",
+          "antonym": "intellectual",
+          "usage": "Perceptual acuity allows experienced pilots to detect subtle turbulence patterns early."
+        },
+        {
+          "word": "salience",
+          "meaning": "The quality of being particularly noticeable or important; prominence",
+          "synonym": "prominence",
+          "antonym": "inconspicuousness",
+          "usage": "The brightly colored badge increased visual salience against the muted background."
+        },
+        {
+          "word": "gravitates",
+          "meaning": "Moves toward or is strongly attracted to something",
+          "synonym": "inclines",
+          "antonym": "repels",
+          "usage": "Public debate frequently gravitates toward polarizing simplifications during campaigns."
+        },
+        {
+          "word": "resonance",
+          "meaning": "The quality of evoking enduring emotions or sympathetic response",
+          "synonym": "evocativeness",
+          "antonym": "indifference",
+          "usage": "The speech possessed profound moral resonance that moved audiences nationwide."
+        },
+        {
+          "word": "brevity",
+          "meaning": "Concise and exact use of words in writing or speech; shortness of time",
+          "synonym": "conciseness",
+          "antonym": "verbosity",
+          "usage": "The executive appreciated brevity in project status memoranda."
+        },
+        {
+          "word": "sovereignty",
+          "meaning": "Supreme power, autonomy, or self-governing authority",
+          "synonym": "autonomy",
+          "antonym": "subjugation",
+          "usage": "Personal intellectual sovereignty requires deliberate boundaries around screen usage."
+        },
+        {
+          "word": "hygiene",
+          "meaning": "Practices conducive to maintaining health and sound functioning",
+          "synonym": "cleanliness",
+          "antonym": "contamination",
+          "usage": "Strict mental hygiene protects analytical rigor from unsubstantiated rumors."
+        },
+        {
+          "word": "stimuli",
+          "meaning": "Things that evoke a specific functional reaction in an organ or tissue",
+          "synonym": "triggers",
+          "antonym": "sedatives",
+          "usage": "Visual stimuli bombard shoppers entering sensory-rich commercial arcades."
+        },
+        {
+          "word": "insulate",
+          "meaning": "Protect from unpleasant influences, heat, or noise",
+          "synonym": "shield",
+          "antonym": "expose",
+          "usage": "Double-glazed windows insulate urban study rooms against street traffic clamor."
+        },
+        {
+          "word": "hyperactive",
+          "meaning": "Abnormally or extremely active",
+          "synonym": "overactive",
+          "antonym": "sedate",
+          "usage": "Hyperactive market speculation led to abrupt pricing fluctuations in equities."
+        },
+        {
+          "word": "ecology",
+          "meaning": "The complex relationships between entities and their surrounding environment",
+          "synonym": "ecosystem",
+          "antonym": "isolation",
+          "usage": "The modern digital ecology blends social commentary, scholarly archives, and advertising."
+        }
+      ]
+    }
+  ]
+}

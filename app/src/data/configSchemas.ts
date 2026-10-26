@@ -176,6 +176,8 @@ export const GlossaryWordSchema = z.object({
   antonym: z.string(),
   usage: z.string(),
 });
+export type GlossaryWord = z.infer<typeof GlossaryWordSchema>;
+
 export const PassageSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -185,5 +187,7 @@ export const PassageSchema = z.object({
   estReadMinutes: z.number(),
   glossary: z.array(GlossaryWordSchema).min(15),
 });
+export type Passage = z.infer<typeof PassageSchema>;
+
 export const PassagesPackSchema = z.object({ passages: z.array(PassageSchema) });
 export type PassagesPack = z.infer<typeof PassagesPackSchema>;

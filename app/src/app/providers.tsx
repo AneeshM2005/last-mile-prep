@@ -2,14 +2,14 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { loadConfig, getConfig, getConfigErrors, type LoadedConfig, type ConfigError } from '../data/configLoader';
 import { storageAvailable } from '../data/storage';
 
-interface AppContextValue {
+export interface AppContextValue {
   config: LoadedConfig | null;
   configErrors: ConfigError[];
   loading: boolean;
   storageAvailable: boolean;
 }
 
-const AppContext = createContext<AppContextValue>({
+export const AppContext = createContext<AppContextValue>({
   config: null,
   configErrors: [],
   loading: true,

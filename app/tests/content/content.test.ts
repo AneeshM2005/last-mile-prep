@@ -17,6 +17,7 @@ import {
   SwotConfigSchema,
   TasksConfigSchema,
   CopyConfigSchema,
+  PassagesPackSchema,
 } from '@/data/configSchemas';
 
 const PUBLIC = join(process.cwd(), 'public');
@@ -134,6 +135,18 @@ describe('Content packs parse correctly', () => {
     expect(result.success).toBe(true);
     if (result.success) expect(result.data.schools.length).toBeGreaterThanOrEqual(4);
   });
+
+  it('passages.json is valid and has at least 5 passages with >=15 glossary words', () => {
+    const data = readJson(join(PUBLIC, 'content/passages.json'));
+    const result = PassagesPackSchema.safeParse(data);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.passages.length).toBeGreaterThanOrEqual(5);
+      for (const p of result.data.passages) {
+        expect(p.glossary.length).toBeGreaterThanOrEqual(15);
+      }
+    }
+  });
 });
 
 // ── Deliberately broken fixture ───────────────────────────────
@@ -178,6 +191,15 @@ describe('Copy lint: no forbidden phrases', () => {
   it('schools.json contains no forbidden phrases', () => {
     const data = readJson(join(PUBLIC, 'content/schools.json'));
     const violations = deepScanObject(data, 'schools.json');
+    expect(violations).toHaveLength(0);
+  });
+
+  it('passages.json contains no forbidden phrases', () => {
+    const data = readJson(join(PUBLIC, 'content/passages.json'));
+    const violations = deepScanObject(data, 'passages.json');
+    if (violations.length > 0) {
+      console.error('Forbidden phrases found in passages.json:', violations);
+    }
     expect(violations).toHaveLength(0);
   });
 });
