@@ -14,12 +14,15 @@ import { Badge } from '../../ui/Badge';
 import { Modal } from '../../ui/Modal';
 import { Banner } from '../../ui/Banner';
 import { EmptyState } from '../../ui/EmptyState';
+import { EvidenceLine } from '../../ui/EvidenceLine';
 import { useToast } from '../../ui/Toast';
 import { useStore } from '../../data/store';
 import { resetApp } from '../../data/reset';
 import { appClock } from '../../domain/appClock';
 import { logEvent } from '../../data/eventLog';
 import { getConfig } from '../../data/configLoader';
+import { computeBaselineScoring } from '../../domain/baselineScoring';
+import { buildSwotProfile } from '../../domain/swot';
 
 type DailyMinutes = 15 | 30 | 45 | 60 | 90;
 
@@ -46,6 +49,12 @@ export function ProfilePage(): React.ReactElement {
   const isSimulated = appClock.isSimulated();
 
   const config = getConfig();
+  const questionsList = config?.questions?.questions || [];
+  const baselinePatterns = data.baseline && data.baseline.status === 'completed'
+    ? computeBaselineScoring(data.baseline, questionsList).patterns
+    : [];
+  const swotResult = buildSwotProfile(baselinePatterns, data.mocks);
+
   const loadedSchools = config?.schools?.schools || [];
   const schoolOptions = loadedSchools.length > 0
     ? loadedSchools.map((s: { id: string; name: string }) => ({ id: s.id, label: s.name }))
@@ -132,32 +141,104 @@ export function ProfilePage(): React.ReactElement {
             message="Starter profile. It becomes more detailed as you use the app."
           />
 
-          {data.baseline?.completedAt ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card className="p-6">
-                <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0 mb-2">Strengths</h2>
-                <p className="text-body text-[var(--lm-text-muted)] m-0">
-                  Speed on quantitative comparisons and quick filter checks.
+          {swotResult && swotResult.totalPatterns > 0 ? (
+            <div className="flex flex-col gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Strengths */}
+                <Card className="p-6 flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0">Strengths</h2>
+                    <span className="text-caption font-bold px-2 py-0.5 rounded-[var(--lm-radius-pill)] bg-[var(--grade-a-bg)] text-[var(--grade-a-fg)]">
+                      {swotResult.strengths.length}
+                    </span>
+                  </div>
+                  {swotResult.strengths.length > 0 ? (
+                    <div className="flex flex-col gap-3">
+                      {swotResult.strengths.map((item) => (
+                        <div key={item.id} className="p-3 bg-[var(--lm-inset)] rounded-[var(--lm-radius-sm)] flex flex-col gap-1">
+                          <span className="text-body-strong text-[var(--lm-ink)]">{item.section}: {item.type}</span>
+                          <EvidenceLine questionCount={item.questionCount} text={item.evidence} />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-small text-[var(--lm-text-muted)] m-0">No strengths classified yet.</p>
+                  )}
+                </Card>
+
+                {/* Weaknesses */}
+                <Card className="p-6 flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0">Weaknesses</h2>
+                    <span className="text-caption font-bold px-2 py-0.5 rounded-[var(--lm-radius-pill)] bg-[var(--grade-d-bg)] text-[var(--grade-d-fg)]">
+                      {swotResult.weaknesses.length}
+                    </span>
+                  </div>
+                  {swotResult.weaknesses.length > 0 ? (
+                    <div className="flex flex-col gap-3">
+                      {swotResult.weaknesses.map((item) => (
+                        <div key={item.id} className="p-3 bg-[var(--lm-inset)] rounded-[var(--lm-radius-sm)] flex flex-col gap-1">
+                          <span className="text-body-strong text-[var(--lm-ink)]">{item.section}: {item.type}</span>
+                          <EvidenceLine questionCount={item.questionCount} text={item.evidence} />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-small text-[var(--lm-text-muted)] m-0">No weaknesses classified yet.</p>
+                  )}
+                </Card>
+
+                {/* Opportunities */}
+                <Card className="p-6 flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0">Opportunities</h2>
+                    <span className="text-caption font-bold px-2 py-0.5 rounded-[var(--lm-radius-pill)] bg-[var(--grade-b-bg)] text-[var(--grade-b-fg)]">
+                      {swotResult.opportunities.length}
+                    </span>
+                  </div>
+                  {swotResult.opportunities.length > 0 ? (
+                    <div className="flex flex-col gap-3">
+                      {swotResult.opportunities.map((item) => (
+                        <div key={item.id} className="p-3 bg-[var(--lm-inset)] rounded-[var(--lm-radius-sm)] flex flex-col gap-1">
+                          <span className="text-body-strong text-[var(--lm-ink)]">{item.section}: {item.type}</span>
+                          <EvidenceLine questionCount={item.questionCount} text={item.evidence} />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-small text-[var(--lm-text-muted)] m-0">No opportunities classified yet.</p>
+                  )}
+                </Card>
+
+                {/* Threats */}
+                <Card className="p-6 flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0">Threats</h2>
+                    <span className="text-caption font-bold px-2 py-0.5 rounded-[var(--lm-radius-pill)] bg-[var(--grade-c-bg)] text-[var(--grade-c-fg)]">
+                      {swotResult.threats.length}
+                    </span>
+                  </div>
+                  {swotResult.threats.length > 0 ? (
+                    <div className="flex flex-col gap-3">
+                      {swotResult.threats.map((item) => (
+                        <div key={item.id} className="p-3 bg-[var(--lm-inset)] rounded-[var(--lm-radius-sm)] flex flex-col gap-1">
+                          <span className="text-body-strong text-[var(--lm-ink)]">{item.section}: {item.type}</span>
+                          <EvidenceLine questionCount={item.questionCount} text={item.evidence} />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-small text-[var(--lm-text-muted)] m-0">No threats classified yet.</p>
+                  )}
+                </Card>
+              </div>
+
+              {/* Reflection prompt */}
+              <div className="p-5 rounded-[var(--lm-radius-md)] bg-[var(--lm-inset)] border border-[var(--lm-border)]">
+                <p className="text-reflect italic text-[var(--lm-ink)] m-0">
+                  &ldquo;Notice your opportunities: knowledge is present, decisions and timing are your levers.&rdquo;
                 </p>
-              </Card>
-              <Card className="p-6">
-                <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0 mb-2">Weaknesses</h2>
-                <p className="text-body text-[var(--lm-text-muted)] m-0">
-                  Time traps on multi-paragraph reading inferences.
-                </p>
-              </Card>
-              <Card className="p-6">
-                <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0 mb-2">Opportunities</h2>
-                <p className="text-body text-[var(--lm-text-muted)] m-0">
-                  Question selection rounds will lift your potential score by skipping trap questions.
-                </p>
-              </Card>
-              <Card className="p-6">
-                <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0 mb-2">Threats</h2>
-                <p className="text-body text-[var(--lm-text-muted)] m-0">
-                  Spending more than 2.5 minutes on unattempted questions under fatigue.
-                </p>
-              </Card>
+              </div>
             </div>
           ) : (
             <EmptyState

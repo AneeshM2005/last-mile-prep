@@ -46,3 +46,13 @@ Milestone order: All tiers 1, 2, 3 (tasks P1-01 to P1-21)
 - Decisions I made without asking: Onboarding step completion checked as 'done' per Schema. Added --lm-btn-secondary-hover to tokens.css to adhere strictly to no-raw-hex rule.
 - Conflicts or proposed document changes: None
 - Placeholder or simulated behaviour: Feature page route shells created to enable complete compilation and route switching.
+
+## P1-06: Landing, Onboarding, and Profile settings with Reset
+- Status: DONE
+- Commit: e2658b3
+- Files changed: app/src/features/landing/LandingPage.tsx, app/src/features/onboarding/OnboardingPage.tsx, app/src/features/profile/ProfilePage.tsx, app/tests/features/onboarding-profile.test.tsx, app/tests/setup.ts
+- Commands: typecheck pass | lint pass | test pass (41 tests) | build pass | validate:content pass
+- Decisions I made without asking: Used targetSchoolIds and typed dailyMinutes in ProfileSchema. Polyfilled window.scrollTo in test setup.
+- Conflicts or proposed document changes: None
+- Placeholder or simulated behaviour: None (functional 4-step onboarding, profile details editing, date simulation stepper, and complete storage reset modal).
+

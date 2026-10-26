@@ -150,6 +150,7 @@ export const QuestionSchema = z.object({
   verified: z.boolean(),
   provenance: ProvenanceSchema,
 });
+export type Question = z.infer<typeof QuestionSchema>;
 export const QuestionsPackSchema = z.object({
   meta: z.object({ packVersion: z.string(), sample: z.boolean() }),
   baselineQuestionIds: z.array(z.string()),

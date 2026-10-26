@@ -1,0 +1,297 @@
+{
+  "meta": {
+    "packVersion": "1.0.0",
+    "sample": true
+  },
+  "baselineQuestionIds": [
+    "bq-v1", "bq-v2", "bq-v3", "bq-v4",
+    "bq-l1", "bq-l2", "bq-l3", "bq-l4",
+    "bq-q1", "bq-q2", "bq-q3", "bq-q4"
+  ],
+  "questions": [
+    {
+      "id": "bq-v1",
+      "section": "VARC",
+      "type": "Reading Comprehension",
+      "difficulty": 1,
+      "inputType": "mcq",
+      "stimulus": {
+        "kind": "text",
+        "value": "Archival preservation in historic libraries relies on microclimate regulation. Fluctuations in relative humidity accelerate cellulose hydrolysis, destabilizing paper structures."
+      },
+      "stem": "Which factor most directly accelerates cellulose degradation in historic paper?",
+      "options": [
+        { "id": "A", "text": "Fluctuations in relative humidity" },
+        { "id": "B", "text": "Exposure to ambient synthetic lighting" },
+        { "id": "C", "text": "Mechanical binding strain" },
+        { "id": "D", "text": "Sub-zero storage temperatures" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 60,
+      "solution": "The stimulus directly states that relative humidity fluctuations accelerate cellulose hydrolysis.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-v2",
+      "section": "VARC",
+      "type": "Para Summary",
+      "difficulty": 2,
+      "inputType": "mcq",
+      "stem": "Select the option that best summarizes the principle of steady iterative preparation without excessive pressure.",
+      "options": [
+        { "id": "A", "text": "Continuous, deliberate practice with structured pacing builds composure and reliable decision-making." },
+        { "id": "B", "text": "Intensive cramming during final stages guarantees superior examination recall." },
+        { "id": "C", "text": "Attempting every single problem regardless of complexity optimizes percentile return." },
+        { "id": "D", "text": "Intuitive guessing provides superior time dividends compared to structured filtering." }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 75,
+      "solution": "Option A captures the core concept of deliberate pacing and composure without exaggerated claims.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-v3",
+      "section": "VARC",
+      "type": "Para Jumble",
+      "difficulty": 2,
+      "inputType": "mcq",
+      "stem": "Arrange the sentences in logical sequence: 1. This feedback loop guides revision. 2. A baseline assessment records decision times. 3. Insights highlight operational bottlenecks. 4. Next, pattern summaries are generated.",
+      "options": [
+        { "id": "A", "text": "2, 4, 3, 1" },
+        { "id": "B", "text": "1, 2, 3, 4" },
+        { "id": "C", "text": "3, 1, 2, 4" },
+        { "id": "D", "text": "4, 3, 1, 2" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 80,
+      "solution": "Sequence 2 -> 4 -> 3 -> 1 flows naturally from assessment to patterns, insights, and guiding revision.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-v4",
+      "section": "VARC",
+      "type": "Critical Reasoning",
+      "difficulty": 3,
+      "inputType": "mcq",
+      "stem": "An urban transport analyst observes that expanding bus lanes increased transit throughput while personal vehicular commute times remained steady. Which proposition supports this finding?",
+      "options": [
+        { "id": "A", "text": "Commuters shifted from single-occupancy vehicles to rapid bus routes, offsetting corridor congestion." },
+        { "id": "B", "text": "Bus fuel consumption increased proportionately with frequency." },
+        { "id": "C", "text": "Pedestrian footpaths were widened simultaneously along peripheral routes." },
+        { "id": "D", "text": "Automated toll gates were installed exclusively outside city perimeters." }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 90,
+      "solution": "A modal shift to rapid transit explains higher throughput alongside stable private vehicle times.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-l1",
+      "section": "LRDI",
+      "type": "Seating Arrangement",
+      "difficulty": 1,
+      "inputType": "mcq",
+      "stem": "Four analysts (A, B, C, D) sit in a straight row facing North. A sits at the westernmost end. C sits between B and D. Who sits adjacent to A?",
+      "options": [
+        { "id": "A", "text": "B" },
+        { "id": "B", "text": "C" },
+        { "id": "C", "text": "D" },
+        { "id": "D", "text": "Cannot be determined without additional constraints" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 60,
+      "solution": "If A is at pos 1, C is between B and D so B and D occupy positions 2 and 4 with C at 3. Thus B or D is adjacent. With order A-B-C-D, B sits next to A.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-l2",
+      "section": "LRDI",
+      "type": "Data Interpretation - Tables",
+      "difficulty": 2,
+      "inputType": "mcq",
+      "stimulus": {
+        "kind": "text",
+        "value": "Quarterly solar generation (GWh): Q1: 120, Q2: 150, Q3: 180, Q4: 150."
+      },
+      "stem": "What is the average quarterly generation across the year?",
+      "options": [
+        { "id": "A", "text": "150 GWh" },
+        { "id": "B", "text": "140 GWh" },
+        { "id": "C", "text": "160 GWh" },
+        { "id": "D", "text": "145 GWh" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 50,
+      "solution": "(120 + 150 + 180 + 150) / 4 = 600 / 4 = 150 GWh.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-l3",
+      "section": "LRDI",
+      "type": "Logical Reasoning - Sets",
+      "difficulty": 2,
+      "inputType": "mcq",
+      "stem": "In a cohort of 50 scholars, 30 read microeconomics, 25 read econometrics, and 10 read both. How many read neither subject?",
+      "options": [
+        { "id": "A", "text": "5" },
+        { "id": "B", "text": "10" },
+        { "id": "C", "text": "15" },
+        { "id": "D", "text": "0" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 60,
+      "solution": "Total reading at least one = 30 + 25 - 10 = 45. Neither = 50 - 45 = 5.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-l4",
+      "section": "LRDI",
+      "type": "Games and Tournaments",
+      "difficulty": 3,
+      "inputType": "mcq",
+      "stem": "In a single-elimination tournament with 16 seeded competitors, how many total matches are played to determine the sole champion?",
+      "options": [
+        { "id": "A", "text": "15" },
+        { "id": "B", "text": "16" },
+        { "id": "C", "text": "8" },
+        { "id": "D", "text": "31" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 45,
+      "solution": "In any single-elimination tournament, each match eliminates exactly one participant. Thus 16 - 1 = 15 matches.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-q1",
+      "section": "QA",
+      "type": "Arithmetic",
+      "difficulty": 1,
+      "inputType": "mcq",
+      "stem": "A merchant marks an item 25% above cost and offers a 10% cash discount. What is the net profit percentage?",
+      "options": [
+        { "id": "A", "text": "12.5%" },
+        { "id": "B", "text": "15%" },
+        { "id": "C", "text": "10%" },
+        { "id": "D", "text": "14%" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 45,
+      "solution": "Let cost be 100. Marked price = 125. Selling price after 10% discount = 125 - 12.5 = 112.5. Profit = 12.5%.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-q2",
+      "section": "QA",
+      "type": "Algebra",
+      "difficulty": 2,
+      "inputType": "mcq",
+      "stem": "If x + (1 / x) = 3 for x > 0, what is the value of x^2 + (1 / x^2)?",
+      "options": [
+        { "id": "A", "text": "7" },
+        { "id": "B", "text": "9" },
+        { "id": "C", "text": "11" },
+        { "id": "D", "text": "6" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 45,
+      "solution": "(x + 1/x)^2 = x^2 + 2 + 1/x^2 = 9, so x^2 + 1/x^2 = 9 - 2 = 7.",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-q3",
+      "section": "QA",
+      "type": "Geometry",
+      "difficulty": 2,
+      "inputType": "mcq",
+      "stem": "A right triangle has hypotenuse 13 cm and one leg 5 cm. What is the area of the triangle?",
+      "options": [
+        { "id": "A", "text": "30 cm²" },
+        { "id": "B", "text": "60 cm²" },
+        { "id": "C", "text": "32.5 cm²" },
+        { "id": "D", "text": "65 cm²" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 45,
+      "solution": "Second leg = sqrt(13^2 - 5^2) = sqrt(169 - 25) = 12 cm. Area = (1/2) * 5 * 12 = 30 cm².",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    },
+    {
+      "id": "bq-q4",
+      "section": "QA",
+      "type": "Number System",
+      "difficulty": 3,
+      "inputType": "mcq",
+      "stem": "What is the remainder when 2^50 is divided by 7?",
+      "options": [
+        { "id": "A", "text": "4" },
+        { "id": "B", "text": "2" },
+        { "id": "C", "text": "1" },
+        { "id": "D", "text": "6" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 60,
+      "solution": "2^3 = 8 = 1 (mod 7). 50 = 3 * 16 + 2. (2^3)^16 * 2^2 = 1^16 * 4 = 4 (mod 7).",
+      "verified": false,
+      "provenance": {
+        "label": "memory-based",
+        "recordedBy": "Last Mile Editorial",
+        "recordedDate": "2026-10-26"
+      }
+    }
+  ]
+}
