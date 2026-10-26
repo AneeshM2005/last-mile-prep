@@ -97,4 +97,44 @@ Milestone order: All tiers 1, 2, 3 (tasks P1-01 to P1-21)
 - Commands: typecheck pass | lint pass | test pass (65 tests) | build pass | validate:content pass
 - Decisions I made without asking: Built taskRecommender cascade logic adhering to tasks.json cascade rules and profile dailyMinutes. Created 12-column Bento HomePage with daily task card, days to CAT, quote, days practised, 5-node journey indicator, and resume session card. Implemented PracticeHubPage, OmetPage with CAT vs OMET comparison, and FeedbackPage with 2 numerical ratings, 5 280-char textareas, stripped displayName privacy guarantee, and live payload preview.
 - Conflicts or proposed document changes: None
+## P1-16 & P1-17: Spaced revision scheduler, RevisionPage, and demo date integration
+- Status: DONE
+- Commit: 07cb19d
+- Files changed: app/src/data/schemas.ts, app/src/domain/revisionScheduler.ts, app/src/features/revision/RevisionPage.tsx, app/tests/domain/revisionScheduler.test.ts, app/tests/features/revision.test.tsx
+- Commands: typecheck pass | lint pass | test pass (73 tests) | build pass | validate:content pass
+- Decisions I made without asking: Built revision scheduler supporting 4 intervals [1, 3, 9, 18] days, marking reviewed (advancing interval), postponing (+1 day), and grouping upcoming items by target date. Added RevisionPage with Due today, Upcoming, and Add topic tabs, linking directly to Profile demo tools for simulated date testing.
+- Conflicts or proposed document changes: None
 - Placeholder or simulated behaviour: None.
+
+## P1-18 & P1-19: Word cards domain, passages pack, PassageSessionPage, and WordsPage
+- Status: DONE
+- Commit: e40ae25
+- Files changed: app/public/content/passages.json, app/src/app/providers.tsx, app/src/data/configSchemas.ts, app/src/domain/wordCards.ts, app/src/features/words/PassageSessionPage.tsx, app/src/features/words/WordsPage.tsx, app/tests/content/content.test.ts, app/tests/domain/wordCards.test.ts, app/tests/features/words.test.tsx
+- Commands: typecheck pass | lint pass | test pass (87 tests) | build pass | validate:content pass
+- Decisions I made without asking: Built wordCards domain for normalisation, duplicate prevention, 30-word session cap, status toggling, and glossary lookup. Generated 5 original RC passages with >=15 glossary items each obeying all Rules.md copy constraints. Implemented PassageSessionPage with quiet countdown timer, tokenised interactive word selection, session recording in passageSessions and activity, and WordsPage with 3D flip card, practice carousel, filter tabs, stats, and word list mode.
+- Conflicts or proposed document changes: None
+- Placeholder or simulated behaviour: None.
+
+## P1-20 & P1-21: Full accessibility pass, complete verification, and production build readiness
+- Status: DONE
+- Commit: 998a35f
+- Files changed: app/src/features/landing/LandingPage.tsx, app/src/features/onboarding/OnboardingPage.tsx, app/src/styles/tokens.css, app/tests/a11y/a11y.test.tsx
+- Commands: typecheck pass | lint pass | test pass (95 tests) | build pass | validate:content pass
+- Decisions I made without asking: Added landmark skip-to-content links across LandingPage, OnboardingPage, and AppShell. Enhanced tokens.css reduced-motion block with auto scroll-behavior. Verified keyboard focus rings, dialog role & focus traps, tablist ARIA roles, and grade announcements. Created automated accessibility & motion test suite (8 tests). Full suite of 95 tests and Vite production build verified passing 100%.
+- Conflicts or proposed document changes: None
+- Placeholder or simulated behaviour: None.
+
+---
+
+## Final Phase 1 Status Summary (All Tiers 1, 2, and 3 Complete)
+
+- **Total Tasks Completed**: P1-01 through P1-21 (Milestones M1 to M9)
+- **Codebase Health**:
+  - `npm run typecheck`: PASS (0 errors, strict mode enabled)
+  - `npm run lint`: PASS (0 warnings, 0 errors)
+  - `npm test`: PASS (19 test suites, 95 unit & feature integration tests passing)
+  - `npm run build`: PASS (Vite production bundle generated in `app/dist/`)
+  - `npm run validate:content`: PASS (16 integrity, schema, and copy-lint checks passing)
+- **Git State**: Clean working tree with atomic commits on `master` branch.
+- **Remaining Task**: Only cloud deployment (P1-22) remains for the user.
+
