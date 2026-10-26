@@ -26,8 +26,8 @@ import { SpecularButton } from '../../ui/animations/SpecularButton';
 import { useAppContext } from '../../app/providers';
 import { useStore } from '../../data/store';
 import { logEvent } from '../../data/eventLog';
-import { getConfig } from '../../data/configLoader';
 import { AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { getAllColleges } from '../../domain/colleges';
 
 type DailyMinutes = 15 | 30 | 45 | 60 | 90;
 export type StepId = 'consent' | 'account' | 'name' | 'schools' | 'time';
@@ -56,7 +56,7 @@ export const ONBOARDING_STEPS: StepConfig[] = [
 
 export function OnboardingPage(): React.ReactElement {
   const navigate = useNavigate();
-  const { storageAvailable, config: appConfig } = useAppContext();
+  const { storageAvailable } = useAppContext();
   const { data, createProfile, updateProfile, setOnboardingStep } = useStore();
   const profile = data.profile;
 
@@ -91,8 +91,8 @@ export function OnboardingPage(): React.ReactElement {
   const [displayName, setDisplayName] = useState(profile?.displayName || '');
   const [nameError, setNameError] = useState('');
 
-  // Step 4: Target schools state
-  const [selectedSchools, setSelectedSchools] = useState<string[]>(profile?.targetSchoolIds || []);
+  // Step 4: Target schools state (nothing is pre-selected)
+  const [selectedSchools, setSelectedSchools] = useState<string[]>([]);
   const [schoolError, setSchoolError] = useState('');
 
   // Step 5: Daily time state
@@ -109,21 +109,10 @@ export function OnboardingPage(): React.ReactElement {
     heading?.focus();
   }, [currentStep]);
 
-  // Loaded schools
-  const config = getConfig() || appConfig;
-  const loadedSchools = config?.schools?.schools || [];
+  // Loaded schools from dream-college configuration (Part B)
   const schoolOptions = useMemo(() => {
-    return loadedSchools.length > 0
-      ? loadedSchools.map((s: { id: string; name: string }) => ({ id: s.id, label: s.name }))
-      : [
-          { id: 'iima', label: 'IIM Ahmedabad' },
-          { id: 'iimb', label: 'IIM Bangalore' },
-          { id: 'iimc', label: 'IIM Calcutta' },
-          { id: 'iiml', label: 'IIM Lucknow' },
-          { id: 'fms', label: 'FMS Delhi' },
-          { id: 'xlri', label: 'XLRI Jamshedpur' },
-        ];
-  }, [loadedSchools]);
+    return getAllColleges().map((c) => ({ id: c.id, label: c.name }));
+  }, []);
 
   // Current step config
   const currentStepConfig = ONBOARDING_STEPS[currentStep - 1] || ONBOARDING_STEPS[0];

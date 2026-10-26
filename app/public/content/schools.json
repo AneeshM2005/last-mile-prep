@@ -1,12 +1,21 @@
 {
   "schools": [
-    { "id": "iima",   "name": "IIM Ahmedabad" },
-    { "id": "iimb",   "name": "IIM Bangalore" },
-    { "id": "iimc",   "name": "IIM Calcutta" },
-    { "id": "iims",   "name": "IIM Shillong" },
-    { "id": "iimk",   "name": "IIM Kozhikode" },
-    { "id": "xlri",   "name": "XLRI Jamshedpur" },
-    { "id": "spjimr", "name": "SPJIMR Mumbai" },
-    { "id": "fms",    "name": "FMS Delhi" }
+    { "id": "fms", "name": "FMS" },
+    { "id": "iift-delhi", "name": "IIFT Delhi" },
+    { "id": "iim-ahmedabad", "name": "IIM Ahmedabad" },
+    { "id": "iim-bangalore", "name": "IIM Bangalore" },
+    { "id": "iim-calcutta", "name": "IIM Calcutta" },
+    { "id": "iim-indore", "name": "IIM Indore" },
+    { "id": "iim-kozhikode", "name": "IIM Kozhikode" },
+    { "id": "iim-lucknow", "name": "IIM Lucknow" },
+    { "id": "iim-mumbai", "name": "IIM Mumbai" },
+    { "id": "iim-shillong", "name": "IIM Shillong" },
+    { "id": "iim-trichy", "name": "IIM Trichy" },
+    { "id": "iit-delhi", "name": "IIT Delhi" },
+    { "id": "mdi-gurgaon", "name": "MDI Gurgaon" },
+    { "id": "sjmsom-iit-b", "name": "SJMSOM, IIT B" },
+    { "id": "spjimr", "name": "SPJIMR" },
+    { "id": "tiss", "name": "TISS" },
+    { "id": "xlri-jamshedpur", "name": "XLRI Jamshedpur" }
   ]
 }

@@ -17,7 +17,9 @@ import { useStore } from '../../data/store';
 import { appClock } from '../../domain/appClock';
 import { logEvent } from '../../data/eventLog';
 import { recommendTodayTask } from '../../domain/taskRecommender';
-import { resolveSessionCollegeCursor, type SchoolTarget } from '../../domain/collegeRotation';
+import { resolveSessionCollegeCursor } from '../../domain/collegeRotation';
+import { getAllColleges, findCollege, DEFAULT_COLLEGE, type CollegeConfig } from '../../domain/colleges';
+import { CountdownCard } from './CountdownCard';
 import { MessageSquare, ArrowRight, CheckCircle2, Circle } from 'lucide-react';
 
 export function HomePage(): React.ReactElement {
@@ -58,23 +60,13 @@ export function HomePage(): React.ReactElement {
   const uniquePractisedDays = new Set(data.activity.map((a) => a.date)).size;
 
   // Target schools resolution for countdown card rotation
-  const allSchools: SchoolTarget[] = config?.schools?.schools || [
-    { id: 'iima', name: 'IIM Ahmedabad' },
-    { id: 'iimb', name: 'IIM Bangalore' },
-    { id: 'iimc', name: 'IIM Calcutta' },
-    { id: 'fms', name: 'FMS Delhi' },
-    { id: 'xlri', name: 'XLRI Jamshedpur' },
-    { id: 'spjimr', name: 'SPJIMR Mumbai' },
-    { id: 'iimk', name: 'IIM Kozhikode' },
-    { id: 'iims', name: 'IIM Shillong' },
-  ];
-
+  const allSchools = getAllColleges();
   const userChosenSchoolIds = profile?.targetSchoolIds || [];
   const chosenColleges = userChosenSchoolIds
-    .map((id) => allSchools.find((s) => s.id === id))
-    .filter((s): s is SchoolTarget => Boolean(s));
+    .map((id) => findCollege(id))
+    .filter((s): s is CollegeConfig => Boolean(s));
 
-  const targetColleges = chosenColleges.length > 0 ? chosenColleges : [allSchools[0]];
+  const targetColleges = chosenColleges.length > 0 ? chosenColleges : [allSchools[0] || DEFAULT_COLLEGE];
   const activeCollegeIndex = resolveSessionCollegeCursor(targetColleges.length);
   const activeCollege = targetColleges[activeCollegeIndex] || targetColleges[0];
 
@@ -235,57 +227,7 @@ export function HomePage(): React.ReactElement {
         </Card>
 
         {/* 2. Days to CAT Stat tile with College Picture Rotation (col-span-12 sm:col-span-6 lg:col-span-4) */}
-        {(() => {
-          const collegeImgSrc = typeof activeCollege?.image === 'string'
-            ? activeCollege.image
-            : activeCollege?.image?.file;
-          const collegeCredit = typeof activeCollege?.image === 'object' && activeCollege.image?.attribution
-            ? activeCollege.image.attribution
-            : activeCollege?.credit;
-
-          return (
-            <div
-              className="col-span-12 sm:col-span-6 lg:col-span-4 rounded-[var(--lm-radius-card)] border border-[var(--lm-sage-200)] shadow-[var(--lm-shadow-card)] relative overflow-hidden flex flex-col justify-between p-3"
-              style={{
-                minHeight: '220px',
-                backgroundImage: collegeImgSrc ? `url(${collegeImgSrc})` : 'var(--lm-sky-fallback)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            >
-              {/* Translucent light panel: 88% opaque paper, no blur, ensuring contrast */}
-              <div
-                className="p-5 rounded-[20px] border border-[var(--lm-sage-200)] shadow-xs flex flex-col justify-between h-full"
-                style={{
-                  backgroundColor: 'rgba(251, 252, 249, 0.88)',
-                }}
-              >
-                <div>
-                  <span className="text-caption font-bold tracking-wider text-[var(--lm-sage-700)] uppercase">
-                    Countdown
-                  </span>
-                  <div className="flex items-baseline gap-2 my-2">
-                    <span className="text-display font-serif text-[var(--lm-ink)] leading-none">
-                      {daysToCAT}
-                    </span>
-                    <span className="text-body font-medium text-[var(--lm-text-muted)]">
-                      {daysToCAT === 0 ? 'CAT day has passed' : 'days to CAT'}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="pt-2 border-t border-[var(--lm-sage-200)] flex items-center justify-between text-caption text-[var(--lm-text-muted)]">
-                  <span className="font-semibold text-[var(--lm-sage-700)]">
-                    {activeCollege.name}
-                  </span>
-                  {collegeCredit && (
-                    <span className="text-[11px] opacity-75">{collegeCredit}</span>
-                  )}
-                </div>
-              </div>
-            </div>
-          );
-        })()}
+        <CountdownCard daysToCAT={daysToCAT} college={activeCollege} />
 
         {/* 3. Days practised tile (col-span-12 sm:col-span-6 lg:col-span-4) */}
         <Card className="col-span-12 sm:col-span-6 lg:col-span-4 p-6 flex flex-col justify-between gap-3 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card,24px)] shadow-[var(--lm-shadow-card)]">

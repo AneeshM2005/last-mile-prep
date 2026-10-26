@@ -23,6 +23,7 @@ import { logEvent } from '../../data/eventLog';
 import { getConfig } from '../../data/configLoader';
 import { computeBaselineScoring } from '../../domain/baselineScoring';
 import { buildSwotProfile } from '../../domain/swot';
+import { getAllColleges } from '../../domain/colleges';
 
 import type { MockEntry } from '../../data/schemas';
 
@@ -57,17 +58,7 @@ export function ProfilePage(): React.ReactElement {
     : [];
   const swotResult = buildSwotProfile(baselinePatterns, data.mocks);
 
-  const loadedSchools = config?.schools?.schools || [];
-  const schoolOptions = loadedSchools.length > 0
-    ? loadedSchools.map((s: { id: string; name: string }) => ({ id: s.id, label: s.name }))
-    : [
-        { id: 'iima', label: 'IIM Ahmedabad' },
-        { id: 'iimb', label: 'IIM Bangalore' },
-        { id: 'iimc', label: 'IIM Calcutta' },
-        { id: 'iiml', label: 'IIM Lucknow' },
-        { id: 'fms', label: 'FMS Delhi' },
-        { id: 'xlri', label: 'XLRI Jamshedpur' },
-      ];
+  const schoolOptions = getAllColleges().map((c) => ({ id: c.id, label: c.name }));
 
   const handleSaveDetails = () => {
     if (!displayName.trim()) {
