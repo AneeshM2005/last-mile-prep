@@ -9,7 +9,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { Card } from '../../ui/Card';
 import { useAppContext } from '../../app/providers';
 import { useStore } from '../../data/store';
-import { GradientWaves } from '../../ui/animations/GradientWaves';
+import { SageWavesBackdrop } from '../../ui/animations/SageWavesBackdrop';
 import { ScrollExpand } from '../../ui/animations/ScrollExpand';
 import { SpecularButton } from '../../ui/animations/SpecularButton';
 import { HERO_SCROLL_CONFIG } from '../../domain/heroScroll';
@@ -23,44 +23,6 @@ import {
   ShieldCheck,
   CheckCircle2,
 } from 'lucide-react';
-
-// Memoized GradientWaves backdrop wrapper to avoid re-rendering on header state change
-interface WavesBackdropProps {
-  isMobile: boolean;
-}
-
-const WavesBackdrop = React.memo(function WavesBackdrop({ isMobile }: WavesBackdropProps) {
-  return (
-    <div
-      aria-hidden="true"
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
-      style={{ opacity: 0.85 }}
-    >
-      <GradientWaves
-        lightMode={true}
-        backgroundColor="transparent"
-        horizonColor="rgb(181, 205, 176)" // sage-300
-        waveColor="rgb(127, 160, 122)"    // sage-500
-        crestColor="rgb(255, 255, 255)"
-        speed={0.25}
-        amplitude={2.0}
-        waveScale={0.5}
-        relief={0.8}
-        sheen={0.15}
-        brightness={1.0}
-        opacity={0.85}
-        grain={0.12}
-        intro={true}
-        mouseInteraction={true}
-        parallaxStrength={0.3}
-        mouseStrength={0.5}
-        swellOnClick={true}
-        quality={isMobile ? 'low' : 'medium'}
-        dpr={isMobile ? 1.25 : 1.5}
-      />
-    </div>
-  );
-});
 
 export function LandingPage(): React.ReactElement {
   const navigate = useNavigate();
@@ -174,7 +136,7 @@ export function LandingPage(): React.ReactElement {
       </header>
 
       {/* 2B. Fixed Full-Viewport Living Backdrop: GradientWaves */}
-      {wavesMounted && <WavesBackdrop isMobile={isMobile} />}
+      {wavesMounted && <SageWavesBackdrop isMobile={isMobile} mouseInteraction swellOnClick />}
 
       {/* Main Content Area sitting above waves */}
       <main id="landing-main" className="relative z-10 flex-1 flex flex-col items-center">

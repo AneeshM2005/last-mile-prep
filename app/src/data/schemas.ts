@@ -6,7 +6,21 @@ export const LocalDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 export const SectionSchema = z.enum(['VARC', 'LRDI', 'QA']);
 export type Section = z.infer<typeof SectionSchema>;
 
-// ── Profile ───────────────────────────────────────────────────
+export const OnboardingStepSchema = z.union([
+  z.literal(1),
+  z.literal(2),
+  z.literal(3),
+  z.literal(4),
+  z.literal(5),
+  z.literal('consent'),
+  z.literal('account'),
+  z.literal('name'),
+  z.literal('schools'),
+  z.literal('time'),
+  z.literal('done'),
+]);
+export type OnboardingStep = z.infer<typeof OnboardingStepSchema>;
+
 export const ProfileSchema = z.object({
   id: z.string().uuid(),
   displayName: z.string().min(1).max(30),
@@ -17,9 +31,7 @@ export const ProfileSchema = z.object({
   consentAt: ISOSchema,
   age18Declared: z.literal(true),
   createdAt: ISOSchema,
-  onboardingStep: z.union([
-    z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal('done'),
-  ]),
+  onboardingStep: OnboardingStepSchema.default(1),
 });
 export type Profile = z.infer<typeof ProfileSchema>;
 

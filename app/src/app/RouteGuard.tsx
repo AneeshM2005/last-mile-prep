@@ -17,7 +17,7 @@ export function RouteGuard({ children }: RouteGuardProps): React.ReactElement {
   const isOnboardingComplete = profile?.onboardingStep === 'done';
 
   if (!isOnboardingComplete) {
-    if (profile && profile.onboardingStep !== 1 && profile.onboardingStep !== 'done') {
+    if (profile && profile.onboardingStep !== 1 && profile.onboardingStep !== 'consent' && profile.onboardingStep !== 'done') {
       return <Navigate to="/onboarding" replace state={{ from: location }} />;
     }
     return <Navigate to="/welcome" replace state={{ from: location }} />;

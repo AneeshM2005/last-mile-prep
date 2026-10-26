@@ -38,6 +38,20 @@ function loadFromStorage(): { data: AppData; wasReset: boolean } {
     if (!raw) return { data: defaultData, wasReset: false };
 
     const parsed: unknown = JSON.parse(raw);
+
+    // Migration: ensure legacy profiles with missing/legacy onboardingStep load without reset
+    if (parsed && typeof parsed === 'object' && 'data' in parsed) {
+      const dataObj = (parsed as { data: Record<string, unknown> }).data;
+      if (dataObj && typeof dataObj === 'object' && 'profile' in dataObj) {
+        const profileObj = dataObj.profile as Record<string, unknown> | null;
+        if (profileObj && typeof profileObj === 'object') {
+          if (profileObj.onboardingStep === undefined || profileObj.onboardingStep === null) {
+            profileObj.onboardingStep = 1;
+          }
+        }
+      }
+    }
+
     const result = PersistedStoreSchema.safeParse(parsed);
 
     if (!result.success) {
@@ -73,8 +87,6 @@ function flushPersist(data: AppData): void {
   persist(data);
 }
 
-// ── Store interface ───────────────────────────────────────────
-
 interface StoreState {
   data: AppData;
   wasReset: boolean;     // shows neutral notice banner if true
@@ -83,16 +95,23 @@ interface StoreState {
   updateProfile: (updates: Partial<Profile>) => void;
   setOnboardingStep: (step: Profile['onboardingStep']) => void;
   resetAllData: () => void;
+  reloadFromStorage: () => void;
   dismissBanner: (id: string) => void;
   // Raw setter for slices (used by future feature slices)
   setData: (updater: (prev: AppData) => AppData) => void;
 }
 
+export { loadFromStorage };
 const { data: initialData, wasReset } = loadFromStorage();
 
 export const useStore = create<StoreState>()((set, get) => ({
   data: initialData,
   wasReset,
+
+  reloadFromStorage() {
+    const { data, wasReset } = loadFromStorage();
+    set({ data, wasReset });
+  },
 
   setData(updater) {
     set((state) => {
