@@ -11,6 +11,7 @@ import { Badge } from '../../ui/Badge';
 import { useStore } from '../../data/store';
 import { logEvent } from '../../data/eventLog';
 import { buildAnonymousFeedbackPayload } from '../../domain/sessionSummary';
+import { PeekRating } from '../../ui/animations/PeekRating';
 import type { FeedbackRecord, FeatureId } from '../../data/schemas';
 import { Check, Copy, Download, Share2, ShieldCheck } from 'lucide-react';
 
@@ -157,51 +158,43 @@ export function FeedbackPage(): React.ReactElement {
         <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0">Experience ratings</h2>
 
         {/* Strategy Rating */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <label className="text-body font-medium text-[var(--lm-ink)]">
-            How helpful was the decision and strategy focus? (1 = Not helpful, 5 = Extremely helpful)
+            How helpful was the decision and strategy focus?
           </label>
-          <div className="flex items-center gap-2">
-            {([1, 2, 3, 4, 5] as const).map((r) => (
-              <button
-                key={r}
-                type="button"
-                onClick={() => setStrategyRating(r)}
-                className={[
-                  'w-11 h-11 rounded-[var(--lm-radius-sm)] border font-mono font-bold text-h3 transition-all cursor-pointer',
-                  strategyRating === r
-                    ? 'bg-[var(--lm-ink)] text-white border-[var(--lm-ink)]'
-                    : 'bg-[var(--lm-surface)] text-[var(--lm-ink)] border-[var(--lm-border)] hover:bg-[var(--lm-inset)]',
-                ].join(' ')}
-              >
-                {r}
-              </button>
-            ))}
-          </div>
+          <PeekRating
+            value={strategyRating}
+            count={5}
+            labels={['Not helpful', 'Slightly helpful', 'Moderately helpful', 'Very helpful', 'Extremely helpful']}
+            activeColor="rgb(245, 158, 11)"
+            idleColor="rgb(156, 163, 175)"
+            tipColor="rgb(30, 30, 36)"
+            size={30}
+            lift={6}
+            magnify={1.15}
+            name="strategy-rating"
+            onChange={(val) => setStrategyRating((val || 1) as 1 | 2 | 3 | 4 | 5)}
+          />
         </div>
 
         {/* Calm Routine Rating */}
-        <div className="flex flex-col gap-2 pt-3 border-t border-[var(--lm-border)]">
+        <div className="flex flex-col gap-1 pt-3 border-t border-[var(--lm-border)]">
           <label className="text-body font-medium text-[var(--lm-ink)]">
-            How calm and sustainable was your practice routine? (1 = Stressful, 5 = Very calm & steady)
+            How calm and sustainable was your practice routine?
           </label>
-          <div className="flex items-center gap-2">
-            {([1, 2, 3, 4, 5] as const).map((r) => (
-              <button
-                key={r}
-                type="button"
-                onClick={() => setCalmRating(r)}
-                className={[
-                  'w-11 h-11 rounded-[var(--lm-radius-sm)] border font-mono font-bold text-h3 transition-all cursor-pointer',
-                  calmRating === r
-                    ? 'bg-[var(--lm-ink)] text-white border-[var(--lm-ink)]'
-                    : 'bg-[var(--lm-surface)] text-[var(--lm-ink)] border-[var(--lm-border)] hover:bg-[var(--lm-inset)]',
-                ].join(' ')}
-              >
-                {r}
-              </button>
-            ))}
-          </div>
+          <PeekRating
+            value={calmRating}
+            count={5}
+            labels={['Stressful', 'Tense', 'Balanced', 'Calm', 'Very calm & steady']}
+            activeColor="rgb(16, 185, 129)"
+            idleColor="rgb(156, 163, 175)"
+            tipColor="rgb(30, 30, 36)"
+            size={30}
+            lift={6}
+            magnify={1.15}
+            name="calm-rating"
+            onChange={(val) => setCalmRating((val || 1) as 1 | 2 | 3 | 4 | 5)}
+          />
         </div>
       </Card>
 
