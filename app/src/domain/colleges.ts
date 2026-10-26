@@ -9,6 +9,8 @@ export interface CollegeConfig {
   image: string | null;
   focus?: string;
   legacyIds?: string[];
+  textTone?: 'ink' | 'light';
+  wash?: number;
 }
 
 export const COLLEGES: CollegeConfig[] = [
@@ -18,6 +20,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/fms.webp',
     focus: '50% 50%',
     legacyIds: ['fms', 'fms-delhi'],
+    textTone: 'ink',
+    wash: 8,
   },
   {
     id: 'iift-delhi',
@@ -25,6 +29,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iift-delhi.webp',
     focus: '50% 50%',
     legacyIds: [],
+    textTone: 'ink',
+    wash: 45,
   },
   {
     id: 'iim-ahmedabad',
@@ -32,6 +38,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iim-ahmedabad.webp',
     focus: '50% 50%',
     legacyIds: ['iima'],
+    textTone: 'ink',
+    wash: 0,
   },
   {
     id: 'iim-bangalore',
@@ -39,6 +47,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iim-bangalore.webp',
     focus: '50% 50%',
     legacyIds: ['iimb'],
+    textTone: 'light',
+    wash: 45,
   },
   {
     id: 'iim-calcutta',
@@ -46,6 +56,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iim-calcutta.webp',
     focus: '50% 50%',
     legacyIds: ['iimc'],
+    textTone: 'ink',
+    wash: 45,
   },
   {
     id: 'iim-indore',
@@ -53,6 +65,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iim-indore.webp',
     focus: '50% 50%',
     legacyIds: [],
+    textTone: 'light',
+    wash: 20,
   },
   {
     id: 'iim-kozhikode',
@@ -60,6 +74,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iim-kozhikode.webp',
     focus: '50% 50%',
     legacyIds: ['iimk'],
+    textTone: 'ink',
+    wash: 9,
   },
   {
     id: 'iim-lucknow',
@@ -67,6 +83,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iim-lucknow.webp',
     focus: '50% 50%',
     legacyIds: ['iiml'],
+    textTone: 'ink',
+    wash: 31,
   },
   {
     id: 'iim-mumbai',
@@ -74,6 +92,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iim-mumbai.webp',
     focus: '50% 50%',
     legacyIds: [],
+    textTone: 'ink',
+    wash: 23,
   },
   {
     id: 'iim-shillong',
@@ -81,6 +101,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iim-shillong.webp',
     focus: '50% 50%',
     legacyIds: ['iims'],
+    textTone: 'ink',
+    wash: 45,
   },
   {
     id: 'iim-trichy',
@@ -88,6 +110,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iim-trichy.webp',
     focus: '50% 50%',
     legacyIds: [],
+    textTone: 'ink',
+    wash: 29,
   },
   {
     id: 'iit-delhi',
@@ -95,6 +119,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/iit-delhi.webp',
     focus: '50% 50%',
     legacyIds: [],
+    textTone: 'ink',
+    wash: 27,
   },
   {
     id: 'mdi-gurgaon',
@@ -102,6 +128,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/mdi-gurgaon.webp',
     focus: '50% 50%',
     legacyIds: [],
+    textTone: 'ink',
+    wash: 45,
   },
   {
     id: 'sjmsom-iit-b',
@@ -109,6 +137,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/sjmsom-iit-b.webp',
     focus: '50% 50%',
     legacyIds: [],
+    textTone: 'light',
+    wash: 0,
   },
   {
     id: 'spjimr',
@@ -116,6 +146,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/spjimr.webp',
     focus: '50% 50%',
     legacyIds: ['spjimr', 'spjimr-mumbai'],
+    textTone: 'ink',
+    wash: 27,
   },
   {
     id: 'tiss',
@@ -123,6 +155,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/tiss.webp',
     focus: '50% 50%',
     legacyIds: [],
+    textTone: 'ink',
+    wash: 45,
   },
   {
     id: 'xlri-jamshedpur',
@@ -130,6 +164,8 @@ export const COLLEGES: CollegeConfig[] = [
     image: '/images/colleges/xlri-jamshedpur.webp',
     focus: '50% 50%',
     legacyIds: ['xlri'],
+    textTone: 'ink',
+    wash: 45,
   },
 ];
 

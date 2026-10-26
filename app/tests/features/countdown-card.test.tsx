@@ -23,6 +23,10 @@ describe('Dream Colleges configuration', () => {
       expect(c.name.trim().length).toBeGreaterThan(0);
       expect(c.image).toMatch(/^\/images\/colleges\/[a-z0-9-]+\.webp$/);
       expect(c.focus).toBe('50% 50%');
+      expect(['ink', 'light']).toContain(c.textTone);
+      expect(typeof c.wash).toBe('number');
+      expect(c.wash).toBeGreaterThanOrEqual(0);
+      expect(c.wash).toBeLessThanOrEqual(45);
     }
   });
 
@@ -42,19 +46,30 @@ describe('Dream Colleges configuration', () => {
   });
 });
 
-describe('CountdownCard component (Part C)', () => {
-  it('renders solid white panel and college pill when image is present', () => {
+describe('CountdownCard component (no panel, adaptive text tone & wash)', () => {
+  it('renders countdown without white panel using stored ink tone and wash', () => {
     const college = findCollege('iim-ahmedabad')!;
     render(<CountdownCard daysToCAT={33} college={college} />);
 
-    // Panel with countdown number
-    const panel = screen.getByTestId('countdown-panel');
-    expect(panel).toBeInTheDocument();
-    expect(panel).toHaveTextContent('Countdown');
-    expect(panel).toHaveTextContent('33');
-    expect(panel).toHaveTextContent('days to CAT');
+    // White panel must NOT render
+    expect(screen.queryByTestId('countdown-panel')).not.toBeInTheDocument();
 
-    // College pill
+    // Text group renders directly with ink styling
+    const textGroup = screen.getByTestId('countdown-text-group');
+    expect(textGroup).toBeInTheDocument();
+    expect(textGroup).toHaveTextContent('Countdown');
+    expect(textGroup).toHaveTextContent('33');
+    expect(textGroup).toHaveTextContent('days to CAT');
+
+    // Text elements use ink tone
+    const numEl = screen.getByText('33');
+    expect(numEl.className).toContain('text-[var(--lm-ink)]');
+
+    // Wash overlay matches stored wash (0%)
+    const washEl = screen.getByTestId('countdown-wash');
+    expect(washEl).toHaveStyle({ backgroundColor: 'rgba(250, 249, 248, 0)' });
+
+    // College pill remains unchanged
     const pill = screen.getByTestId('college-pill');
     expect(pill).toBeInTheDocument();
     expect(pill).toHaveTextContent('IIM Ahmedabad');
@@ -62,8 +77,27 @@ describe('CountdownCard component (Part C)', () => {
     // Background decorative image
     const img = screen.getByRole('presentation', { hidden: true });
     expect(img).toHaveAttribute('src', '/images/colleges/iim-ahmedabad.webp');
-    expect(img).toHaveAttribute('alt', '');
-    expect(img).toHaveAttribute('decoding', 'async');
+  });
+
+  it('renders countdown without white panel using stored light tone and wash', () => {
+    const college = findCollege('iim-indore')!;
+    render(<CountdownCard daysToCAT={50} college={college} />);
+
+    // No white panel
+    expect(screen.queryByTestId('countdown-panel')).not.toBeInTheDocument();
+
+    // Text elements use light tone (text-white)
+    const numEl = screen.getByText('50');
+    expect(numEl.className).toContain('text-white');
+
+    // Wash overlay matches stored sage wash (20% deep sage)
+    const washEl = screen.getByTestId('countdown-wash');
+    expect(washEl).toHaveStyle({ backgroundColor: 'rgba(47, 74, 50, 0.2)' });
+
+    // College pill remains
+    const pill = screen.getByTestId('college-pill');
+    expect(pill).toBeInTheDocument();
+    expect(pill).toHaveTextContent('IIM Indore');
   });
 
   it('renders plain sage fallback when college has image: null', () => {

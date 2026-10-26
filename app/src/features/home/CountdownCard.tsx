@@ -94,26 +94,53 @@ export function CountdownCard({
         }}
       />
 
-      {/* Uniform paper-white wash (12% paper-white) */}
+      {/* Uniform wash over photo based on computed college wash and tone */}
       <div
         aria-hidden="true"
+        data-testid="countdown-wash"
         className="absolute inset-0 pointer-events-none z-[1]"
-        style={{ backgroundColor: 'rgba(250, 249, 248, 0.12)' }}
+        style={{
+          backgroundColor:
+            college?.textTone === 'light'
+              ? `rgba(47, 74, 50, ${(college?.wash ?? 0) / 100})`
+              : `rgba(250, 249, 248, ${(college?.wash ?? 0) / 100})`,
+        }}
       />
 
-      {/* Top-left small solid white panel */}
+      {/* Top-left countdown text without panel */}
       <div
-        data-testid="countdown-panel"
-        className="relative z-[2] w-fit max-w-[90%] bg-white rounded-[16px] border border-[var(--lm-sage-200)] shadow-[var(--lm-shadow-card)] p-3 sm:p-4 flex flex-col gap-1 transition-all"
+        data-testid="countdown-text-group"
+        className="relative z-[2] flex flex-col gap-1 transition-all"
+        style={{
+          textShadow:
+            college?.textTone === 'light'
+              ? '0 1px 3px rgba(0, 0, 0, 0.25)'
+              : '0 1px 3px rgba(255, 255, 255, 0.25)',
+        }}
       >
-        <span className="text-caption font-bold tracking-wider text-[var(--lm-sage-700)] uppercase">
+        <span
+          className={[
+            'text-caption font-bold tracking-wider uppercase',
+            college?.textTone === 'light' ? 'text-white' : 'text-[var(--lm-ink)]',
+          ].join(' ')}
+        >
           Countdown
         </span>
         <div className="flex items-baseline gap-2">
-          <span className="text-display font-serif text-[var(--lm-ink)] leading-none">
+          <span
+            className={[
+              'text-display font-serif leading-none',
+              college?.textTone === 'light' ? 'text-white' : 'text-[var(--lm-ink)]',
+            ].join(' ')}
+          >
             {daysToCAT}
           </span>
-          <span className="text-body font-medium text-[var(--lm-text-muted)]">
+          <span
+            className={[
+              'text-body font-medium',
+              college?.textTone === 'light' ? 'text-white' : 'text-[var(--lm-ink)]',
+            ].join(' ')}
+          >
             {daysToCAT === 0 ? 'CAT day has passed' : 'days to CAT'}
           </span>
         </div>
