@@ -1,5 +1,6 @@
 /**
  * SpecularButton.tsx – Mouse-following specular highlight & reflective glow button from React Bits.
+ * Tuned for Last Mile light editorial aesthetic (sage-900 deep base, white text, pill radius).
  */
 
 import React, { useRef, useState, useEffect, useCallback } from 'react';
@@ -27,19 +28,19 @@ export interface SpecularButtonProps
 
 export function SpecularButton({
   children,
-  size = 'lg',
-  radius = 18,
+  size = 'md',
+  radius = 9999,
   tint = 'rgb(255, 255, 255)',
   tintOpacity = 0.04,
-  textColor = 'rgb(245, 245, 245)',
+  textColor = 'rgb(255, 255, 255)',
   lineColor = 'rgb(255, 255, 255)',
-  baseColor = 'rgb(30, 30, 36)',
+  baseColor = 'rgb(47, 74, 50)', // sage-900
   intensity = 1,
-  idleIntensity = 0.35,
+  idleIntensity = 0.25,
   shineSize = 10,
   shineFade = 34,
   thickness = 1.2,
-  glow = 1,
+  glow = 0.6,
   followMouse = true,
   proximity = 250,
   className = '',
@@ -52,9 +53,17 @@ export function SpecularButton({
   const [currentIntensity, setCurrentIntensity] = useState<number>(idleIntensity);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
+  const isInteractive = !disabled;
+
   const handlePointerMove = useCallback(
     (e: PointerEvent) => {
-      if (!buttonRef.current || !followMouse) return;
+      if (!buttonRef.current || !followMouse || !isInteractive) return;
+      if (typeof window !== 'undefined') {
+        const canHover = window.matchMedia('(hover: hover)').matches;
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!canHover || reduced) return;
+      }
+
       const rect = buttonRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -70,19 +79,42 @@ export function SpecularButton({
         setCurrentIntensity(idleIntensity);
       }
     },
-    [followMouse, idleIntensity, intensity, proximity],
+    [followMouse, idleIntensity, intensity, isInteractive, proximity],
   );
 
   useEffect(() => {
+    if (!isInteractive) return;
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     return () => window.removeEventListener('pointermove', handlePointerMove);
-  }, [handlePointerMove]);
+  }, [handlePointerMove, isInteractive]);
 
   const sizeClasses = {
     sm: 'px-4 py-2 text-xs',
     md: 'px-6 py-2.5 text-sm',
     lg: 'px-8 py-3.5 text-base',
   }[size];
+
+  if (disabled) {
+    return (
+      <button
+        ref={buttonRef}
+        type="button"
+        disabled
+        aria-disabled="true"
+        style={{
+          borderRadius: `${radius}px`,
+          backgroundColor: 'rgb(210, 226, 205)', // sage-200
+          color: 'rgb(94, 90, 85)', // muted
+        }}
+        className={`relative inline-flex items-center justify-center font-semibold tracking-tight select-none opacity-60 cursor-not-allowed ${sizeClasses} ${className}`}
+        {...rest}
+      >
+        <span className="relative z-10 flex items-center justify-center gap-2">
+          {children}
+        </span>
+      </button>
+    );
+  }
 
   return (
     <button
@@ -98,10 +130,10 @@ export function SpecularButton({
         color: textColor,
         boxShadow:
           glow > 0
-            ? `0 0 ${glow * 16}px rgba(255, 255, 255, ${currentIntensity * 0.15})`
+            ? `0 4px 14px rgba(47, 74, 50, ${0.12 + currentIntensity * 0.1})`
             : undefined,
       }}
-      className={`relative inline-flex items-center justify-center font-semibold tracking-tight transition-all duration-200 select-none overflow-hidden cursor-pointer group active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${sizeClasses} ${className}`}
+      className={`relative inline-flex items-center justify-center font-semibold tracking-tight transition-all duration-200 select-none overflow-hidden cursor-pointer group active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--lm-sage-700,rgb(75,111,77))] ${sizeClasses} ${className}`}
       {...rest}
     >
       {/* Dynamic Specular Border Glow */}

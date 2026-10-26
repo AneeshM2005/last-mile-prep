@@ -13,9 +13,9 @@ interface MoreSheetProps {
 }
 
 const MORE_ITEMS = [
-  { to: '/words', label: 'My words', Icon: BookOpen },
-  { to: '/profile', label: 'My profile', Icon: UserRound },
+  { to: '/words', label: 'Personal dictionary', Icon: BookOpen },
   { to: '/omet', label: 'OMET', Icon: Compass },
+  { to: '/profile', label: 'My profile', Icon: UserRound },
   { to: '/feedback', label: 'Feedback', Icon: MessageSquare },
 ];
 

@@ -24,12 +24,14 @@ import { getConfig } from '../../data/configLoader';
 import { computeBaselineScoring } from '../../domain/baselineScoring';
 import { buildSwotProfile } from '../../domain/swot';
 
+import type { MockEntry } from '../../data/schemas';
+
 type DailyMinutes = 15 | 30 | 45 | 60 | 90;
 
 export function ProfilePage(): React.ReactElement {
   const navigate = useNavigate();
   const { showToast } = useToast();
-  const { data, updateProfile } = useStore();
+  const { data, updateProfile, setData } = useStore();
   const profile = data.profile;
 
   const [activeTab, setActiveTab] = useState<'swot' | 'settings'>('swot');
@@ -115,6 +117,77 @@ export function ProfilePage(): React.ReactElement {
     appClock.resetOffset();
     setOffsetInput(0);
     showToast('Returned to today.');
+  };
+
+  const handleLoadSampleMock = async () => {
+    try {
+      const res = await fetch('/content/sampleMock.json');
+      if (res.ok) {
+        const sample: MockEntry = await res.json();
+        setData((prev) => ({
+          ...prev,
+          mocks: [sample, ...prev.mocks.filter((m) => m.id !== sample.id)],
+        }));
+        logEvent('mock_summary_viewed', 'demo_tools');
+        showToast('Loaded sample mock (AIMCAT 2026).');
+      } else {
+        throw new Error('Not found');
+      }
+    } catch {
+      const fallbackSample: MockEntry = {
+        id: '00000000-0000-0000-0000-000000000099',
+        label: 'AIMCAT 2026 Sample Mock',
+        date: '2026-10-15',
+        provider: 'TIME',
+        mockType: 'full',
+        sections: [
+          {
+            section: 'VARC',
+            questionCount: 24,
+            actualScore: 15,
+            savedAt: '2026-10-15T10:40:00.000Z',
+            records: [
+              ...Array.from({ length: 7 }, (_, i) => ({ n: i + 1, type: 'Reading Comprehension', step1: 'correct' as const, step2: 'fast' as const, outcomeCode: 'CORRECT_FAST' as const })),
+              ...Array.from({ length: 2 }, (_, i) => ({ n: i + 8, type: 'Para Summary', step1: 'correct' as const, step2: 'slow' as const, outcomeCode: 'CORRECT_SLOW' as const })),
+              ...Array.from({ length: 2 }, (_, i) => ({ n: i + 10, type: 'Para Jumble', step1: 'wrong' as const, step2: 'can_solve' as const, outcomeCode: 'WRONG_CAN' as const })),
+              ...Array.from({ length: 4 }, (_, i) => ({ n: i + 12, type: 'Reading Comprehension', step1: 'correct' as const, step2: 'guessed' as const, outcomeCode: 'CORRECT_GUESSED' as const })),
+              ...Array.from({ length: 4 }, (_, i) => ({ n: i + 16, type: 'Odd Sentence Out', step1: 'left' as const, step2: 'cannot_solve' as const, outcomeCode: 'LEFT_CANNOT' as const })),
+              ...Array.from({ length: 5 }, (_, i) => ({ n: i + 20, type: 'Reading Comprehension', step1: 'wrong' as const, step2: 'cannot_solve' as const, outcomeCode: 'WRONG_CANNOT' as const })),
+            ],
+          },
+          {
+            section: 'LRDI',
+            questionCount: 22,
+            actualScore: 12,
+            savedAt: '2026-10-15T11:25:00.000Z',
+            records: [
+              ...Array.from({ length: 4 }, (_, i) => ({ n: i + 1, type: 'Data Interpretation - Tables', step1: 'correct' as const, step2: 'fast' as const, outcomeCode: 'CORRECT_FAST' as const })),
+              ...Array.from({ length: 5 }, (_, i) => ({ n: i + 5, type: 'Seating Arrangement', step1: 'correct' as const, step2: 'slow' as const, outcomeCode: 'CORRECT_SLOW' as const })),
+              ...Array.from({ length: 4 }, (_, i) => ({ n: i + 10, type: 'Data Interpretation - Charts', step1: 'left' as const, step2: 'can_solve' as const, outcomeCode: 'LEFT_CAN' as const })),
+              ...Array.from({ length: 9 }, (_, i) => ({ n: i + 14, type: 'Games and Tournaments', step1: 'left' as const, step2: 'cannot_solve' as const, outcomeCode: 'LEFT_CANNOT' as const })),
+            ],
+          },
+          {
+            section: 'QA',
+            questionCount: 22,
+            actualScore: 6,
+            savedAt: '2026-10-15T12:10:00.000Z',
+            records: [
+              ...Array.from({ length: 3 }, (_, i) => ({ n: i + 1, type: 'Arithmetic', step1: 'correct' as const, step2: 'fast' as const, outcomeCode: 'CORRECT_FAST' as const })),
+              ...Array.from({ length: 2 }, (_, i) => ({ n: i + 4, type: 'Algebra', step1: 'correct' as const, step2: 'slow' as const, outcomeCode: 'CORRECT_SLOW' as const })),
+              ...Array.from({ length: 3 }, (_, i) => ({ n: i + 6, type: 'Geometry', step1: 'wrong' as const, step2: 'can_solve' as const, outcomeCode: 'WRONG_CAN' as const })),
+              ...Array.from({ length: 14 }, (_, i) => ({ n: i + 9, type: 'Number Systems', step1: 'left' as const, step2: 'cannot_solve' as const, outcomeCode: 'LEFT_CANNOT' as const })),
+            ],
+          },
+        ],
+      };
+      setData((prev) => ({
+        ...prev,
+        mocks: [fallbackSample, ...prev.mocks.filter((m) => m.id !== fallbackSample.id)],
+      }));
+      logEvent('mock_summary_viewed', 'demo_tools');
+      showToast('Loaded sample mock (AIMCAT 2026).');
+    }
   };
 
   return (
@@ -397,6 +470,18 @@ export function ProfilePage(): React.ReactElement {
                   Back to today
                 </Button>
               )}
+            </div>
+
+            <div className="pt-3 border-t border-[var(--lm-sage-200)] flex items-center justify-between">
+              <div>
+                <p className="text-body-strong text-[var(--lm-ink)] m-0">Sample mock data</p>
+                <p className="text-small text-[var(--lm-text-muted)] m-0">
+                  Load the AIMCAT 2026 worked example mock into your saved mocks.
+                </p>
+              </div>
+              <Button variant="secondary" onClick={handleLoadSampleMock}>
+                Load sample mock
+              </Button>
             </div>
           </Card>
 

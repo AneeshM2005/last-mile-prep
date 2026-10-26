@@ -125,7 +125,7 @@ describe('Milestone M8: Words and Passage Reading Screens', () => {
       </AppContext.Provider>,
     );
 
-    expect(screen.getByText('My Words')).toBeInTheDocument();
+    expect(screen.getByText('Personal dictionary')).toBeInTheDocument();
     expect(screen.getByText(/No vocabulary cards yet/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Read a Passage Now/i })).toBeInTheDocument();
   });

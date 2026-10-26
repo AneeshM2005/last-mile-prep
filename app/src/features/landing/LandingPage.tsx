@@ -1,13 +1,11 @@
 /**
- * LandingPage.tsx – Aesthetic first impression landing screen.
- * Incorporates React Bits GradientWaves, ScrollExpand with custom train-window backdrop, and SpecularButton.
- * design.md 8.0, PRD M1.1.
- * Route: /welcome
+ * LandingPage.tsx – Aesthetic editorial landing screen for Last Mile.
+ * Top-to-bottom composition on a fixed GradientWaves veil with ScrollExpand hero.
+ * Section 1, 2A, 2B, 3.
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { Badge } from '../../ui/Badge';
 import { Card } from '../../ui/Card';
 import { useAppContext } from '../../app/providers';
 import { useStore } from '../../data/store';
@@ -17,7 +15,8 @@ import { SpecularButton } from '../../ui/animations/SpecularButton';
 import {
   Compass,
   Target,
-  Sparkles,
+  ClipboardList,
+  RefreshCw,
   BookOpen,
   ArrowRight,
   ShieldCheck,
@@ -29,255 +28,325 @@ export function LandingPage(): React.ReactElement {
   const { config } = useAppContext();
   const profile = useStore((s) => s.data.profile);
 
-  // If user already completed onboarding, redirect directly to /
+  // Lazy-mount waves after first paint & hero load to never delay initial paint
+  const [wavesMounted, setWavesMounted] = useState<boolean>(false);
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
+
+  useEffect(() => {
+    // Reset scroll to top on enter
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+
+      const timer = setTimeout(() => {
+        setWavesMounted(true);
+      }, 100);
+
+      const handleScroll = () => {
+        const scrolled = Math.max(0, window.scrollY || 0);
+        const ratio = Math.min(1, scrolled / 300);
+        setScrollProgress(ratio);
+      };
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, []);
+
+  // If user already completed onboarding, redirect to /
   if (profile?.onboardingStep === 'done') {
     return <Navigate to="/" replace />;
   }
 
   const brandName = config?.app.brand.name || 'Last Mile';
+  const landingCopy = config?.copy?.landing as Record<string, string> | undefined;
+  const headline = landingCopy?.headline || 'The last stretch, one steady step at a time.';
+  const sub = landingCopy?.sub || 'Strategy, timing and a calmer routine for the final weeks before CAT. Built from your own practice.';
+  const ctaText = landingCopy?.cta || 'Get started';
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   return (
-    <div className="relative min-h-screen bg-[var(--lm-bg)] dark:bg-zinc-950 text-[var(--lm-ink)] selection:bg-indigo-100 dark:selection:bg-indigo-950 overflow-x-hidden flex flex-col justify-between font-sans">
-      {/* Skip to main content link for keyboard users */}
+    <div className="relative min-h-screen bg-[var(--lm-bg)] text-[var(--lm-ink)] overflow-x-hidden font-sans flex flex-col justify-between selection:bg-[var(--lm-sage-100)]">
+      {/* Skip to main content */}
       <a
         href="#landing-main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[var(--lm-ink)] text-white rounded-[var(--lm-radius-pill)] shadow-md"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-50 px-4 py-2 bg-[var(--lm-sage-900)] text-white rounded-full shadow-md text-sm font-semibold"
       >
         Skip to main content
       </a>
 
-      {/* Floating Header */}
-      <header className="sticky top-0 z-40 backdrop-blur-md bg-white/70 dark:bg-zinc-900/70 border-b border-black/[0.06] dark:border-white/[0.08] transition-all">
-        <div className="max-w-[1280px] w-full mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-600 to-amber-500 flex items-center justify-center text-white shadow-sm">
+      {/* 2B. Fixed Full-Viewport Living Backdrop: GradientWaves */}
+      {wavesMounted && (
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
+          style={{ opacity: 0.85 }}
+        >
+          <GradientWaves
+            lightMode={true}
+            backgroundColor="transparent"
+            horizonColor="rgb(181, 205, 176)" // sage-300
+            waveColor="rgb(127, 160, 122)"    // sage-500
+            crestColor="rgb(255, 255, 255)"
+            speed={0.25}
+            amplitude={2.0}
+            waveScale={0.5}
+            relief={0.8}
+            sheen={0.15}
+            brightness={1.0}
+            opacity={0.85}
+            grain={0.12}
+            intro={true}
+            mouseInteraction={true}
+            parallaxStrength={0.3}
+            mouseStrength={0.5}
+            swellOnClick={true}
+            quality={isMobile ? 'low' : 'medium'}
+            dpr={isMobile ? 1.25 : 1.5}
+          />
+        </div>
+      )}
+
+      {/* Main Content Area sitting above waves */}
+      <main id="landing-main" className="relative z-10 flex-1 flex flex-col items-center">
+        {/* Top Slim Wordmark: sits in margin above frame, fades out as frame opens */}
+        <header
+          className="w-full max-w-[1280px] mx-auto px-6 pt-5 pb-3 flex items-center justify-between transition-opacity duration-200"
+          style={{ opacity: Math.max(0, 1 - scrollProgress * 1.5) }}
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)] flex items-center justify-center border border-[var(--lm-sage-200)]">
               <Compass className="w-4 h-4" />
             </div>
-            <span className="font-bold text-xl tracking-tight text-[var(--lm-ink)] font-serif">
+            <span className="font-serif font-bold text-lg tracking-tight text-[var(--lm-ink)]">
               {brandName}
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Badge variant="prototype" />
-            <button
-              type="button"
-              onClick={() => navigate('/onboarding')}
-              className="hidden sm:inline-flex items-center text-xs font-semibold text-zinc-600 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+          <button
+            type="button"
+            onClick={() => navigate('/onboarding')}
+            className="inline-flex items-center text-xs font-semibold text-[var(--lm-sage-700)] hover:underline cursor-pointer"
+          >
+            Start profile <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </button>
+        </header>
+
+        {/* 1. Hero: ScrollExpand picture */}
+        <section className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 pt-2 pb-12 flex flex-col items-center">
+          <ScrollExpand
+            src="/images/backdrop.jpg"
+            alt="Scenic view from a train window looking out over mountains and green meadows"
+            title={headline}
+            scrollHint="Scroll"
+            useWindowScroll={true}
+            mediaZoom={1.15}
+          >
+            {/* 2. Opening moment revealed inside/under frame once opened */}
+            <div
+              className="max-w-xl p-6 sm:p-8 rounded-[var(--lm-radius-card)] border border-[var(--lm-sage-200)] shadow-sm"
+              style={{
+                backgroundColor: 'rgba(251, 252, 249, 0.92)',
+              }}
             >
-              Sign in / Start <ArrowRight className="w-3.5 h-3.5 ml-1" />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content Area */}
-      <main id="landing-main" className="flex-1 flex flex-col items-center">
-        {/* Hero Section with ScrollExpand & Ambient GradientWaves */}
-        <section className="relative w-full pt-8 pb-16 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto flex flex-col items-center">
-          {/* Subtle ambient background canvas */}
-          <div className="absolute inset-0 -top-24 h-[580px] pointer-events-none opacity-40 dark:opacity-30 overflow-hidden">
-            <GradientWaves
-              horizonColor="rgb(67, 56, 202)"
-              waveColor="rgb(245, 158, 11)"
-              crestColor="rgb(255, 255, 255)"
-              speed={0.25}
-              amplitude={2.0}
-              relief={0.8}
-              lightAngle={135}
-              mouseInteraction
-              swellOnClick={false}
-              opacity={0.45}
-            />
-          </div>
-
-          {/* Top Tag & Editorial Heading */}
-          <div className="relative z-10 text-center max-w-3xl mx-auto space-y-4 mb-8">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 dark:bg-zinc-800/80 border border-black/[0.08] dark:border-white/[0.1] shadow-xs backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
-                CAT 2026 Preparation Protocol
+              <span className="text-xs font-bold uppercase tracking-widest text-[var(--lm-sage-700)] block mb-1">
+                A Calmer Approach to CAT
               </span>
-            </div>
+              <p className="text-sm sm:text-base text-[var(--lm-ink)] leading-relaxed font-medium mb-5">
+                {sub}
+              </p>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <SpecularButton
+                  size="lg"
+                  radius={9999}
+                  onClick={() => navigate('/onboarding')}
+                  aria-label="Get started with Last Mile"
+                  className="w-full sm:w-auto"
+                >
+                  <span>{ctaText}</span>
+                  <ArrowRight className="w-4 h-4 ml-0.5" />
+                </SpecularButton>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--lm-ink)] font-serif leading-[1.12]">
-              The last stretch, one steady step at a time.
-            </h1>
-
-            <p className="text-base sm:text-lg lg:text-xl text-[var(--lm-text-muted)] max-w-2xl mx-auto leading-relaxed">
-              Strategy, timing and a calmer routine for the final weeks before CAT. Built from your own practice.
-            </p>
-
-            {/* Specular Button CTA */}
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <SpecularButton
-                size="lg"
-                radius={24}
-                baseColor="rgb(30, 30, 36)"
-                lineColor="rgb(255, 255, 255)"
-                tint="rgb(129, 140, 248)"
-                tintOpacity={0.08}
-                intensity={1}
-                idleIntensity={0.4}
-                shineSize={12}
-                shineFade={40}
-                glow={1}
-                onClick={() => navigate('/onboarding')}
-                className="w-full sm:w-auto px-10 py-4 shadow-xl"
-              >
-                Get started
-                <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-              </SpecularButton>
-
-              <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-                <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-                <span>Zero registration required · 100% on-device</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Interactive ScrollExpand with the User's Scenic Train Window Backdrop */}
-          <div className="relative z-10 w-full mt-4">
-            <ScrollExpand
-              src="/images/backdrop.jpg"
-              alt="View from train window overlooking mountains during your journey"
-              title="Journey to Top B-Schools"
-              scrollHint="Scroll to expand view"
-              mediaZoom={1.2}
-            >
-              <div className="max-w-xl bg-black/40 backdrop-blur-md p-6 sm:p-8 rounded-2xl border border-white/15 shadow-2xl">
-                <span className="text-xs font-bold uppercase tracking-widest text-amber-300">
-                  Calm Execution
+                <span className="text-xs text-[var(--lm-text-muted)] font-medium">
+                  Your data stays on this device.
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-bold text-white mt-1 font-serif">
-                  A scenic path through test-taking composure.
-                </h2>
-                <p className="text-sm text-zinc-200 mt-2 leading-relaxed">
-                  Every CAT question is a landscape to survey: scan for rapid wins, let go of dead ends gracefully, and bank your potential score.
-                </p>
               </div>
-            </ScrollExpand>
-          </div>
+            </div>
+          </ScrollExpand>
         </section>
 
-        {/* Feature Bento Grid: Classy, calm, and purposeful */}
+        {/* 3. Diagnostic Architecture: Editorial two-column layout */}
         <section className="w-full py-16 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
-              Diagnostic Architecture
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-5 space-y-3">
+              <span className="text-xs font-bold font-mono tracking-widest text-[var(--lm-sage-700)] uppercase">
+                01 · Methodology
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[var(--lm-ink)] leading-tight">
+                Diagnostic architecture for the decisive last weeks.
+              </h2>
+              <p className="text-base text-[var(--lm-text-muted)] leading-relaxed">
+                Most platforms drill questions without addressing why candidates drop marks. Last Mile deconstructs your test-taking behaviour into clear, fixable dimensions: decision speed, selection judgement, and composure recovery.
+              </p>
+            </div>
+
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Card className="p-6 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] shadow-[var(--lm-shadow-card)] flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-9 h-9 rounded-xl bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)] flex items-center justify-center">
+                    <Target className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-bold font-serif text-[var(--lm-ink)]">
+                    Honest Potential
+                  </h3>
+                  <p className="text-sm text-[var(--lm-text-muted)] leading-relaxed">
+                    Identify your true ceiling by separating knowledge errors from pacing leaks. Learn what you can score when solvable questions are not abandoned.
+                  </p>
+                </div>
+              </Card>
+
+              <Card className="p-6 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] shadow-[var(--lm-shadow-card)] flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="w-9 h-9 rounded-xl bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)] flex items-center justify-center">
+                    <Compass className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-bold font-serif text-[var(--lm-ink)]">
+                    Non-Linear Scanning
+                  </h3>
+                  <p className="text-sm text-[var(--lm-text-muted)] leading-relaxed">
+                    Train the instinct to triage. Pick the easiest questions first and bypass high-friction traps that sap energy and time.
+                  </p>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. Quiet Feature Strip: 5 light cards with sage icon chips */}
+        <section className="w-full py-12 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto bg-[var(--lm-sage-50)] border-y border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] my-8">
+          <div className="mb-8">
+            <span className="text-xs font-bold font-mono tracking-widest text-[var(--lm-sage-700)] uppercase">
+              02 · System Overview
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--lm-ink)] font-serif mt-2">
-              Everything built for the decisive last mile.
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[var(--lm-ink)] mt-1">
+              Five quiet pillars of practice
             </h2>
-            <p className="text-sm sm:text-base text-[var(--lm-text-muted)] mt-2">
-              Four intentional modules addressing what coaching institutes overlook: decision latency, leakage, and panic recovery.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1: Baseline & SWOT */}
-            <Card className="p-6 flex flex-col justify-between hover:shadow-lg transition-all duration-300 border-t-4 border-t-indigo-500 bg-white dark:bg-zinc-900">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
-                  <Target className="w-5 h-5" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* Feature 1 */}
+            <Card className="p-6 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] shadow-xs flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)] flex items-center justify-center">
+                  <Target className="w-4 h-4" />
                 </div>
-                <h3 className="text-lg font-bold text-[var(--lm-ink)] font-serif">
-                  15-Min Baseline
+                <h3 className="text-base font-bold text-[var(--lm-ink)]">
+                  Baseline and profile
                 </h3>
-                <p className="text-xs sm:text-sm text-[var(--lm-text-muted)] leading-relaxed">
-                  A balanced 12-question diagnostic across VARC, LRDI, and QA. Automatically constructs your dynamic 4-quadrant SWOT matrix.
+                <p className="text-sm text-[var(--lm-text-muted)] leading-relaxed">
+                  Twelve questions across VARC, LRDI, and QA. Maps your starting decision profile and builds an actionable SWOT matrix without pressure.
                 </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center text-xs font-semibold text-indigo-600 dark:text-indigo-400">
-                <span>Threats & Opportunities</span>
               </div>
             </Card>
 
-            {/* Card 2: Question Selection */}
-            <Card className="p-6 flex flex-col justify-between hover:shadow-lg transition-all duration-300 border-t-4 border-t-amber-500 bg-white dark:bg-zinc-900">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-                  <Compass className="w-5 h-5" />
+            {/* Feature 2 */}
+            <Card className="p-6 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] shadow-xs flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)] flex items-center justify-center">
+                  <Compass className="w-4 h-4" />
                 </div>
-                <h3 className="text-lg font-bold text-[var(--lm-ink)] font-serif">
-                  Selection Rounds
+                <h3 className="text-base font-bold text-[var(--lm-ink)]">
+                  Question selection
                 </h3>
-                <p className="text-xs sm:text-sm text-[var(--lm-text-muted)] leading-relaxed">
-                  Train non-linear scanning. Practice picking the 2-3 most solvable problems from a 5-question grid under a gentle, quiet timer.
+                <p className="text-sm text-[var(--lm-text-muted)] leading-relaxed">
+                  Five QA questions in five minutes. Practice identifying which questions to solve and which to leave to bank your target score calmly.
                 </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center text-xs font-semibold text-amber-600 dark:text-amber-400">
-                <span>Eliminate Question Traps</span>
               </div>
             </Card>
 
-            {/* Card 3: Mock Potential & Leakage */}
-            <Card className="p-6 flex flex-col justify-between hover:shadow-lg transition-all duration-300 border-t-4 border-t-rose-500 bg-white dark:bg-zinc-900">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center">
-                  <Sparkles className="w-5 h-5" />
+            {/* Feature 3 */}
+            <Card className="p-6 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] shadow-xs flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)] flex items-center justify-center">
+                  <ClipboardList className="w-4 h-4" />
                 </div>
-                <h3 className="text-lg font-bold text-[var(--lm-ink)] font-serif">
-                  Mock Leakage Analysis
+                <h3 className="text-base font-bold text-[var(--lm-ink)]">
+                  Mock analysis
                 </h3>
-                <p className="text-xs sm:text-sm text-[var(--lm-text-muted)] leading-relaxed">
-                  Classify answers into 9 outcome codes. Calculate your true Potential Score: what you could score if known questions weren't dropped.
+                <p className="text-sm text-[var(--lm-text-muted)] leading-relaxed">
+                  Classify your mock decisions question by question into grades A through D. Reveal your potential score and diagnose pacing leaks.
                 </p>
-              </div>
-              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center text-xs font-semibold text-rose-600 dark:text-rose-400">
-                <span>Grade A to D Mapping</span>
               </div>
             </Card>
 
-            {/* Card 4: Spaced Revision & Words */}
-            <Card className="p-6 flex flex-col justify-between hover:shadow-lg transition-all duration-300 border-t-4 border-t-emerald-500 bg-white dark:bg-zinc-900">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
-                  <BookOpen className="w-5 h-5" />
+            {/* Feature 4 */}
+            <Card className="p-6 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] shadow-xs flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)] flex items-center justify-center">
+                  <RefreshCw className="w-4 h-4" />
                 </div>
-                <h3 className="text-lg font-bold text-[var(--lm-ink)] font-serif">
-                  Spaced Revision & Words
+                <h3 className="text-base font-bold text-[var(--lm-ink)]">
+                  Revision
                 </h3>
-                <p className="text-xs sm:text-sm text-[var(--lm-text-muted)] leading-relaxed">
-                  Automatic retention intervals at 1, 3, 9, 18 days. Read curated RC passages and tap unfamiliar words to practice 3D flashcards.
+                <p className="text-sm text-[var(--lm-text-muted)] leading-relaxed">
+                  Four scheduled intervals (1, 3, 7, 14, 30 days) to keep core formulas, traps, and problem patterns fresh before test day.
                 </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-                <span>Active Recall Protocol</span>
+            </Card>
+
+            {/* Feature 5 */}
+            <Card className="p-6 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] shadow-xs flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)] flex items-center justify-center">
+                  <BookOpen className="w-4 h-4" />
+                </div>
+                <h3 className="text-base font-bold text-[var(--lm-ink)]">
+                  Personal dictionary
+                </h3>
+                <p className="text-sm text-[var(--lm-text-muted)] leading-relaxed">
+                  Read curated editorial passages and tap unfamiliar words to add them directly to your personal active-recall study flashcards.
+                </p>
               </div>
             </Card>
           </div>
         </section>
 
-        {/* Calm Manifesto Banner */}
-        <section className="w-full py-12 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
-          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-indigo-900 to-slate-900 text-white relative overflow-hidden shadow-xl">
-            <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-radial from-amber-500/20 to-transparent pointer-events-none" />
-
+        {/* 5. "Calm by design" Section (renamed from Anti-anxiety guarantee) */}
+        <section className="w-full py-14 px-4 sm:px-6 lg:px-8 max-w-[1280px] mx-auto">
+          <div className="p-8 sm:p-12 rounded-[var(--lm-radius-card)] bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] shadow-[var(--lm-shadow-card)] relative overflow-hidden">
             <div className="relative z-10 max-w-2xl space-y-4">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>The Anti-Anxiety Guarantee</span>
+              <span className="text-xs font-bold font-mono tracking-widest text-[var(--lm-sage-700)] uppercase">
+                03 · Philosophy
+              </span>
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--lm-sage-700)]">
+                <CheckCircle2 className="w-4 h-4 text-[var(--lm-sage-700)]" />
+                <span>Calm by design</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold font-serif">
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-[var(--lm-ink)]">
                 No streak punishments. No public rankings.
               </h2>
-              <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
-                Most test platforms fuel anxiety to drive artificial engagement. Last Mile is designed for clarity: diagnostic signal, deliberate practice, and zero guilt if life gets busy.
+              <p className="text-sm sm:text-base text-[var(--lm-text-muted)] leading-relaxed">
+                Most test platforms fuel anxiety to drive artificial engagement. Last Mile is designed for clarity: diagnostic signal, deliberate practice, and zero guilt if life gets busy. A practice aid that keeps practice calm, not a promise to eliminate anxiety.
               </p>
 
-              <div className="pt-2">
+              {/* 6. Closing Call to Action with SpecularButton */}
+              <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <SpecularButton
                   size="md"
-                  radius={20}
-                  baseColor="rgb(255, 255, 255)"
-                  textColor="rgb(15, 23, 42)"
-                  lineColor="rgb(99, 102, 241)"
-                  tint="rgb(224, 231, 255)"
+                  radius={9999}
                   onClick={() => navigate('/onboarding')}
+                  aria-label="Start your prep profile"
                 >
-                  Start Your Prep Profile
+                  Start your prep profile
                 </SpecularButton>
+
+                <div className="flex items-center gap-2 text-xs text-[var(--lm-text-muted)]">
+                  <ShieldCheck className="w-4 h-4 text-[var(--lm-sage-700)] shrink-0" />
+                  <span>Private and local on this device</span>
+                </div>
               </div>
             </div>
           </div>
@@ -285,15 +354,13 @@ export function LandingPage(): React.ReactElement {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-black/[0.06] dark:border-white/[0.08] py-8 px-6 text-center text-xs text-zinc-500 dark:text-zinc-400">
+      <footer className="border-t border-[var(--lm-sage-200)] py-8 px-6 text-center text-xs text-[var(--lm-text-muted)] bg-[var(--lm-bg)]">
         <div className="max-w-[1280px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 font-serif font-bold text-sm text-[var(--lm-ink)]">
             <span>{brandName}</span>
-            <span className="text-zinc-400">·</span>
-            <span className="font-sans font-normal text-xs text-zinc-500">Prototype v1.0</span>
           </div>
-          <p className="m-0">
-            Local-only data. Never transmitted to external servers. Designed for CAT aspirants.
+          <p className="m-0 text-xs">
+            All data stays on this device. Nothing is sent automatically.
           </p>
         </div>
       </footer>

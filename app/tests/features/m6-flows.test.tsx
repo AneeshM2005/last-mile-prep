@@ -43,7 +43,7 @@ describe('Milestone M6 Screens Flow (Home, Practice Hub, OMET, Feedback)', () =>
     expect(screen.getByText(/0 of 5 milestones/i)).toBeInTheDocument();
   });
 
-  it('renders PracticeHubPage with cards for all practice modes', () => {
+  it('renders PracticeHubPage with cards for Baseline and Question selection', () => {
     render(
       <MemoryRouter initialEntries={['/practice']}>
         <Routes>
@@ -55,10 +55,6 @@ describe('Milestone M6 Screens Flow (Home, Practice Hub, OMET, Feedback)', () =>
     expect(screen.getByRole('heading', { level: 1, name: /practice/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: /baseline diagnostic/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { level: 2, name: /question selection/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2, name: /mock analysis/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2, name: /spaced revision/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2, name: /reading & vocabulary/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2, name: /omet preparation/i })).toBeInTheDocument();
   });
 
   it('renders OmetPage and logs omet_teaser_viewed event', () => {

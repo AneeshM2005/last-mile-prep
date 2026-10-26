@@ -103,10 +103,10 @@ export function WordsPage(): React.ReactElement {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-              My Words
+            <h1 className="text-2xl font-bold text-[var(--lm-ink)] font-serif">
+              Personal dictionary
             </h1>
-            <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[var(--lm-sage-100)] text-[var(--lm-sage-700)]">
               Vocabulary Cards
             </span>
           </div>

@@ -10,14 +10,7 @@ import { Button } from '../../ui/Button';
 import { Card } from '../../ui/Card';
 import { Badge } from '../../ui/Badge';
 import { useStore } from '../../data/store';
-import {
-  Compass,
-  CheckCircle2,
-  BookOpen,
-  ClipboardList,
-  RefreshCw,
-  ArrowRight,
-} from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export function PracticeHubPage(): React.ReactElement {
   const navigate = useNavigate();
@@ -25,7 +18,6 @@ export function PracticeHubPage(): React.ReactElement {
 
   const isBaselineDone = Boolean(data.baseline && data.baseline.status === 'completed');
   const roundsCompletedCount = data.rounds.filter((r) => r.status === 'completed').length;
-  const mocksRecordedCount = data.mocks.length;
 
   return (
     <div className="flex flex-col gap-6 max-w-[800px] mx-auto py-6 animate-fade-in">
@@ -38,10 +30,10 @@ export function PracticeHubPage(): React.ReactElement {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* 1. Baseline Diagnostic */}
-        <Card className="p-6 flex flex-col justify-between gap-4">
+        <Card className="p-6 flex flex-col justify-between gap-4 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] shadow-[var(--lm-shadow-card)]">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <span className="text-caption font-bold text-[var(--lm-accent-strong)] uppercase tracking-wider">
+              <span className="text-caption font-bold text-[var(--lm-sage-700)] uppercase tracking-wider">
                 Starting point
               </span>
               <div className="flex items-center gap-1.5">
@@ -76,10 +68,10 @@ export function PracticeHubPage(): React.ReactElement {
         </Card>
 
         {/* 2. Question Selection Rounds */}
-        <Card className="p-6 flex flex-col justify-between gap-4">
+        <Card className="p-6 flex flex-col justify-between gap-4 bg-[var(--lm-surface)] border border-[var(--lm-sage-200)] rounded-[var(--lm-radius-card)] shadow-[var(--lm-shadow-card)]">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <span className="text-caption font-bold text-[var(--lm-accent-strong)] uppercase tracking-wider">
+              <span className="text-caption font-bold text-[var(--lm-sage-700)] uppercase tracking-wider">
                 Timing & Selection
               </span>
               <div className="flex items-center gap-1.5">
@@ -108,131 +100,6 @@ export function PracticeHubPage(): React.ReactElement {
               className="w-full sm:w-auto"
             >
               Start rounds
-            </Button>
-          </div>
-        </Card>
-
-        {/* 3. Mock Analysis */}
-        <Card className="p-6 flex flex-col justify-between gap-4">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <span className="text-caption font-bold text-[var(--lm-accent-strong)] uppercase tracking-wider">
-                Honest potential
-              </span>
-              {mocksRecordedCount > 0 && (
-                <span className="text-caption font-semibold text-[var(--lm-text-muted)] font-mono">
-                  {mocksRecordedCount} mocks
-                </span>
-              )}
-            </div>
-
-            <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0 flex items-center gap-2">
-              <ClipboardList size={20} className="text-[var(--lm-accent-strong)]" />
-              <span>Mock analysis</span>
-            </h2>
-
-            <p className="text-body text-[var(--lm-text-muted)] leading-relaxed m-0">
-              Classify your mock decisions question by question and reveal your potential score: what you could score with steady choices.
-            </p>
-          </div>
-
-          <div className="pt-2">
-            <Button
-              variant="secondary"
-              onClick={() => navigate('/mock')}
-              className="w-full sm:w-auto"
-            >
-              Open mock analysis
-            </Button>
-          </div>
-        </Card>
-
-        {/* 4. Spaced Revision */}
-        <Card className="p-6 flex flex-col justify-between gap-4">
-          <div className="flex flex-col gap-2">
-            <span className="text-caption font-bold text-[var(--lm-accent-strong)] uppercase tracking-wider">
-              Retention
-            </span>
-
-            <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0 flex items-center gap-2">
-              <RefreshCw size={20} className="text-[var(--lm-accent-strong)]" />
-              <span>Spaced revision</span>
-            </h2>
-
-            <p className="text-body text-[var(--lm-text-muted)] leading-relaxed m-0">
-              Four scheduled reminder intervals (1, 3, 7, 14, 30 days) to keep core formulas and rules fresh before the exam.
-            </p>
-          </div>
-
-          <div className="pt-2">
-            <Button
-              variant="secondary"
-              onClick={() => navigate('/revision')}
-              className="w-full sm:w-auto"
-            >
-              View revision
-            </Button>
-          </div>
-        </Card>
-
-        {/* 5. Passage Reading */}
-        <Card className="p-6 flex flex-col justify-between gap-4">
-          <div className="flex flex-col gap-2">
-            <span className="text-caption font-bold text-[var(--lm-accent-strong)] uppercase tracking-wider">
-              Verbal & Vocabulary
-            </span>
-
-            <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0 flex items-center gap-2">
-              <BookOpen size={20} className="text-[var(--lm-accent-strong)]" />
-              <span>Reading & Vocabulary</span>
-            </h2>
-
-            <p className="text-body text-[var(--lm-text-muted)] leading-relaxed m-0">
-              Read curated editorial passages and tap unfamiliar words to add them directly to your personal flashcards.
-            </p>
-          </div>
-
-          <div className="pt-2">
-            <Button
-              variant="secondary"
-              onClick={() => navigate('/words')}
-              className="w-full sm:w-auto"
-            >
-              Open words
-            </Button>
-          </div>
-        </Card>
-
-        {/* 6. OMET Teaser */}
-        <Card className="p-6 flex flex-col justify-between gap-4 bg-[var(--lm-inset)] border border-[var(--lm-border)]">
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <span className="text-caption font-bold text-[var(--lm-text-muted)] uppercase tracking-wider">
-                Beyond CAT
-              </span>
-              <span className="text-caption font-bold px-2 py-0.5 rounded-[var(--lm-radius-pill)] bg-[var(--lm-surface)] border border-[var(--lm-border)] text-[var(--lm-ink)]">
-                Coming soon
-              </span>
-            </div>
-
-            <h2 className="text-h2 font-semibold text-[var(--lm-ink)] m-0 flex items-center gap-2">
-              <Compass size={20} className="text-[var(--lm-accent-strong)]" />
-              <span>OMET preparation</span>
-            </h2>
-
-            <p className="text-body text-[var(--lm-text-muted)] leading-relaxed m-0">
-              Explore how strategy and pacing shift for XAT, SNAP, NMAT, and other management entrance examinations.
-            </p>
-          </div>
-
-          <div className="pt-2">
-            <Button
-              variant="ghost"
-              onClick={() => navigate('/omet')}
-              className="w-full sm:w-auto inline-flex items-center gap-1"
-            >
-              <span>Explore OMETs</span>
-              <ArrowRight size={16} />
             </Button>
           </div>
         </Card>

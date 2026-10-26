@@ -4,6 +4,9 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { MockPage } from '../../src/features/mock/MockPage';
 import { useStore } from '../../src/data/store';
 import { resetApp } from '../../src/data/reset';
+import type { MockEntry } from '../../src/data/schemas';
+
+import sampleMockData from '../../public/content/sampleMock.json';
 
 describe('P1-11 Mock Analysis Flow', () => {
   beforeEach(() => {
@@ -20,7 +23,13 @@ describe('P1-11 Mock Analysis Flow', () => {
     });
   });
 
-  it('renders start screen and loads sample mock reproducing 33, 39, 15, total 87', async () => {
+  it('renders start screen, allows opening instructions via link, and views loaded sample mock reproducing 33, 39, 15, total 87', async () => {
+    // Populate store with the real sample mock
+    useStore.getState().setData((prev) => ({
+      ...prev,
+      mocks: [sampleMockData as unknown as MockEntry],
+    }));
+
     render(
       <MemoryRouter initialEntries={['/mock']}>
         <Routes>
@@ -31,12 +40,17 @@ describe('P1-11 Mock Analysis Flow', () => {
 
     expect(screen.getByRole('heading', { level: 1, name: /mock analysis/i })).toBeInTheDocument();
 
-    const loadSampleBtns = screen.getAllByRole('button', { name: /load sample mock/i });
-    expect(loadSampleBtns.length).toBeGreaterThan(0);
+    // Verify "How mock analysis works" link is present and opens instructions
+    const howWorksLink = screen.getByRole('button', { name: /how mock analysis works/i });
+    expect(howWorksLink).toBeInTheDocument();
 
-    fireEvent.click(loadSampleBtns[0]);
+    // Verify sample mock card is displayed with "View summary"
+    const viewSummaryBtn = screen.getByRole('button', { name: /view summary/i });
+    expect(viewSummaryBtn).toBeInTheDocument();
 
-    // Should navigate to summary
+    fireEvent.click(viewSummaryBtn);
+
+    // Summary heading
     expect(await screen.findByRole('heading', { level: 1, name: /aimcat 2026 sample mock — summary/i })).toBeInTheDocument();
 
     // Verbatim BR-14 sentence
@@ -55,10 +69,11 @@ describe('P1-11 Mock Analysis Flow', () => {
     expect(screen.getByText(/QA 15/i)).toBeInTheDocument();
 
     // Gap to work on: +54
-    expect(screen.getByText(/Gap to work on: \+54/i)).toBeInTheDocument();
+    expect(screen.getByText(/Gap to work on/i)).toBeInTheDocument();
+    expect(screen.getByText('+54')).toBeInTheDocument();
   });
 
-  it('allows starting a new section, selecting Step 1 & 2 to update GradeChip, and saving section', () => {
+  it('allows starting mock analysis, going through instructions & details, and classifying questions', () => {
     render(
       <MemoryRouter initialEntries={['/mock']}>
         <Routes>
@@ -67,17 +82,47 @@ describe('P1-11 Mock Analysis Flow', () => {
       </MemoryRouter>
     );
 
-    // Click "Start mock"
-    fireEvent.click(screen.getByRole('button', { name: /start mock/i }));
+    // 1. Click "Start mock analysis" on start screen
+    const startBtns = screen.getAllByRole('button', { name: /start mock analysis/i });
+    fireEvent.click(startBtns[0]);
 
-    // Click "Continue" in modal
-    fireEvent.click(screen.getByRole('button', { name: /continue/i }));
+    // 2. Instructions view appears
+    expect(screen.getByRole('heading', { level: 1, name: /how mock analysis works/i })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /continue to mock details/i }));
 
-    // Choose section view
+    // 3. Mock details view appears
+    expect(screen.getByRole('heading', { level: 1, name: /mock details/i })).toBeInTheDocument();
+
+    // Enter name
+    const nameInput = screen.getByPlaceholderText(/e\.g\. AIMCAT 2026/i);
+    fireEvent.change(nameInput, { target: { value: 'Pro Mock 1' } });
+
+    // Select provider
+    const providerSelect = screen.getByRole('combobox');
+    fireEvent.change(providerSelect, { target: { value: 'IMS' } });
+
+    // Enter date
+    const dateInput = screen.getByLabelText(/date taken/i);
+    fireEvent.change(dateInput, { target: { value: '2026-10-26' } });
+
+    // Select mock type
+    const fullMockBtn = screen.getByRole('button', { name: /full-length mock/i });
+    fireEvent.click(fullMockBtn);
+
+    // Click "Continue to analysis"
+    fireEvent.click(screen.getByRole('button', { name: /continue to analysis/i }));
+
+    // 4. Choose a section view appears
     expect(screen.getByRole('heading', { level: 1, name: /choose a section/i })).toBeInTheDocument();
+
+    // Select VARC section
+    const varcSection = screen.getByText('VARC');
+    fireEvent.click(varcSection);
+
+    // Click "Start section"
     fireEvent.click(screen.getByRole('button', { name: /start section/i }));
 
-    // Now in Entry view
+    // 5. Entry view appears
     expect(screen.getByText(/Question 1/i)).toBeInTheDocument();
 
     // Step 1: Attempted and correct
@@ -97,8 +142,11 @@ describe('P1-11 Mock Analysis Flow', () => {
     // Save section
     fireEvent.click(screen.getByRole('button', { name: /save section/i }));
 
-    // Now in summary view
+    // 6. Summary view appears
     expect(screen.getByRole('heading', { level: 1, name: /summary/i })).toBeInTheDocument();
     expect(useStore.getState().data.mocks.length).toBeGreaterThan(0);
+    const saved = useStore.getState().data.mocks[0];
+    expect(saved.provider).toBe('IMS');
+    expect(saved.mockType).toBe('full');
   });
 });

@@ -9,26 +9,41 @@
 
 /* ── Raw tokens ─────────────────────────────────────────────── */
 :root {
+  color-scheme: light;
+
   /* Colours */
-  --lm-bg:               #FAF9F8;
+  --lm-bg:               #FBFCF9;
   --lm-surface:          #FFFFFF;
-  --lm-inset:            #F5F3F0;
-  --lm-sidebar:          #F3F1EE;
-  --lm-border:           #E6E3DE;
-  --lm-border-strong:    #8C867E;
+  --lm-inset:            #F4F8F2;
+  --lm-sidebar:          #F4F8F2;
+  --lm-border:           #D2E2CD;
+  --lm-border-strong:    #7FA07A;
   --lm-ink:              #2B2B2B;
   --lm-text-muted:       #5E5A55;
-  --lm-btn-secondary:    #F0EDE8;
-  --lm-btn-secondary-hover: #E7E2DA;
-  --lm-accent:           #657E8E;
-  --lm-accent-strong:    #3F5766;
-  --lm-accent-soft:      #E4EBEF;
-  --lm-sample:           #EFE9DC;
-  --lm-notice-bg:        #F6ECD9;
+  --lm-btn-secondary:    #F4F8F2;
+  --lm-btn-secondary-hover: #E6EFE3;
+  --lm-accent:           #4B6F4D;
+  --lm-accent-strong:    #2F4A32;
+  --lm-accent-soft:      #E6EFE3;
+  --lm-sample:           #FDF3D0;
+  --lm-notice-bg:        #FDF3D0;
   --lm-notice-text:      #7A4D0A;
-  --lm-scrim:            #1E2A33;
-  --lm-focus:            #3F5766;
+  --lm-scrim:            #2F4A32;
+  --lm-focus:            #4B6F4D;
   --lm-disabled-text:    #8C867E;
+
+  /* Sage Palette */
+  --lm-sage-50:          #F4F8F2;
+  --lm-sage-100:         #E6EFE3;
+  --lm-sage-200:         #D2E2CD;
+  --lm-sage-300:         #B5CDB0;
+  --lm-sage-500:         #7FA07A;
+  --lm-sage-700:         #4B6F4D;
+  --lm-sage-900:         #2F4A32;
+
+  /* Amber Palette */
+  --lm-amber-400:        #F5B400;
+  --lm-amber-100:        #FDF3D0;
 
   /* Grade colours */
   --lm-grade-a-fg:       #25594D;
@@ -42,6 +57,7 @@
 
   /* Radii */
   --lm-radius-pill:      9999px;
+  --lm-radius-card:      24px;
   --lm-radius-xl:        24px;
   --lm-radius-lg:        20px;
   --lm-radius-md:        16px;
@@ -64,12 +80,13 @@
   --lm-shadow-0:         none;
   --lm-shadow-1:         0 1px 2px rgba(43,43,43,.06);
   --lm-shadow-2:         0 12px 32px rgba(43,43,43,.12);
+  --lm-shadow-card:      0 4px 20px -2px rgba(75, 111, 77, 0.08);
 
   /* Motion */
   --lm-dur-fast:         120ms;
   --lm-dur-base:         200ms;
   --lm-dur-slow:         320ms;
-  --lm-ease-out:         cubic-bezier(.2,0,0,1);
+  --lm-ease-out:         cubic-bezier(.22,1,.36,1);
   --lm-ease-inout:       cubic-bezier(.4,0,.2,1);
 
   /* Z-index */
@@ -83,12 +100,13 @@
   --lm-z-toast:          60;
 
   /* Sky fallback gradient (no gradient in components; only here) */
-  --lm-sky-fallback:     linear-gradient(180deg, #C9D9E3 0%, #E6EEF2 55%, #F3EFE8 100%);
+  --lm-sky-fallback:     linear-gradient(180deg, #E6EFE3 0%, #F4F8F2 55%, #FBFCF9 100%);
 }
 
 /* ── Tailwind @theme mappings ───────────────────────────────── */
 @theme inline {
   /* Colours */
+  --color-canvas:        var(--lm-bg);
   --color-bg:            var(--lm-bg);
   --color-surface:       var(--lm-surface);
   --color-inset:         var(--lm-inset);
@@ -108,6 +126,19 @@
   --color-focus:         var(--lm-focus);
   --color-disabled-text: var(--lm-disabled-text);
 
+  /* Sage Palette */
+  --color-sage-50:       var(--lm-sage-50);
+  --color-sage-100:      var(--lm-sage-100);
+  --color-sage-200:      var(--lm-sage-200);
+  --color-sage-300:      var(--lm-sage-300);
+  --color-sage-500:      var(--lm-sage-500);
+  --color-sage-700:      var(--lm-sage-700);
+  --color-sage-900:      var(--lm-sage-900);
+
+  /* Amber Palette */
+  --color-amber-400:     var(--lm-amber-400);
+  --color-amber-100:     var(--lm-amber-100);
+
   /* Grade colours */
   --color-grade-a-fg:    var(--lm-grade-a-fg);
   --color-grade-a-bg:    var(--lm-grade-a-bg);
@@ -124,10 +155,14 @@
 
   /* Radii */
   --radius-pill:         var(--lm-radius-pill);
+  --radius-card:         var(--lm-radius-card);
   --radius-xl:           var(--lm-radius-xl);
   --radius-lg:           var(--lm-radius-lg);
   --radius-md:           var(--lm-radius-md);
   --radius-sm:           var(--lm-radius-sm);
+
+  /* Elevation */
+  --shadow-card:         var(--lm-shadow-card);
 
   /* Breakpoints */
   --breakpoint-sm:       480px;

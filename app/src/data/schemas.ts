@@ -128,6 +128,11 @@ export const MockEntrySchema = z.object({
   label: z.string(),
   date: LocalDateSchema,
   sections: z.array(MockSectionSchema),
+  provider: z.string().optional(),
+  providerNote: z.string().max(40).optional(),
+  mockType: z.enum(['full', 'sectional']).optional(),
+  totalScore: z.number().int().optional(),
+  composure: z.number().int().min(1).max(5).optional(),
 });
 export type MockEntry = z.infer<typeof MockEntrySchema>;
 

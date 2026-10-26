@@ -25,9 +25,9 @@ export const NAV_ITEMS = [
   { to: '/practice', label: 'Practice', Icon: Target, end: false },
   { to: '/mock', label: 'Mock analysis', Icon: ClipboardList, end: false },
   { to: '/revision', label: 'Revision', Icon: RefreshCw, end: false },
-  { to: '/words', label: 'Words', Icon: BookOpen, end: false },
-  { to: '/profile', label: 'My profile', Icon: UserRound, end: false },
+  { to: '/words', label: 'Personal dictionary', Icon: BookOpen, end: false },
   { to: '/omet', label: 'OMET', Icon: Compass, end: false },
+  { to: '/profile', label: 'My profile', Icon: UserRound, end: false },
   { to: '/feedback', label: 'Feedback', Icon: MessageSquare, end: false },
 ];
 

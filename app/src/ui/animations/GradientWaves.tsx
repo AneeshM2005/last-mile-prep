@@ -203,6 +203,7 @@ const parseColor = (
       return fallback;
     }
   }
+  if (!probe) return fallback;
   try {
     probe.fillStyle = 'rgb(0, 0, 0)';
     probe.fillStyle = value;
