@@ -90,5 +90,11 @@ Milestone order: All tiers 1, 2, 3 (tasks P1-01 to P1-21)
 - Commands: typecheck pass | lint pass | test pass (55 tests) | build pass | validate:content pass
 - Decisions I made without asking: Built 9 outcome classification mappings (Step 1 + Step 2 -> OutcomeCode -> Grade A/B/C/D), potential score calculation 3 * (A + B), leakage calculation, and verbatim BR-14 sentence. Created sampleMock.json faithfully reproducing BRD worked example (VARC 33, LRDI 39, QA 15, total 87). Implemented start screen, section choice, entry cards, dynamic GradeChip, BarRows, focus list, and reflection prompt.
 - Conflicts or proposed document changes: None
-- Placeholder or simulated behaviour: None (fully functional mock recording and analysis with sample mock loader).
-
+## P1-12 to P1-15: Home, Practice Hub, OMET teaser, and Feedback with privacy payload
+- Status: DONE
+- Commit: 4256e93
+- Files changed: app/src/domain/taskRecommender.ts, app/src/domain/sessionSummary.ts, app/src/features/home/HomePage.tsx, app/src/features/practice/PracticeHubPage.tsx, app/src/features/omet/OmetPage.tsx, app/src/features/feedback/FeedbackPage.tsx, app/tests/domain/taskRecommender.test.ts, app/tests/features/m6-flows.test.tsx
+- Commands: typecheck pass | lint pass | test pass (65 tests) | build pass | validate:content pass
+- Decisions I made without asking: Built taskRecommender cascade logic adhering to tasks.json cascade rules and profile dailyMinutes. Created 12-column Bento HomePage with daily task card, days to CAT, quote, days practised, 5-node journey indicator, and resume session card. Implemented PracticeHubPage, OmetPage with CAT vs OMET comparison, and FeedbackPage with 2 numerical ratings, 5 280-char textareas, stripped displayName privacy guarantee, and live payload preview.
+- Conflicts or proposed document changes: None
+- Placeholder or simulated behaviour: None.
