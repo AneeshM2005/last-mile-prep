@@ -1,13 +1,44 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
 import '@/styles/tokens.css';
+import { AppProviders, useAppContext } from './app/providers';
+import { AppRouter } from './app/router';
+import { ToastProvider } from './ui/Toast';
+import { LoadingScreen } from './ui/LoadingScreen';
+import { ErrorScreen } from './ui/ErrorScreen';
+
+function RootApp(): React.ReactElement {
+  const { loading, configErrors } = useAppContext();
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (configErrors.length > 0) {
+    return (
+      <ErrorScreen
+        errors={configErrors}
+        onRetry={() => {
+          window.location.reload();
+        }}
+      />
+    );
+  }
+
+  return (
+    <HashRouter>
+      <ToastProvider>
+        <AppRouter />
+      </ToastProvider>
+    </HashRouter>
+  );
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <a href="#main" className="skip-link">Skip to main content</a>
-    <main id="main">
-      <h1 className="text-h1" style={{ color: 'var(--lm-ink)' }}>Last Mile</h1>
-      <p className="text-body" style={{ color: 'var(--lm-text-muted)' }}>Loading…</p>
-    </main>
+    <AppProviders>
+      <RootApp />
+    </AppProviders>
   </React.StrictMode>
 );
