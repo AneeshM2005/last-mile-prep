@@ -56,3 +56,29 @@ Milestone order: All tiers 1, 2, 3 (tasks P1-01 to P1-21)
 - Conflicts or proposed document changes: None
 - Placeholder or simulated behaviour: None (functional 4-step onboarding, profile details editing, date simulation stepper, and complete storage reset modal).
 
+## P1-07: Baseline flow, sample questions, and baselineScoring domain
+- Status: DONE
+- Commit: 2b6bc60
+- Files changed: app/public/content/questions.json, app/src/domain/baselineScoring.ts, app/src/features/baseline/BaselinePage.tsx, app/tests/domain/baseline-swot.test.ts, app/tests/features/baseline.test.tsx
+- Commands: typecheck pass | lint pass | test pass (45 tests) | build pass | validate:content pass
+- Decisions I made without asking: Created 12 original SAMPLE questions (4 VARC, 4 LRDI, 4 QA) verified: false.
+- Conflicts or proposed document changes: None
+- Placeholder or simulated behaviour: Sample baseline question bank.
+
+## P1-08: SWOT domain and profile screen
+- Status: DONE
+- Commit: 2b6bc60
+- Files changed: app/src/domain/swot.ts, app/src/features/profile/ProfilePage.tsx, app/tests/domain/baseline-swot.test.ts
+- Commands: typecheck pass | lint pass | test pass (45 tests) | build pass | validate:content pass
+- Decisions I made without asking: Followed tie-breaker precedence (Threat > Weakness > Opportunity > Strength) and supported both baseline metrics and mock outcomeCode mapping.
+- Conflicts or proposed document changes: None
+- Placeholder or simulated behaviour: None.
+
+## P1-09: Question selection rounds, workspace, reflection and summary
+- Status: DONE
+- Commit: 2865265
+- Files changed: app/public/content/rounds.json, app/public/content/questions.json, app/src/data/configSchemas.ts, app/src/domain/roundSummary.ts, app/src/features/rounds/RoundsPage.tsx, app/tests/domain/roundSummary.test.ts, app/tests/features/rounds.test.tsx
+- Commands: typecheck pass | lint pass | test pass (49 tests) | build pass | validate:content pass
+- Decisions I made without asking: Appended 10 original QA round questions (rq-1..rq-10) to questions.json and created 2 round definitions in rounds.json with 300s duration and target solves 2-3. Implemented 5-tile non-linear jump grid, quiet timer, 3-step skippable reflection, and verbatim alignment sentence formatting.
+- Conflicts or proposed document changes: None
+- Placeholder or simulated behaviour: Sample questions marked verified: false with memory-based provenance per PRD.

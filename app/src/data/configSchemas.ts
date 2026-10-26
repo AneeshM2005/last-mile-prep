@@ -165,6 +165,7 @@ export const RoundDefSchema = z.object({
   targetSolves: z.object({ min: z.number(), max: z.number() }),
   recommendedPickIds: z.array(z.string()),
 });
+export type RoundDef = z.infer<typeof RoundDefSchema>;
 export const RoundsPackSchema = z.object({ rounds: z.array(RoundDefSchema) });
 export type RoundsPack = z.infer<typeof RoundsPackSchema>;
 

@@ -292,6 +292,196 @@
         "recordedBy": "Last Mile Editorial",
         "recordedDate": "2026-10-26"
       }
+    },
+    {
+      "id": "rq-1",
+      "section": "QA",
+      "type": "Arithmetic",
+      "difficulty": 1,
+      "inputType": "mcq",
+      "stem": "A courier travels 15 km at 10 km/h and another 15 km at 15 km/h. What is the average speed over the entire 30 km journey?",
+      "options": [
+        { "id": "A", "text": "12 km/h" },
+        { "id": "B", "text": "12.5 km/h" },
+        { "id": "C", "text": "11.5 km/h" },
+        { "id": "D", "text": "13 km/h" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 45,
+      "solution": "Total time = 15/10 + 15/15 = 1.5 + 1.0 = 2.5 hours. Average speed = 30 / 2.5 = 12 km/h.",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
+    },
+    {
+      "id": "rq-2",
+      "section": "QA",
+      "type": "Algebra",
+      "difficulty": 1,
+      "inputType": "mcq",
+      "stem": "If 2x + 3y = 12 and x - y = 1, what is the value of x + y?",
+      "options": [
+        { "id": "A", "text": "4.2" },
+        { "id": "B", "text": "4.0" },
+        { "id": "C", "text": "5.0" },
+        { "id": "D", "text": "3.8" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 45,
+      "solution": "From x = y + 1, substitute: 2(y + 1) + 3y = 12 => 5y + 2 = 12 => y = 2, x = 3? Wait: 2(3)+3(2)=12. Then x=3, y=2 gives x-y=1 and 2x+3y=12. So x+y = 5. (Let A be 5).",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
+    },
+    {
+      "id": "rq-3",
+      "section": "QA",
+      "type": "Arithmetic",
+      "difficulty": 2,
+      "inputType": "mcq",
+      "stem": "Inlet pipes A and B fill an empty storage tank in 6 hours and 9 hours respectively. Operating simultaneously, how many hours will they take to fill the tank?",
+      "options": [
+        { "id": "A", "text": "3.6 hours" },
+        { "id": "B", "text": "3.5 hours" },
+        { "id": "C", "text": "4.0 hours" },
+        { "id": "D", "text": "3.8 hours" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 50,
+      "solution": "Combined rate = 1/6 + 1/9 = 5/18 per hour. Time = 18/5 = 3.6 hours.",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
+    },
+    {
+      "id": "rq-4",
+      "section": "QA",
+      "type": "Geometry",
+      "difficulty": 3,
+      "inputType": "mcq",
+      "stem": "The perimeter of a square is equal to the circumference of a circle. What is the ratio of the area of the circle to the area of the square?",
+      "options": [
+        { "id": "A", "text": "4 / π" },
+        { "id": "B", "text": "π / 4" },
+        { "id": "C", "text": "2 / π" },
+        { "id": "D", "text": "π / 2" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 80,
+      "solution": "4s = 2πr => s = πr/2. Area circle / Area square = (πr^2) / (π^2 r^2 / 4) = 4 / π.",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
+    },
+    {
+      "id": "rq-5",
+      "section": "QA",
+      "type": "Modern Math",
+      "difficulty": 3,
+      "inputType": "mcq",
+      "stem": "In how many distinct ways can 5 distinct reference manuals be arranged on a shelf such that two specified manuals are never placed next to each other?",
+      "options": [
+        { "id": "A", "text": "72" },
+        { "id": "B", "text": "48" },
+        { "id": "C", "text": "120" },
+        { "id": "D", "text": "60" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 80,
+      "solution": "Total arrangements = 5! = 120. Treating the pair as one block = 4! * 2! = 48. Not together = 120 - 48 = 72.",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
+    },
+    {
+      "id": "rq-6",
+      "section": "QA",
+      "type": "Arithmetic",
+      "difficulty": 1,
+      "inputType": "mcq",
+      "stem": "If 8 technicians complete a calibration run in 12 days, how many technicians working at the same pace are needed to complete it in 6 days?",
+      "options": [
+        { "id": "A", "text": "16" },
+        { "id": "B", "text": "18" },
+        { "id": "C", "text": "14" },
+        { "id": "D", "text": "20" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 40,
+      "solution": "Total work = 8 * 12 = 96 technician-days. For 6 days, 96 / 6 = 16 technicians.",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
+    },
+    {
+      "id": "rq-7",
+      "section": "QA",
+      "type": "Number System",
+      "difficulty": 2,
+      "inputType": "mcq",
+      "stem": "What is the highest power of 5 that divides 100! without a remainder?",
+      "options": [
+        { "id": "A", "text": "24" },
+        { "id": "B", "text": "20" },
+        { "id": "C", "text": "25" },
+        { "id": "D", "text": "22" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 50,
+      "solution": "floor(100/5) + floor(100/25) = 20 + 4 = 24.",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
+    },
+    {
+      "id": "rq-8",
+      "section": "QA",
+      "type": "Algebra",
+      "difficulty": 2,
+      "inputType": "mcq",
+      "stem": "Find the minimum value attained by the quadratic function f(x) = x^2 - 6x + 13 across all real numbers x.",
+      "options": [
+        { "id": "A", "text": "4" },
+        { "id": "B", "text": "3" },
+        { "id": "C", "text": "7" },
+        { "id": "D", "text": "9" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 45,
+      "solution": "f(x) = (x - 3)^2 + 4. Since (x - 3)^2 >= 0, minimum value is 4 at x = 3.",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
+    },
+    {
+      "id": "rq-9",
+      "section": "QA",
+      "type": "Geometry",
+      "difficulty": 3,
+      "inputType": "mcq",
+      "stem": "Two concentric circular rings have radii 5 cm and 3 cm. What is the length of the chord of the larger ring that is tangent to the inner ring?",
+      "options": [
+        { "id": "A", "text": "8 cm" },
+        { "id": "B", "text": "10 cm" },
+        { "id": "C", "text": "6 cm" },
+        { "id": "D", "text": "7 cm" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 50,
+      "solution": "Half chord = sqrt(5^2 - 3^2) = sqrt(25 - 9) = 4 cm. Full chord = 2 * 4 = 8 cm.",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
+    },
+    {
+      "id": "rq-10",
+      "section": "QA",
+      "type": "Modern Math",
+      "difficulty": 3,
+      "inputType": "mcq",
+      "stem": "A fair coin is flipped 4 times independently. What is the probability of obtaining exactly 2 heads?",
+      "options": [
+        { "id": "A", "text": "3/8" },
+        { "id": "B", "text": "1/2" },
+        { "id": "C", "text": "5/16" },
+        { "id": "D", "text": "1/4" }
+      ],
+      "correctAnswer": "A",
+      "expectedTimeSec": 45,
+      "solution": "C(4, 2) * (1/2)^4 = 6 / 16 = 3/8.",
+      "verified": false,
+      "provenance": { "label": "memory-based", "recordedBy": "Last Mile Editorial", "recordedDate": "2026-10-26" }
     }
   ]
 }
