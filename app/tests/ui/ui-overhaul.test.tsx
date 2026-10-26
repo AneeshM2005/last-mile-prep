@@ -142,7 +142,7 @@ describe('UI and Design Overhaul Requirements', () => {
   });
 
   describe('ScrollExpand full-screen shrinking hero starting state and text swap', () => {
-    it('starts full screen with square corners, stage 1 text visible, and actions hidden', () => {
+    it('starts full screen with square corners, stage 1 text visible, actions out of flow, and data-hero-step="1"', () => {
       render(
         <ScrollExpand
           src="/images/landing-hero.jpeg"
@@ -162,14 +162,27 @@ describe('UI and Design Overhaul Requirements', () => {
         />
       );
 
+      // Sticky scene has data-hero-step="1"
+      const stickyEl = screen.getByTestId('scroll-expand-sticky');
+      expect(stickyEl).toBeInTheDocument();
+      expect(stickyEl).toHaveAttribute('data-hero-step', '1');
+
       // Frame container exists
       const frameEl = screen.getByTestId('scroll-expand-frame');
       expect(frameEl).toBeInTheDocument();
 
-      // Starts full screen (100% width, 0px border radius, full viewport height)
+      // Starts full screen (100% width, 0px border radius, full viewport height, top 0px)
+      // Exactly fills the viewport with zero bottom bar
       expect(frameEl.style.width).toBe('100%');
       expect(frameEl.style.borderRadius).toBe('0px');
       expect(frameEl.style.height).toBe(`${window.innerHeight}px`);
+      expect(frameEl.style.top).toBe('0px');
+
+      // Actions are positioned absolutely out of flow and do not shrink or alter the frame
+      const actionsEl = screen.getByTestId('hero-actions');
+      expect(actionsEl).toBeInTheDocument();
+      expect(actionsEl.className).toContain('absolute');
+      expect(actionsEl.style.opacity).toBe('0');
 
       // Stage 1 text group is visible directly on picture
       const stage1El = screen.getByTestId('hero-stage-1');
@@ -188,26 +201,49 @@ describe('UI and Design Overhaul Requirements', () => {
       const hintEl = screen.getByTestId('hero-scroll-hint');
       expect(hintEl).toBeInTheDocument();
       expect(hintEl.style.opacity).toBe('1');
-
-      // Actions below frame are in DOM with opacity 0
-      const actionsEl = screen.getByTestId('hero-actions');
-      expect(actionsEl).toBeInTheDocument();
-      expect(actionsEl.style.opacity).toBe('0');
     });
 
-    it('calculates total container height including shrink runway and hold distance', () => {
+    it('presence of actionsSlot does not affect initial frame height (no white bar regression)', () => {
+      const { unmount } = render(
+        <ScrollExpand
+          src="/images/landing-hero.jpeg"
+          actionsSlot={null}
+        />
+      );
+      const frameWithoutActions = screen.getByTestId('scroll-expand-frame');
+      const heightWithout = frameWithoutActions.style.height;
+      unmount();
+
       render(
         <ScrollExpand
           src="/images/landing-hero.jpeg"
-          scrollDistance={1.2}
+          actionsSlot={
+            <div style={{ height: '140px' }}>
+              <button type="button">Tall Action Button</button>
+            </div>
+          }
+        />
+      );
+      const frameWithActions = screen.getByTestId('scroll-expand-frame');
+      expect(frameWithActions.style.height).toBe(heightWithout);
+      expect(frameWithActions.style.height).toBe(`${window.innerHeight}px`);
+    });
+
+    it('calculates total container height including shrink runway (default 1.6) and hold distance (0.6)', () => {
+      render(
+        <ScrollExpand
+          src="/images/landing-hero.jpeg"
           actionsSlot={<button type="button">Get started</button>}
         />
       );
 
       const containerEl = screen.getByTestId('scroll-expand-container');
       expect(containerEl).toBeInTheDocument();
-      // Total = window.innerHeight + Math.round(shrinkDistPx) + Math.round(holdDistPx)
-      const expectedHeight = window.innerHeight + Math.round(window.innerHeight * 1.2) + Math.round(window.innerHeight * 0.6);
+      // Total = window.innerHeight + Math.round(shrinkDistPx: 1.6) + Math.round(holdDistPx: 0.6)
+      const expectedHeight =
+        window.innerHeight +
+        Math.round(window.innerHeight * 1.6) +
+        Math.round(window.innerHeight * 0.6);
       expect(containerEl.style.height).toBe(`${expectedHeight}px`);
     });
 

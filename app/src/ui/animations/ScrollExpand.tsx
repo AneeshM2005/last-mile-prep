@@ -3,18 +3,24 @@
  * Starts full screen at scroll 0, then smoothly shrinks into an inset framed picture
  * as the visitor scrolls down.
  *
- * Timeline driven by raw scroll progress p (0 to 1, linear in scroll).
- * - Dead zone p <= 0.03 keeps picture full screen on initial touch
- * - Geometry g uses smootherstep (0.03 to 0.72)
- * - Pinned scene holds for ~0.6 viewport height after shrink completes (p = 1)
- * - Headline text swaps inside picture (Stage 1 -> Stage 2)
- * - Specular Get started button and privacy line sit outside the picture, below the frame
- * - Zero React re-renders during scrolling: writes CSS custom properties on requestAnimationFrame
+ * Three-step cinematic transition driven by raw scroll progress p (0 to 1, linear in scroll):
+ * - Step 1 (Arrive, p: 0 -> 0.12): Full screen edge-to-edge, square corners, Stage 1 text centred.
+ * - Step 2 (Transition, p: 0.12 -> 0.70): Frame shrinks to 88% width, height & top offset move down
+ *   below the header, radius rounds to 32px/24px. Stage 1 dissolves upward into soft blur while
+ *   Stage 2 dissolves in with slight rise and de-blur. Image settles from 1.06 to 1.0 zoom.
+ * - Step 3 (Settle, p: 0.70 -> 1.0): Frame holds still. Actions fade in (0.62 -> 0.82).
+ *   Holds pinned for ~0.6 viewport height after p = 1.
+ *
+ * Zero React re-renders during scrolling: writes CSS custom properties on requestAnimationFrame.
+ * Positions frame and actions out of normal flow (absolute) so actions never shrink the frame.
  */
 
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { calculateHeroState } from '../../domain/heroScroll';
+import {
+  calculateHeroState,
+  HERO_SCROLL_CONFIG,
+} from '../../domain/heroScroll';
 
 export interface ScrollExpandProps {
   src: string;
@@ -26,13 +32,15 @@ export interface ScrollExpandProps {
   scrollHint?: string;
   /**
    * Scroll runway distance for the shrink animation as a multiple of the viewport height.
-   * Defaults to 1.1 (i.e. 1.1x viewport height). A hold distance of 0.6x viewport is added after.
+   * Defaults to HERO_SCROLL_CONFIG.SHRINK_DISTANCE_MULTIPLE (1.6).
+   * A hold distance of HERO_SCROLL_CONFIG.HOLD_DISTANCE_MULTIPLE (0.6) is added after.
    */
   scrollDistance?: number;
   useWindowScroll?: boolean;
   mediaZoom?: number;
   actionsSlot?: React.ReactNode;
   children?: React.ReactNode;
+  headerHeight?: number;
   /**
    * Callback notifying parent whether the header is currently over the photo (true)
    * or over the pale page canvas (false). Invoked only when the boolean state changes.
@@ -50,11 +58,12 @@ export function ScrollExpand({
   eyebrowStage2 = 'A CALMER APPROACH TO CAT',
   stage2Text = 'Strategy, timing and a calmer routine for the final weeks before CAT. Built from your own practice.',
   scrollHint = 'Scroll',
-  scrollDistance = 1.1,
+  scrollDistance = HERO_SCROLL_CONFIG.SHRINK_DISTANCE_MULTIPLE,
   useWindowScroll = true,
-  mediaZoom = 1.0,
+  mediaZoom,
   actionsSlot,
   children,
+  headerHeight: propHeaderHeight,
   headerProgressCallback,
   className = '',
   style,
@@ -62,6 +71,7 @@ export function ScrollExpand({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const stickyRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<HTMLDivElement | null>(null);
+  const mediaRef = useRef<HTMLDivElement | null>(null);
   const actionsRef = useRef<HTMLDivElement | null>(null);
   const stage1Ref = useRef<HTMLDivElement | null>(null);
   const stage2Ref = useRef<HTMLDivElement | null>(null);
@@ -69,11 +79,18 @@ export function ScrollExpand({
 
   const [prefersReduced, setPrefersReduced] = useState<boolean>(false);
   const [imgError, setImgError] = useState<boolean>(false);
-  const [actionsHeight, setActionsHeight] = useState<number>(80);
+  const [actionsHeight, setActionsHeight] = useState<number>(HERO_SCROLL_CONFIG.DEFAULT_ACTIONS_HEIGHT);
+  const [measuredHeaderHeight, setMeasuredHeaderHeight] = useState<number>(HERO_SCROLL_CONFIG.DEFAULT_HEADER_HEIGHT);
   const [viewportDims, setViewportDims] = useState<{ width: number; height: number }>(() => ({
     width: typeof window !== 'undefined' ? window.innerWidth : 1280,
     height: typeof window !== 'undefined' ? window.innerHeight : 800,
   }));
+
+  // Effective header height
+  const effectiveHeaderHeight =
+    typeof propHeaderHeight === 'number' && propHeaderHeight > 0
+      ? propHeaderHeight
+      : measuredHeaderHeight;
 
   // Store latest callback in ref to prevent scroll listener churn
   const headerCallbackRef = useRef(headerProgressCallback);
@@ -88,6 +105,26 @@ export function ScrollExpand({
       const listener = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
       mediaQuery.addEventListener?.('change', listener);
       return () => mediaQuery.removeEventListener?.('change', listener);
+    }
+  }, []);
+
+  // Measure fixed header height with ResizeObserver
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const headerEl = document.querySelector('header');
+    if (!headerEl) return;
+    if (typeof ResizeObserver !== 'undefined') {
+      const observer = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const h = entry.contentRect.height || entry.target.getBoundingClientRect().height;
+          if (h > 0) setMeasuredHeaderHeight(Math.round(h));
+        }
+      });
+      observer.observe(headerEl);
+      return () => observer.disconnect();
+    } else {
+      const h = headerEl.getBoundingClientRect().height;
+      if (h > 0) setMeasuredHeaderHeight(Math.round(h));
     }
   }, []);
 
@@ -119,19 +156,26 @@ export function ScrollExpand({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Calculate final frame height and minimum required height for pinned mode
-  // headerAllowance ~72px, vertical gaps ~48px
-  const minFrameHeight = 260;
-  const maxFrameHeight = 640;
-  const overhead = actionsHeight + 72 + 48;
-  const finalFrameHeight = Math.max(minFrameHeight, Math.min(maxFrameHeight, viewportDims.height - overhead));
-  const minRequiredViewport = minFrameHeight + overhead;
+  // Calculate final frame top offset, final frame height, and layout mode
+  // finalTopOffset = headerHeight + 24px
+  // overhead = finalTopOffset + gap (24px) + actionsHeight + bottomMargin (24px)
+  const finalTopOffset = effectiveHeaderHeight + HERO_SCROLL_CONFIG.FRAME_HEADER_GAP;
+  const overhead =
+    finalTopOffset +
+    HERO_SCROLL_CONFIG.FRAME_ACTIONS_GAP +
+    actionsHeight +
+    HERO_SCROLL_CONFIG.ACTIONS_BOTTOM_MARGIN;
+  const finalFrameHeight = Math.max(
+    HERO_SCROLL_CONFIG.MIN_FRAME_HEIGHT,
+    Math.min(HERO_SCROLL_CONFIG.MAX_FRAME_HEIGHT, viewportDims.height - overhead)
+  );
+  const minRequiredViewport = HERO_SCROLL_CONFIG.MIN_FRAME_HEIGHT + overhead;
   const isTooShort = viewportDims.height < minRequiredViewport;
 
   // Decide if static layout is required (reduced motion or short viewport)
   const isStatic = prefersReduced || isTooShort;
 
-  // Notify header when in static layout
+  // Notify header when in static layout (header sits over paper canvas)
   useEffect(() => {
     if (isStatic && headerCallbackRef.current) {
       lastHeaderOverPhotoRef.current = false;
@@ -139,8 +183,11 @@ export function ScrollExpand({
     }
   }, [isStatic]);
 
-  const shrinkMultiple = typeof scrollDistance === 'number' && scrollDistance > 0 ? scrollDistance : 1.1;
-  const holdMultiple = 0.6;
+  const shrinkMultiple =
+    typeof scrollDistance === 'number' && scrollDistance > 0
+      ? scrollDistance
+      : HERO_SCROLL_CONFIG.SHRINK_DISTANCE_MULTIPLE;
+  const holdMultiple = HERO_SCROLL_CONFIG.HOLD_DISTANCE_MULTIPLE;
   const shrinkDistPx = Math.max(1, Math.round(viewportDims.height * shrinkMultiple));
   const holdDistPx = Math.max(1, Math.round(viewportDims.height * holdMultiple));
   const totalRunwayPx = shrinkDistPx + holdDistPx;
@@ -150,27 +197,61 @@ export function ScrollExpand({
     const state = calculateHeroState(p, {
       viewportWidth: viewportDims.width,
       viewportHeight: viewportDims.height,
+      headerHeight: effectiveHeaderHeight,
+      actionsHeight,
       finalHeight: finalFrameHeight,
     });
 
+    if (stickyRef.current) {
+      stickyRef.current.setAttribute('data-hero-step', String(state.step));
+    }
+
     if (frameRef.current) {
+      frameRef.current.style.top = `${state.frameTopOffsetPx}px`;
       frameRef.current.style.width = `${state.frameWidthPercent}%`;
       frameRef.current.style.height = `${state.frameHeightPx}px`;
       frameRef.current.style.borderRadius = `${state.frameRadiusPx}px`;
       frameRef.current.style.border = state.frameRadiusPx > 4 ? '1px solid var(--lm-sage-200)' : 'none';
     }
 
+    if (mediaRef.current) {
+      const zoomVal = typeof mediaZoom === 'number' ? mediaZoom : state.mediaZoom;
+      mediaRef.current.style.transform = `scale(${zoomVal})`;
+    }
+
     if (stage1Ref.current) {
       stage1Ref.current.style.opacity = `${state.stage1Opacity}`;
       stage1Ref.current.style.pointerEvents = state.stage1Opacity > 0.2 ? 'auto' : 'none';
+      if (state.stage1Opacity <= 0) {
+        stage1Ref.current.style.transform = 'none';
+        stage1Ref.current.style.filter = 'none';
+      } else {
+        stage1Ref.current.style.transform =
+          state.stage1DriftYPx !== 0 ? `translateY(${state.stage1DriftYPx}px)` : 'none';
+        stage1Ref.current.style.filter =
+          state.stage1BlurPx > 0 ? `blur(${state.stage1BlurPx}px)` : 'none';
+      }
     }
 
     if (stage2Ref.current) {
       stage2Ref.current.style.opacity = `${state.stage2Opacity}`;
       stage2Ref.current.style.pointerEvents = state.stage2Opacity > 0.2 ? 'auto' : 'none';
+      if (state.stage2Opacity >= 1) {
+        stage2Ref.current.style.transform = 'none';
+        stage2Ref.current.style.filter = 'none';
+      } else if (state.stage2Opacity <= 0) {
+        stage2Ref.current.style.transform = `translateY(${state.stage2DriftYPx}px)`;
+        stage2Ref.current.style.filter = `blur(${state.stage2BlurPx}px)`;
+      } else {
+        stage2Ref.current.style.transform =
+          state.stage2DriftYPx !== 0 ? `translateY(${state.stage2DriftYPx}px)` : 'none';
+        stage2Ref.current.style.filter =
+          state.stage2BlurPx > 0 ? `blur(${state.stage2BlurPx}px)` : 'none';
+      }
     }
 
     if (actionsRef.current) {
+      actionsRef.current.style.top = `${state.actionsTopPx}px`;
       actionsRef.current.style.opacity = `${state.actionsOpacity}`;
       actionsRef.current.style.pointerEvents = state.actionsOpacity > 0.2 ? 'auto' : 'none';
     }
@@ -186,7 +267,14 @@ export function ScrollExpand({
         headerCallbackRef.current(state.headerOverPhoto);
       }
     }
-  }, [viewportDims.width, viewportDims.height, finalFrameHeight]);
+  }, [
+    viewportDims.width,
+    viewportDims.height,
+    effectiveHeaderHeight,
+    actionsHeight,
+    finalFrameHeight,
+    mediaZoom,
+  ]);
 
   // Window scroll listener with requestAnimationFrame throttling
   useEffect(() => {
@@ -313,6 +401,9 @@ export function ScrollExpand({
   }
 
   // ── Standard Pinned Scroll-Driven Experience ─────────────────────────────
+  const initialTopOffset = 0;
+  const initialActionsTop = viewportDims.height + HERO_SCROLL_CONFIG.FRAME_ACTIONS_GAP;
+
   return (
     <div
       ref={containerRef}
@@ -332,35 +423,39 @@ export function ScrollExpand({
         onError={() => setImgError(true)}
       />
 
-      {/* Sticky viewport frame container: top 0, pinned scene */}
+      {/* Sticky viewport frame container: top 0, pinned scene, positioned containing box */}
       <div
         ref={stickyRef}
         data-testid="scroll-expand-sticky"
-        className="sticky top-0 w-full flex flex-col items-center justify-center overflow-hidden"
+        data-hero-step="1"
+        className="sticky top-0 w-full overflow-hidden"
         style={{
           height: '100svh',
           minHeight: '100dvh',
         }}
       >
-        {/* The shrinking media frame */}
+        {/* The shrinking media frame: absolute, out of normal flow */}
         <div
           ref={frameRef}
           data-testid="scroll-expand-frame"
-          className="relative overflow-hidden shadow-[var(--lm-shadow-card)] flex flex-col items-center justify-center"
+          className="absolute left-1/2 -translate-x-1/2 overflow-hidden shadow-[var(--lm-shadow-card)] flex flex-col items-center justify-center"
           style={{
+            top: `${initialTopOffset}px`,
             width: '100%',
             height: `${viewportDims.height}px`,
             borderRadius: '0px',
             maxWidth: '100%',
+            flex: 'none',
           }}
         >
-          {/* Background image: mediaZoom 1 */}
+          {/* Background image: settles slowly from 1.06 to 1.0 */}
           <div
+            ref={mediaRef}
             className="absolute inset-0 w-full h-full bg-cover"
             style={{
               backgroundImage: imgError ? 'var(--lm-sky-fallback)' : `url(${src})`,
               backgroundPosition: '50% 40%',
-              transform: mediaZoom !== 1 ? `scale(${mediaZoom})` : undefined,
+              transform: `scale(${HERO_SCROLL_CONFIG.MEDIA_ZOOM_START})`,
             }}
             role="img"
             aria-label={alt || undefined}
@@ -382,7 +477,7 @@ export function ScrollExpand({
               ref={stage1Ref}
               data-testid="hero-stage-1"
               className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 sm:p-10"
-              style={{ opacity: 1 }}
+              style={{ opacity: 1, transform: 'none', filter: 'none' }}
             >
               <span
                 className="font-mono text-xs sm:text-sm uppercase tracking-widest font-semibold mb-3 block"
@@ -410,7 +505,12 @@ export function ScrollExpand({
               ref={stage2Ref}
               data-testid="hero-stage-2"
               className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 sm:p-10"
-              style={{ opacity: 0, pointerEvents: 'none' }}
+              style={{
+                opacity: 0,
+                transform: `translateY(${HERO_SCROLL_CONFIG.STAGE_2_DRIFT_Y_PX}px)`,
+                filter: `blur(${HERO_SCROLL_CONFIG.STAGE_2_MAX_BLUR_PX}px)`,
+                pointerEvents: 'none',
+              }}
             >
               <span
                 className="font-mono text-xs sm:text-sm uppercase tracking-widest font-semibold mb-2 sm:mb-3 block"
@@ -452,14 +552,18 @@ export function ScrollExpand({
           )}
         </div>
 
-        {/* Outside actions (Get started button + privacy line) below framed picture */}
+        {/* Outside actions (Get started button + privacy line) absolutely below framed picture */}
         {actionElements && (
           <div
             ref={actionsRef}
             data-testid="hero-actions"
             onFocus={handleFocusActions}
-            className="w-full flex flex-col items-center justify-center pt-4 sm:pt-6 px-4"
-            style={{ opacity: 0, pointerEvents: 'none' }}
+            className="absolute left-1/2 -translate-x-1/2 w-full flex flex-col items-center justify-center px-4"
+            style={{
+              top: `${initialActionsTop}px`,
+              opacity: 0,
+              pointerEvents: 'none',
+            }}
           >
             {actionElements}
           </div>

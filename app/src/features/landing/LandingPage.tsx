@@ -12,6 +12,7 @@ import { useStore } from '../../data/store';
 import { GradientWaves } from '../../ui/animations/GradientWaves';
 import { ScrollExpand } from '../../ui/animations/ScrollExpand';
 import { SpecularButton } from '../../ui/animations/SpecularButton';
+import { HERO_SCROLL_CONFIG } from '../../domain/heroScroll';
 import {
   Compass,
   Target,
@@ -187,9 +188,8 @@ export function LandingPage(): React.ReactElement {
             eyebrowStage2={eyebrowStage2}
             stage2Text={sub}
             scrollHint={scrollHint}
-            scrollDistance={1.1}
+            scrollDistance={HERO_SCROLL_CONFIG.SHRINK_DISTANCE_MULTIPLE}
             useWindowScroll={true}
-            mediaZoom={1.0}
             headerProgressCallback={handleHeaderChange}
             actionsSlot={
               <div className="flex flex-col items-center justify-center gap-2.5 text-center">
