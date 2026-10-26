@@ -8,3 +8,6 @@ dist-ssr
 .env.development
 .DS_Store
 coverage
+
+.vercel
+.env*
